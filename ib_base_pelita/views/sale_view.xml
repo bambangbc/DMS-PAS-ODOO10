@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--Sales Order Form-->
+    <record id="inherit1_view_order_form" model="ir.ui.view">
+        <field name="name">inherit1.sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="/form/sheet/div[@class='oe_title']" position="replace">
+                <div class="oe_title pull-left">
+                    <label for="quotation_number" string="Quotation No. " class="oe_inline"/>
+                    <h1>
+                        <field name="quotation_number" class="oe_inline" placeholder="e.g. 123/VP/MKT/PAS/2017"
+                               attrs="{'readonly': [('state','not in',('draft'))]}"/>
+                    </h1>
+                </div>
+                <div class="oe_title pull-left">
+                    <label for="name" class="oe_inline" string="Sales Order No. "/>
+                    <h1>
+                        <label string="," class="oe_inline" />
+                        <field name="name" class="oe_inline" nolabel="1" readonly="1" />
+                    </h1>
+                </div>
+                <!--<div class="oe_title">
+                    <label string="Quotation No. " attrs="{'invisible': [('state','not in',('draft','sent'))]}"/>
+                    <label string="Sales Order No. " attrs="{'invisible': [('state','in',('draft','sent'))]}"/>
+                    <h1>
+                        <field name="quotation_number" class="oe_inline" nolabel="1"
+                               attrs="{'invisible': [('state','not in',('draft','sent'))]}" placeholder="e.g. 008/MG/PAF/PAS/2017"/>
+                        <field name="name" class="oe_inline" nolabel="1" readonly="1" attrs="{'invisible': [('state','in',('draft','sent'))]}"/>
+                    </h1>
+                </div>-->
+            </xpath>
+            <xpath expr="/form/sheet/group" position="replace">
+                <group>
+                    <group name="customer_address">
+                        <field name="partner_id" domain="[('customer','=',True)]" string="Sold To" context="{'search_default_customer':1, 'show_address': 1}" options='{"always_reload": True}' placeholder="Customer"/>
+                        <field name="partner_shipping_id" groups="sale.group_delivery_invoice_address" context="{'default_type':'delivery'}" string="Ship To" placeholder="Delivery Address"/>
+                        <field name="partner_invoice_id" groups="sale.group_delivery_invoice_address" context="{'default_type':'invoice'}" string="Bill To" placeholder="Invoice Address"/>
+                        <field name="partner_payer_id" string="Payer" groups="sale.group_delivery_invoice_address" context="{'search_default_customer':1, 'default_customer':1, 'default_supplier':0}" domain="[('customer','=',True)]" placeholder="Payer ID"/>
+                        <field name="project_id" attrs="{'invisible':[('state','=','sale')]}"
+                               context="{'default_partner_id':partner_invoice_id, 'default_name':name}"
+                               domain="['|',('partner_id','=',partner_id),('partner_id','=',partner_invoice_id)]"
+                               groups="analytic.group_analytic_accounting" string="Contract Reference"/>
+                        <field name="related_project_id" string="Contract Reference"
+                               attrs="{'readonly': ['|',('project_id','!=',False),('invoice_count','!=',0),('state','=','sale')],'invisible':[('state','!=','sale')]}"
+                               context="{'default_partner_id':partner_invoice_id, 'default_name':name}"
+                               groups="analytic.group_analytic_accounting"/>
+                    </group>
+                    <group>
+                        <field name="date_order" attrs="{'invisible': [('state', 'in', ['sale', 'done', 'cancel'])]}"/>
+                        <field name="client_order_ref" string="PO No." placeholder="Reference Number / PO Cust."/>
+                        <field name="pricelist_id" groups="product.group_sale_pricelist"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="payment_term_id" options="{'no_create': True}"/>
+                        <label for="type_sales" />
+                        <div>
+                            <field name="type_sales" class="oe_inline"/>
+                            <label class="oe_inline" string="Non Aircraft Service"/>
+                        </div>
+                    </group>
+                    <group name="attribute_sales_1">
+                        <field name="area_id" placeholder="Area" /> <!--options='{"no_open": True}' -->
+                        <field name="dist_channel_id" string="Distribution Channel" placeholder="Distribution Channel"/>
+                        <field name="division_id" placeholder="Division" />
+                        <field name="trx_type_id" string="Sales Type"/>
+
+                    </group>
+                    <group name="attribute_sales_2">
+                        <field name="team_id" string="Sales Group" />
+                        <field name="sales_off" string="Sales Office" />
+                        <field name="validity_date" attrs="{'invisible': [('state', 'in', ['sale', 'done'])]}"/>
+                        <field name="confirmation_date" attrs="{'invisible': [('state', 'in', ['draft', 'sent', 'cancel'])]}"/>
+                    </group>
+                </group>
+            </xpath>
+            <!--<xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="mode">form,tree,kanban</attribute>
+            </xpath>-->
+            <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="before">
+                <field name="etd" attrs="{'invisible': [('type_sales', '=', True)],'required': [('type_sales', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='product_id']" position="before">
+                <field name="type_sales" invisible="True"/>
+                <button name="%(action_flight_information_info)d" string="Flight Requisition &amp; Flight Schedule Information"
+                        type="action" icon="fa-files-o" attrs="{'invisible': [('type_sales', '=', True)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//div[@name='discount']" position="after">
+                <field name="type_sales" invisible="True"/>
+                <field name="route_opt_id" attrs="{'invisible': [('type_sales', '=', True)], 'required': [('type_sales', '=', False)]}"
+                       options="{'no_create': True, 'no_create_edit': True}"/> <!--required="True"-->
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form/group/group[2]" position="inside">
+                <field name="departure" attrs="{'invisible': [('type_sales', '=', True)]}"/>
+                <field name="arrival" attrs="{'invisible': [('type_sales', '=', True)]}"/>
+                <field name="conformance" string="Com Time" attrs="{'invisible': [('type_sales', '=', True)]}"/>
+                <field name="non_conformance" string="NonConf." attrs="{'invisible': [('type_sales', '=', True)]}"/>
+                <!--<field name="fl_acquisition_id" attrs="{'invisible': [('type_sales', '=', True)]}"
+                       domain="['|',('aircraft_ok','=',False),'&amp;',('aircraft_state','=','serviceable'),('availability_aircraft','=','available')]" options='{"no_open": True}' string="A/C Reg.Code" invisible="True"/>-->
+                <field name="fleet_acquisition_id" attrs="{'invisible': [('type_sales', '=', True)]}"
+                       domain="['|',('aircraft_ok','=',False),'&amp;',('aircraft_state','=','serviceable'),('availability_aircraft','=','available')]" options='{"no_open": True}' string="A/C Reg.Code"/>
+                <field name="base_ops_id" options='{"no_open": True}'
+                       attrs="{'invisible': [('type_sales', '=', True)],'required': [('type_sales', '=', False)]}"/>
+                <field name="area_ops_id" options='{"no_open": True}' attrs="{'invisible': [('type_sales', '=', True)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
+                <button name="%(action_air_service_info)d" string="Air Service Info" type="action"
+                        icon="fa-files-o" attrs="{'invisible': [('type_sales', '=', True)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="before">
+                <field name="etd" attrs="{'invisible': [('type_sales', '=', True)]}"/>
+                <field name="route_opt_id" 
+                       attrs="{'invisible': [('type_sales', '=', True)],'required': [('type_sales', '=', False)]}"/>
+                <field name="departure" attrs="{'invisible': [('type_sales', '=', True)]}"/>
+                <field name="arrival" attrs="{'invisible': [('type_sales', '=', True)]}"/>
+                <field name="conformance" string="Com Time" attrs="{'invisible': [('type_sales', '=', True)]}"/>
+                <field name="non_conformance" string="NonConf." attrs="{'invisible': [('type_sales', '=', True)]}"/>
+                <field name="base_ops_id" options='{"no_open": True}'
+                       attrs="{'invisible': [('type_sales', '=', True)],'required': [('type_sales', '=', False)]}"/>
+                <field name="area_ops_id" options='{"no_open": True}' attrs="{'invisible': [('type_sales', '=', True)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form/field[@name='name']" position="after">
+                <group> <!--attrs="{'invisible': [('type_sales', '=', True)]}"-->
+                    <group string="Aircraft Information" name="aircraft_info" invisible="True">
+                        <field name="craft_name" readonly="True"/>
+                        <field name="craft_type" readonly="True"/>
+                        <field name="craft_reg_code" readonly="True"/>
+                        <field name="craft_categ" readonly="True"/>
+                    </group>
+                    <group string="Ownership Information" name="aircraft_ownership" invisible="True">
+                        <field name="craft_ownership" readonly="True"/>
+                        <field name="craft_availseat" readonly="True"/>
+                        <field name="craft_color" readonly="True"/>
+                        <field name="craft_status" readonly="True"/>
+                    </group>
+                    <group string="Base Operation Info" name="base_operation_info" invisible="True">
+                        <field name="base_code" readonly="True"/>
+                        <field name="base_desc" readonly="True"/>
+                        <field name="base_coordinate" readonly="True"/>
+                    </group>
+                    <group string="Area Information" name="area_info" invisible="True">
+                        <field name="area_code" readonly="True"/>
+                        <field name="area_desc" readonly="True"/>
+                        <field name="area_coordinate" readonly="True"/>
+                    </group>
+                    <group string="Passenger Information" name="passenger_info"
+                            attrs="{'invisible': [('type_sales', '=', True)]}">
+                        <field name="pass_qty"/>
+                        <field name="pass_cargo"/>
+                        <field name="pass_ticket"/>
+                    </group>
+                    <group string="Crew Information" name="crew_info"
+                           attrs="{'invisible': [('type_sales', '=', True)]}">
+                        <field name="crew_set"/>
+                        <field name="technician_set"/>
+                        <field name="fuel_consump"/>
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="attributes">
+                <attribute name="domain">[('aircraft_state','=','serviceable')]</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='product_id']" position="attributes">
+                <attribute name="domain">[('aircraft_state','=','serviceable')]</attribute>
+            </xpath>  <!--'|',('aircraft_ok','=',False),'&amp;',,('availability_aircraft','=','available')-->
+            <button name="action_confirm" type="object" states="draft" position="replace">
+                <button name="action_confirm" string="Confirm Sale" type="object" states="draft" class="o_sale_confirm" 
+                        groups="sales_team.group_sale_manager,ib_base_pelita.group_sale_manager_own_document"/>
+            </button>
+            <button name="action_confirm" type="object" states="sent">
+                <button name="action_confirm" string="Confirm Sale" type="object" states="sent"
+                        class="btn-primary o_sale_confirm" 
+                        groups="sales_team.group_sale_manager,ib_base_pelita.group_sale_manager_own_document"/>
+            </button>
+            <xpath expr="//button[@name='action_cancel']" position="attributes">
+                <attribute name="groups">sales_team.group_sale_manager,ib_base_pelita.group_sale_manager_own_document</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_done']" position="attributes">
+                <attribute name="groups">sales_team.group_sale_manager,ib_base_pelita.group_sale_manager_own_document</attribute>
+            </xpath>
+            <xpath expr="/form/header/button[1]" position="attributes">
+                <attribute name="groups">sales_team.group_sale_manager,ib_base_pelita.group_sale_manager_own_document</attribute>
+            </xpath>
+            <xpath expr="/form/header/button[2]" position="attributes">
+                <attribute name="groups">sales_team.group_sale_manager,ib_base_pelita.group_sale_manager_own_document</attribute>
+            </xpath>
+        </field>
+    </record>
+
+            <!--<button name="action_quotation_send" type="object" states="draft" position="replace">
+                <button name="action_order_send_email" string="Send by Email" type="object" states="draft" class="btn-primary"/>
+            </button>
+            <button name="action_quotation_send" type="object" states="sent,sale">
+                <button name="action_order_send_email" string="Send by Email" type="object" states="sent,sale"/>
+            </button>-->
+    <record id="invisible_tags_sale_view_inherit123" model="ir.ui.view">
+        <field name="name">invis.tags.sale.order.form.inherit.sale</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_crm.sale_view_inherit123"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']" position="replace">
+                <field name="tag_ids" invisible="True"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Case Teams View -->
+    <record id="sales_team.crm_team_act" model="ir.actions.act_window">
+        <field name="name">Sales Groups</field>
+        <field name="res_model">crm.team</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="sales_team.crm_team_view_tree"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                    Click here to define a new sales group.
+            </p><p>
+                    Use sales group to organize your different salespersons or
+                    departments into separate teams. Each team will work in
+                    its own list of opportunities.
+            </p>
+        </field>
+    </record>
+    <menuitem name="Sales Groups"
+            id="sales_team.sales_team_config"
+            parent="sale.menu_sales_config" groups="base.group_user"
+            action="sales_team.sales_team_config_action"/>
+
+    <!-- Sales Area Pelita -->
+    <record id="view_sales_area_tree" model="ir.ui.view">
+        <field name="name">sale.sales.area.tree</field>
+        <field name="model">sale.sales.area</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Sales Area">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_sales_area_form" model="ir.ui.view">
+        <field name="name">sale.sales.area.form</field>
+        <field name="model">sale.sales.area</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Sales Area">
+                <sheet>
+                    <group col="4" name="main_group">
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_sales_area_filter" model="ir.ui.view">
+        <field name="name">sale.sales.area.filter</field>
+        <field name="model">sale.sales.area</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="Sales Area">
+                <field name="name" string="Sales Area" filter_domain="['|',('name','ilike',self),('code','ilike',self)]"/>
+            </search>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_sales_area_tree">
+        <field name="name">Sales Area</field>
+        <field name="res_model">sale.sales.area</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_sales_area_tree"/>
+        <field name="context">{}</field>
+        <field name="search_view_id" ref="view_sales_area_filter"/>
+    </record>
+    <menuitem name="Sales Area" parent="sale.menu_sales_config"
+              id="menu_sales_area_view" action="action_sales_area_tree" sequence="21" groups="base.group_user"/>
+
+    <!-- Distribution Channel Pelita -->
+    <record id="view_discount_channel_tree" model="ir.ui.view">
+        <field name="name">sale.distribution.channel.tree</field>
+        <field name="model">sale.distribution.channel</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Distribution Channel">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_discount_channel_form" model="ir.ui.view">
+        <field name="name">sale.distribution.channel.form</field>
+        <field name="model">sale.distribution.channel</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Distribution Channel">
+                <sheet>
+                    <group col="4" name="main_group">
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_discount_channel_filter" model="ir.ui.view">
+        <field name="name">sale.distribution.channel.filter</field>
+        <field name="model">sale.distribution.channel</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="Distribution Channel">
+                <field name="name" string="Distribution Channel" filter_domain="['|',('name','ilike',self),('code','ilike',self)]"/>
+            </search>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_discount_channel_tree">
+        <field name="name">Distribution Channel</field>
+        <field name="res_model">sale.distribution.channel</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_discount_channel_tree"/>
+        <field name="context">{}</field>
+        <field name="search_view_id" ref="view_discount_channel_filter"/>
+    </record>
+    <menuitem name="Distribution Channel" parent="sale.menu_sales_config"
+              id="menu_discount_channel_view" action="action_discount_channel_tree" sequence="22"
+              groups="base.group_user"/>
+
+    <!-- Sales Division Pelita -->
+    <record id="view_sale_division_tree" model="ir.ui.view">
+        <field name="name">sale.division.tree</field>
+        <field name="model">sale.division</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Division">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_sale_division_form" model="ir.ui.view">
+        <field name="name">sale.division.form</field>
+        <field name="model">sale.division</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Division">
+                <sheet>
+                    <group col="4" name="main_group">
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_sale_division_filter" model="ir.ui.view">
+        <field name="name">sale.division.filter</field>
+        <field name="model">sale.division</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="Division">
+                <field name="name" string="Division" filter_domain="['|',('name','ilike',self),('code','ilike',self)]"/>
+            </search>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_sale_division_tree">
+        <field name="name">Division</field>
+        <field name="res_model">sale.division</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_sale_division_tree"/>
+        <field name="context">{}</field>
+        <field name="search_view_id" ref="view_sale_division_filter"/>
+    </record>
+    <menuitem name="Division" parent="sale.menu_sales_config"
+              id="menu_sale_division_view" action="action_sale_division_tree" sequence="23"
+              groups="base.group_user"/>
+
+    <!-- Sales OFF Pelita -->
+    <record id="view_sales_off_tree" model="ir.ui.view">
+        <field name="name">sale.sales.office.tree</field>
+        <field name="model">sale.sales.office</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Sales Office">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_sales_off_form" model="ir.ui.view">
+        <field name="name">sale.sales.office.form</field>
+        <field name="model">sale.sales.office</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Sales Office">
+                <sheet>
+                    <group col="4" name="main_group">
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_sales_off_filter" model="ir.ui.view">
+        <field name="name">sale.sales.office.filter</field>
+        <field name="model">sale.sales.office</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="Sales Office">
+                <field name="name" string="Sales Office" filter_domain="['|',('name','ilike',self),('code','ilike',self)]"/>
+            </search>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_sales_off_tree">
+        <field name="name">Sales Office</field>
+        <field name="res_model">sale.sales.office</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_sales_off_tree"/>
+        <field name="context">{}</field>
+        <field name="search_view_id" ref="view_sales_off_filter"/>
+    </record>
+    <menuitem name="Sales Office" parent="sale.menu_sales_config"
+              id="menu_sales_off_view" action="action_sales_off_tree"
+              groups="base.group_user"/>
+
+
+    <record id="inherit1_view_sales_order_filter" model="ir.ui.view">
+        <field name="name">inherit1.sale.order.list.select</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='customer']" position="after">
+                <separator/>
+                <filter string="Sales Area" domain="[]" context="{'group_by':'area_id'}" />
+                <filter string="Sales Office" domain="[]" context="{'group_by':'sales_off'}" />
+                <filter string="Sales Type" domain="[]" context="{'group_by':'trx_type_id'}" />
+                <filter string="Distribution Channel" domain="[]" context="{'group_by':'dist_channel_id'}" />
+                <filter string="Division" domain="[]" context="{'group_by':'division_id'}" />
+                <filter string="BOD Subordination" name="business_unit" context="{'group_by':'business_unit_id'}" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale.view_order_product_graph" model="ir.ui.view">
+         <field name="name">sale.report.graph.sale_inherit</field>
+         <field name="model">sale.report</field>
+         <field name="arch" type="xml">
+             <graph string="Sales Analysis" type="pivot" stacked="True">
+                 <field name="trx_type_id" type="row"/>
+                 <field name="area_id" type="row"/>
+                 <field name="business_unit_id" type="row"/>
+                 <field name="division_id" type="row"/>
+                 <!--<field name="fl_acquisition_id" type="row"/>-->
+                 <field name="date" interval="month" type="col"/>
+                 <field name="price_total" type="measure"/>
+             </graph>
+         </field>
+    </record>
+    <record id="view_inherit_view_order_product_search" model="ir.ui.view">
+        <field name="name">inherit.view.sale.report.search</field>
+        <field name="model">sale.report</field>
+        <field name="inherit_id" ref="sale.view_order_product_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='status']" position="after">
+                <separator/>
+                <filter string="Sales Area" name="sales_area" context="{'group_by':'area_id'}" />
+                <filter string="Sales Office" name="sales_off" context="{'group_by':'sales_off'}" />
+                <filter string="Sales Type" name="sales_type" context="{'group_by':'trx_type_id'}" />
+                <!--<filter string="Disc_Channel" name="disc_channel" context="{'group_by':'dist_channel_id'}" />-->
+                <filter string="BOD Subordination" name="business_unit" context="{'group_by':'business_unit_id'}" />
+                <filter string="Division" name="division" context="{'group_by':'division_id'}" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit1_view_order_tree" model="ir.ui.view">
+        <field name="name">inherit1.sale.order.tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="string">SO Number</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="trx_type_id"/>
+                <field name="area_id"/>
+                <field name="sales_off"/>
+                <field name="dist_channel_id" string="Distribution Channel"/>
+                <field name="division_id"/>
+                <field name="business_unit_id"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="inherit1_view_quotation_tree" model="ir.ui.view">
+        <field name="name">inherit1.sale.quotation.tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="replace">
+                <field name="quotation_number" string="Quotation Number"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="trx_type_id"/>
+                <field name="area_id"/>
+                <field name="sales_off"/>
+                <field name="dist_channel_id" string="Distribution Channel"/>
+                <field name="division_id"/>
+                <field name="business_unit_id"/> <!--invisible="True"-->
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

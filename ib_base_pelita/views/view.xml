@@ -1,0 +1,1500 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--Aircraft Form-->
+        <record id='inherit1_aircraft_view_form' model='ir.ui.view'>
+            <field name="name">inherit1.aircraft.aircraft.form</field>
+            <field name="model">aircraft.aircraft</field>
+            <field name="inherit_id" ref="pelita_master_data.aircraft_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='aircraft_color']" position="replace">
+                    <field name="aircraft_color" widget="color"/>
+                    <field name="active" />
+                </xpath>
+                <xpath expr="//field[@name='aircraft_status']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Fleet Acquisition Form-->
+        <record id='inherit1_aircraft_acquisition_view_form' model='ir.ui.view'>
+            <field name="name">inherit1.aircraft.acquisition.form</field>
+            <field name="model">aircraft.acquisition</field>
+            <field name="inherit_id" ref="pelita_master_data.aircraft_acquisition_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet" position="before">
+                    <header>
+                        <button string="Set to Available" name="action_set_availability" type="object" 
+                                attrs="{'invisible': [('availability_aircraft', '=', 'available')]}"
+                                groups="pelita_master_data.group_flt_mgnt_manager,pelita_master_data.group_flt_mgnt_manager_own_docs"
+                                class="oe_highlight o_wow" context="{'action': 'available'}"/>
+                        <button string="Set to Reserved" name="action_set_availability" type="object" 
+                                attrs="{'invisible': [('availability_aircraft', '=', 'reserved')]}"
+                                groups="pelita_master_data.group_flt_mgnt_manager,pelita_master_data.group_flt_mgnt_manager_own_docs"
+                                class="oe_highlight" context="{'action': 'reserved'}"/>
+                    </header>
+                </xpath>
+                <xpath expr="//field[@name='aircraft_type_id']" position="after">
+                    <field name="availability_aircraft" readonly="True"/>
+                    <field name="product_tmpl_id" readonly="True" invisible="True"/>
+                    <field name="aircraft_state" readonly="True"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Sale Transaction Type -->
+        <record id='sale_transaction_type_form' model='ir.ui.view'>
+            <field name="name">sale.transaction.type.form</field>
+            <field name="model">sale.trx.type</field>
+            <field name="arch" type="xml">
+                <form string="Sales Type">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="active"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id='sale_transaction_type_tree' model='ir.ui.view'>
+            <field name="name">sale.transaction.type.tree</field>
+            <field name="model">sale.trx.type</field>
+            <field name="arch" type="xml">
+                <tree string="Sales Type">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        <record id='action_sale_transaction_type' model='ir.actions.act_window'>
+            <field name="name">Sales Type</field>
+            <field name="res_model">sale.trx.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click for Create new sales type
+                </p>
+            </field>
+        </record>
+        <menuitem id="menu_sale_transaction_type" action="action_sale_transaction_type" name="Sales Type"
+                  parent="sale.menu_sales_config" sequence="10"
+                  groups="base.group_user"/>
+        <!--sales_team.group_sale_manager,sales_team.group_sale_salesman,sales_team.group_sale_salesman_all_leads-->
+
+        <!--Flight Requisition Form-->
+        <record id='inherit1_flight_requisition_form' model='ir.ui.view'>
+            <field name="name">inherit1.flight.requisition.form</field>
+            <field name="model">flight.requisition</field>
+            <field name="inherit_id" ref="pelita_operation.flight_requisition_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form[@name='flight_requisition']" position="replace">
+                    <form string="Flight Requisition" name="flight_requisition">
+                        <header>
+                            <button string="Set to Draft" name="action_set_to_draft" type="object" states="cancel"
+                                    groups="pelita_operation.group_ops_user,pelita_operation.group_ops_manager,
+                                    pelita_operation.group_ops_user_own_docs,pelita_operation.group_ops_manager_own_docs" />
+                            <button string="Validate" name="action_validate" type="object" 
+                                    states="draft" class="oe_highlight" 
+                                    groups="pelita_operation.group_ops_manager,pelita_operation.group_ops_manager_own_docs"/>
+                            <button string="Cancel" name="action_cancel" type="object" 
+                                    class="oe_highlight" states="validated" 
+                                    groups="pelita_operation.group_ops_manager,pelita_operation.group_ops_manager_own_docs" />
+                            <field name="state" widget="statusbar" statusbar_visible="draft,validated,cancel"/>
+                        </header>
+                        <sheet>
+                            <div class="oe_title">
+                                <label string="Flight Requisition "/>
+                                <h1>
+                                    <field name="name" class="oe_inline" nolabel="1" readonly="1"/>
+                                </h1>
+                            </div>
+                            <group>
+                                <group>
+                                    <field name="customer_id" domain="[('customer','=',True)]" 
+                                           context="{'search_default_customer':1, 'show_address': 1}" 
+                                           options='{"always_reload": True}'/>
+                                    <field name="aircraft_id" domain="[('aircraft_state','=','serviceable'),
+                                        ('availability_aircraft','=','available')]" string="A/C Reg.Code" 
+                                           context="{'show_complete': 1}" options='{"always_reload": True}'/>
+                                    <field name="route_operation_id" domain="[('status','=','validated')]"/>
+                                    <field name="date_from"/>
+                                    <field name="creator_id" readonly="True"/>
+                                    <field name="department_id"/>
+                                </group>
+                                <group>
+                                    <field name="date_request"/>
+                                    <field name="base_operation_id"/>
+                                    <field name="etd"/>
+                                    <field name="date_to"/>
+                                    <field name="order_line_id" invisible="True" readonly="True" options='{"no_open": True}'/>
+                                </group>
+                            </group>
+                            <notebook>
+                                <page string="Flight Route" name="flight_route_pg">
+                                    <field name='requisition_route_ids'>
+                                        <tree>
+                                            <field name="name"/>
+                                            <field name="add_need_id"/>
+                                        </tree>
+                                    </field>
+                                    <field name="note" class="oe_inline" placeholder="Additional notes..."/>
+                                    <div class="oe_clear"/>
+                                </page>
+                            </notebook>
+                        </sheet>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                    </form>
+                </xpath>
+            </field>
+        </record>
+        <record id='inherit1_flight_requisition_tree' model='ir.ui.view'>
+            <field name="name">inherit1.flight.requisition.tree</field>
+            <field name="model">flight.requisition</field>
+            <field name="inherit_id" ref="pelita_operation.flight_requisition_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="decoration-bf">message_needaction==True</attribute>
+                    <attribute name="decoration-info">state == 'draft'</attribute>
+                    <attribute name="ddecoration-muted">state == 'cancel'</attribute>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="message_needaction" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='destination']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='base_operation_id']" position="after">
+                    <field name="route_operation_id"/>
+                    <field name="order_id"/>
+                </xpath>
+                <xpath expr="//field[@name='creator_id']" position="after">
+                    <field name="state"/>
+                    <field name="department_id" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_flight_requisition_filter" model="ir.ui.view">
+            <field name="name">view.flight.requisition.select</field>
+            <field name="model">flight.requisition</field>
+            <field name="arch" type="xml">
+                <search string="Search Flight Requisition">
+                    <field name="name" string="FR.No/AC.Reg.No" 
+                           filter_domain="['|',('name','ilike',self),('aircraft_id','ilike',self)]"/>
+                    <field name="base_operation_id"/>
+                    <field name="aircraft_id"/>
+                    <field name="customer_id"/>
+                    <field name="department_id"/>
+                    <filter string="My Flight Requisition" domain="[('create_uid','=',uid)]" name="my_flight_requisition_filter"/>
+                    <separator/>
+                    <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction','=',True)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="A/C Registration No" domain="[]" context="{'group_by':'aircraft_id'}"/>
+                        <filter name="customer" string="Customer" domain="[]" context="{'group_by':'customer_id'}"/>
+                        <filter string="Department" domain="[]" context="{'group_by':'department_id'}"/>
+                        <filter string="ETD" domain="[]" context="{'group_by':'etd'}"/>
+                        <filter string="Date Request" domain="[]" context="{'group_by':'date_request'}"/>
+                        <filter string="Route" domain="[]" context="{'group_by':'route_operation_id'}"/>
+                        <filter string="Status" domain="[]" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!--Maintenance Request Form-->
+        <record id="inherit1_hr_equipment_request_view_form" model="ir.ui.view">
+            <field name="name">inherit1.equipment.request.form</field>
+            <field name="model">maintenance.request</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='equipment_id']" position="replace">
+                    <field name="equipment_id" invisible="True"/>
+                    <field name="aircraft_id" invisible="True"/>
+                    <field name="fl_acquisition_id" options='{"always_reload": True}'/>
+                </xpath>
+                <xpath expr="//field[@name='stage_id']" position="after">
+                    <field name="aircraft_state" widget="statusbar" statusbar_visible="serviceable,unserviceable"/>
+                </xpath>
+                <xpath expr="//button[@name='reset_equipment_request']" position="after">
+                    <button string="Serviceable" name="action_set_serviceable" type="object" 
+                            attrs="{'invisible': [('aircraft_state', '=', 'serviceable')]}" class="oe_highlight o_wow"/>
+                    <button string="Unserviceable" name="action_set_unserviceable" type="object" 
+                            attrs="{'invisible': [('aircraft_state', '=', 'unserviceable')]}" class="oe_highlight"/>
+                </xpath>
+                <xpath expr="/form/sheet/group/group[2]" position="replace">
+                    <group>
+                        <field name="maintenance_team_id"/>
+                        <field name="technician_user_id" string="Responsible"/>
+                        <field name="schedule_date"/>
+                        <field name="priority" widget="priority"/>
+                        <field name="finished_date" invisible="True" />
+                        <field name="date_finished" />
+                        <field name="department_id"/>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='description']" position="before">
+                    <field name='reason_maintenance' placeholder="Reason of Maintenance..." nolabel="1"/>
+                </xpath>
+                <xpath expr="//button[@name='archive_equipment_request']" position="attributes">
+                    <attribute name="groups">ib_base_pelita.group_maintenance_manager,ib_base_pelita.group_mtc_manager_own_docs</attribute>
+                </xpath>
+                <xpath expr="//button[@name='reset_equipment_request']" position="attributes">
+                    <attribute name="groups">ib_base_pelita.group_maintenance_manager,ib_base_pelita.group_mtc_manager_own_docs</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="inherit1_hr_equipment_request_view_search" model="ir.ui.view">
+            <field name="name">inherit1.equipment.request.search</field>
+            <field name="model">maintenance.request</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_request_view_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='maintenance_team_id']" position="after">
+                    <field name="fl_acquisition_id" />
+                    <field name="aircraft_state" />
+                </xpath>
+                <xpath expr="//filter[@name='created_by']" position="after">
+                    <filter string='Fleet Acquisition' domain="[]" context="{'group_by' : 'fl_acquisition_id'}"/>
+                    <filter string='Aircraft Status' domain="[]" context="{'group_by' : 'aircraft_state'}"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="inherit1_hr_equipment_request_view_tree" model="ir.ui.view">
+            <field name="name">inherit1.equipment.request.tree</field>
+            <field name="model">maintenance.request</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_request_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='category_id']" position="after">
+                    <field name="fl_acquisition_id" />
+                    <field name="aircraft_state" />
+                </xpath>
+                <xpath expr="//field[@name='stage_id']" position="after">
+                    <field name="department_id" invisible="True"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Product Form-->
+        <record id="inherit1_product_template_form_view" model="ir.ui.view">
+            <field name="name">inherit1.product.template.common.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='categ_id']" position="after">
+                    <label for="aircraft_state" string="Status and Availability of Aircraft"/>
+                    <div>
+                        <field name="aircraft_state" class="oe_inline"/> -
+                        <field name="availability_of_aircraft" class="oe_inline"/>
+                        <field name="availability_aircraft" class="oe_inline" invisible="1"/>
+                    </div>
+                    <field name="aircraft_ok" readonly="True"/>
+                    <field name="flight_route_ok" readonly="True"/>
+                    <field name="route_status" readonly="True"/>
+                </xpath>
+                <xpath expr="//field[@name='description_sale']" position="after">
+                    <separator string="More Information [Material Number]" colspan="4"/>
+                    <field name="description" colspan="4" nolabel="1"
+                           placeholder="Raw Materials, types, models, and more..."/>
+                </xpath>
+                <xpath expr="//page[@name='notes']" position="before">
+                    <page string="Logs">
+                        <button name="button_update" string="(Update)" type="object" class="oe_edit_only oe_link"
+                                groups="base.group_erp_manager,base.group_system"/>
+                        <field name="log_availability">
+                            <!--readonly="1" options="{'no_quick_create': True,'no_create_edit': True,'no_create': True}"-->
+                            <tree string="Logs" name="logs_availability" create="false" edit="false">
+                                <field name="order_id" readonly="True"/>
+                                <field name="fleet_acquisition_id" readonly="True"/>
+                                <field name="sales_type" readonly="True"/>
+                                <field name="start_date" readonly="True"/>
+                                <field name="end_date" readonly="True"/>
+                                <field name="state" readonly="True"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record id="inherit_view1_product_normal_form_view" model="ir.ui.view">
+            <field name="name">inherit.view1.product.product.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='default_code']" position="attributes">
+                    <attribute name="string">Reg.Code / Part No.</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Operation Management-->
+        <record id='inherit1_base_operation_form' model='ir.ui.view'>
+            <field name="name">inherit1.base.operation.form</field>
+            <field name="model">base.operation</field>
+            <field name="inherit_id" ref="pelita_operation.base_operation_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='status']" position="replace">
+                    <field name="status" invisible="True"/>
+                    <field name="active" />
+                </xpath>
+            </field>
+        </record>
+        <record id='inherit1_base_operation_tree' model='ir.ui.view'>
+            <field name="name">inherit1.base.operation.tree</field>
+            <field name="model">base.operation</field>
+            <field name="inherit_id" ref="pelita_operation.base_operation_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='status']" position="replace">
+                    <field name="status" invisible="True"/>
+                    <field name="active" />
+                </xpath>
+            </field>
+        </record>
+        <record id='inherit1_area_operation_form' model='ir.ui.view'>
+            <field name="name">inherit1.area.operation.form</field>
+            <field name="model">area.operation</field>
+            <field name="inherit_id" ref="pelita_operation.area_operation_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='status']" position="replace">
+                    <field name="status" invisible="True"/>
+                    <field name="active" />
+                </xpath>
+            </field>
+        </record>
+        <record id='inherit1_area_operation_tree' model='ir.ui.view'>
+            <field name="name">inherit1.area.operation.tree</field>
+            <field name="model">area.operation</field>
+            <field name="inherit_id" ref="pelita_operation.area_operation_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='status']" position="replace">
+                    <field name="status" invisible="True"/>
+                    <field name="active" />
+                </xpath>
+            </field>
+        </record>
+        <record id='inherit1_irregularity_operation_form' model='ir.ui.view'>
+            <field name="name">inherit1.irregularity.operation.form</field>
+            <field name="model">irregularity.operation</field>
+            <field name="inherit_id" ref="pelita_operation.irregularity_operation_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='status']" position="replace">
+                    <field name="status" invisible="True"/>
+                    <field name="active" />
+                </xpath>
+            </field>
+        </record>
+        <record id='inherit1_irregularity_operation_tree' model='ir.ui.view'>
+            <field name="name">inherit1.irregularity.operation.tree</field>
+            <field name="model">irregularity.operation</field>
+            <field name="inherit_id" ref="pelita_operation.irregularity_operation_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='status']" position="replace">
+                    <field name="status" invisible="True"/>
+                    <field name="active" />
+                </xpath>
+            </field>
+        </record>
+        <record id='inherit1_route_operation_form' model='ir.ui.view'>
+            <field name="name">inherit1.route.operation.form</field>
+            <field name="model">route.operation</field>
+            <field name="inherit_id" ref="pelita_operation.route_operation_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="replace">
+                    <form string="Route">
+                        <header>
+                            <button string="Validate" name="action_route_status" type="object" 
+                                    attrs="{'invisible': [('status', '=', 'validated')]}" 
+                                    class="oe_highlight o_wow" context="{'action': 'validated'}"/>
+                            <button string="Set to Invalid" name="action_route_status" type="object" 
+                                    attrs="{'invisible': [('status', '=', 'invalid')]}" class="oe_highlight" 
+                                    context="{'action': 'invalid'}"/>
+                            <field name="status" widget="statusbar" statusbar_visible="invalid,validated"/>
+                        </header>
+                        <sheet>
+                            <div class="oe_title">
+                                <h1>
+                                    <label string="Route " for="name"/>
+                                    <field name="name" readonly="1" class="oe_inline" nolabel="1"/>
+                                </h1>
+                            </div>
+                            <group>
+                                <group>
+                                    <field name="from_area_id"/>
+                                    <field name="distance_nm" required="True"/>
+                                    <field name="product_tmpl_ok" invisible="True"/>
+                                </group>
+                                <group>
+                                    <field name="to_area_id"/>
+                                    <field name="distance_km"/>
+                                    <field name="active"/>
+                                </group>
+                            </group>
+                            <notebook>
+                                <page string="Flight Route">
+                                    <field name="flight_route" readonly="True"/>
+                                    <field name="route_line_ids">
+                                        <form name="flight_route_form">
+                                            <group>
+                                                <field name="sequence" invisible="True"/>
+                                                <field name="name"/>
+                                                <field name="additional_info" invisible="True"/>
+                                                <field name="add_need_id"/>
+                                                <field name="flight_requisition_id" invisible="True"/>
+                                            </group>
+                                        </form>
+                                        <tree string="Flight Route">
+                                            <field name="sequence" invisible="True"/>
+                                            <field name="name"/>
+                                            <field name="additional_info" invisible="True"/>
+                                            <field name="add_need_id"/>
+                                        </tree>
+                                    </field>
+                                    <field name="complete_route" nolabel="True"/>
+                                    <div class="oe_clear"/>
+                                    <label for="description" string="Internal Note" />
+                                    <field name="description" nolabel="True" placeholder="Additional notes..."/>
+                                    <div class="oe_clear"/>
+                                </page>
+                            </notebook>
+                        </sheet>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                    </form>
+                </xpath>
+            </field>
+        </record>
+        <record id='inherit1_route_operation_tree' model='ir.ui.view'>
+            <field name="name">inherit1.route.operation.tree</field>
+            <field name="model">route.operation</field>
+            <field name="inherit_id" ref="pelita_operation.route_operation_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='from_route_id']" position="replace">
+                    <field name="from_area_id" />
+                </xpath>
+                <xpath expr="//field[@name='to_route_id']" position="replace">
+                    <field name="to_area_id" />
+                </xpath>
+                <xpath expr="//field[@name='distance_km']" position="after">
+                    <field name="status" />
+                </xpath>
+            </field>
+        </record>
+        <record id="view_route_operation_filter" model="ir.ui.view">
+            <field name="name">route.operation.filter</field>
+            <field name="model">route.operation</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Routes">
+                    <field name="name" string="Routes" filter_domain="['|','|',('complete_route','ilike',self),
+                    ('from_area_id','ilike',self),('to_area_id','ilike',self)]"/>
+                </search>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="pelita_operation.route_operation_action">
+            <field name="name">Routes</field>
+            <field name="res_model">route.operation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="pelita_operation.route_operation_tree"/>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="view_route_operation_filter"/>
+        </record>
+
+        <!--Flight Schedule Form-->
+        <record id='inherit1_flight_schedule_form' model='ir.ui.view'>
+            <field name="name">inherit1.flight.schedule.form</field>
+            <field name="model">flight.schedule</field>
+            <field name="inherit_id" ref="pelita_operation.flight_schedule_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/group" position="replace">
+                    <div class="oe_title">
+                        <label for="name" class="oe_inline"/>
+                        <label string=" || " class="oe_inline" />
+                        <label for="flight_order_no" class="oe_inline"/>
+                    </div>
+                    <h1>
+                        <field name="name" class="oe_inline" nolabel="True" required="True"/>
+                        <label string=" , " class="oe_inline" />
+                        <field name="flight_order_no" class="oe_inline" nolabel="True"
+                               placeholder="e.g. C270350" required="True"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="base_operation_id"/>
+                            <field name="date_schedule"/>
+                            <field name="etd"/>
+                            <field name="eta"/>
+                        </group>
+                        <group>
+                            <field name="fl_acquisition_id" string="A/C Reg.Code" required="True" 
+                                   context="{'show_complete': 1}" options='{"always_reload": True}'/>
+                            <field name="aircraft_id"/>
+                            <field name='aircraft_type_id'/>
+                            <field name="type_aircraft" invisible="True"/>
+                            <field name="customer_id"/>
+                        </group>
+                        <group>
+                            <field name="flight_type"/>
+                            <field name="internal_flight_type_id"/>
+                            <field name="flight_category"/>
+                        </group>
+                        <group name='regulation'>
+                            <field name="regulation_id" required="True" domain="[('aircraft_categ','=',type_aircraft)]"/>
+                            <field name="fl_hours_price_id" invisible="True"/>
+                            <field name="schedule_commercial_id"/>
+                        </group>
+                    </group>
+                </xpath>
+                <xpath expr="/form/sheet/notebook" position="inside">
+                    <page string='Other Info' name="other_info">
+                        <group>
+                            <group name="split_duty" string="Split Duty">
+                                <field name="start_date"/>
+                                <field name="finish_date"/>
+                                <field name="department_id"/>
+                            </group>
+                            <group name="reference" string="References">
+                                <field name="order_line_id" invisible="True"/>
+                                <field name="contract_id" options="{'no_quick_create': True,'no_create_edit': True,
+                                    'no_create': True, 'no_open': True}" attrs="{'invisible':[('order_id', '=', True)]}"/>
+                                <field name="order_id" attrs="{'invisible':[('order_id', '=', False)]}"
+                                       options="{'no_quick_create': True,'no_create_edit': True,'no_create': True, 'no_open': True}"/>
+                                <field name="sale_id" invisible="True"
+                                       options="{'no_quick_create': True,'no_create_edit': True,'no_create': True, 'no_open': True}"/>
+                                <field name="type_flight" attrs="{'invisible':[('order_line_id', '=', False)]}" />
+                                <field name="create_uid"/>
+                                <field name="write_uid"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="/form/sheet/notebook//field[@name='route_ids']/tree/field[@name='customer_id']" position="after">
+                    <field name="aircraft_categ" invisible="True"/>
+                    <field name="from_area_id"/>
+                    <field name="to_area_id"/>
+                </xpath>
+                <xpath expr="//page[@name='routes']/field[@name='route_ids']/tree/field[@name='cycle']" position="attributes">
+                    <attribute name="attrs">{'required': [('aircraft_categ', '=', 'rotary')]}</attribute>
+                    <!--'invisible': [('aircraft_categ', '!=', 'rotary')]-->
+                </xpath>
+            </field>
+        </record>
+        <record id='inherit1_flight_schedule_tree' model='ir.ui.view'>
+            <field name="name">inherit1.flight.schedule.tree</field>
+            <field name="model">flight.schedule</field>
+            <field name="inherit_id" ref="pelita_operation.flight_schedule_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="department_id" invisible="True"/>
+                </xpath>
+            </field>
+        </record>
+        <record id='inherit1_view_flight_schedule_filter' model='ir.ui.view'>
+            <field name="name">inherit1.flight.schedule.list.select</field>
+            <field name="model">flight.schedule</field>
+            <field name="inherit_id" ref="pelita_operation.view_flight_schedule_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="/search/group" position="inside">
+                    <filter string="Department" domain="[]" context="{'group_by':'department_id'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="inherit1_hr_crew_view_form" model="ir.ui.view">
+            <field name="name">inherit1.hr.crew.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="pelita_crew.hr_crew_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/div[@class='oe_title']" position="after">
+                    <field name="category_ids" widget="many2many_tags" placeholder="e.g. Crew,Technician,Office"
+                           options="{'no_create_edit': True}" groups="hr.group_hr_user"/>
+                </xpath>
+                <xpath expr="//field[@name='rating_ids']/tree/field[@name='aircraft_id']" position="replace">
+                    <field name="aircraft_id" domain="[('aircraft_categ','=',parent.crew_categ)]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_route_ops_line_tree" model="ir.ui.view">
+            <field name="name">route.operation.line.tree</field>
+            <field name="model">route.operation.line</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Flight Route">
+                    <field name="route_opt_id" readonly="True" invisible="1"/>
+                    <field name="name"/>
+                    <field name="additional_info"/>
+                    <field name="sequence"/>
+                    <field name="flight_requisition_id" readonly="True" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_route_ops_line_form" model="ir.ui.view">
+            <field name="name">route.operation.line.form</field>
+            <field name="model">route.operation.line</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Flight Route">
+                    <sheet>
+                        <group col="4">
+                            <field name="route_opt_id" readonly="True" invisible="1"/>
+                            <field name="name"/>
+                            <field name="additional_info"/>
+                            <field name="sequence"/>
+                            <field name="flight_requisition_id" readonly="True" invisible="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="inherit1_view_fml_form" model="ir.ui.view">
+            <field name="name">inherit.view.fml.form</field>
+            <field name="model">flight.maintenance.log</field>
+            <field name="inherit_id" ref="pelita_operation.fml_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='fl_acquisition_id']" position="replace">
+                    <field name='fl_acquisition_id' required="True" string="A/C Reg.No." 
+                           context="{'show_complete': 1}" options='{"always_reload": True}'/>
+                </xpath>
+                <xpath expr="//field[@name='rotary_route_ids']" position="after">
+                    <field name='complete_route' nolabel="True"/>
+                </xpath>
+                <xpath expr="//field[@name='maintenance_rotary_ids']/tree/field[@name='rotor_engage']" position="before">
+                    <field name='complete_route' readonly="True" string="Cycle Route"/>
+                </xpath>
+                <xpath expr="//field[@name='create_uid']" position="after">
+                    <field name="department_id"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="inherit1_view_fml_tree" model="ir.ui.view">
+            <field name="name">inherit.view.fml.tree</field>
+            <field name="model">flight.maintenance.log</field>
+            <field name="inherit_id" ref="pelita_operation.fml_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="department_id" invisible="True"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="inherit1_view_fml_filter" model="ir.ui.view">
+            <field name="name">inherit.flight.maintenance.log.list.select</field>
+            <field name="model">flight.maintenance.log</field>
+            <field name="inherit_id" ref="pelita_operation.view_fml_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='customer']" position="after">
+                    <filter name="department" string="Department" domain="[]" context="{'group_by':'department_id'}"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="inherit1_crew_schedule_form" model='ir.ui.view'>
+            <field name="name">inherit1.crew.schedule.form</field>
+            <field name="model">crew.schedule</field>
+            <field name="inherit_id" ref="pelita_crew.crew_schedule_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="replace">
+                    <form string="Crew Schedule Planning">
+                        <sheet>
+                            <group>
+                                <group>
+                                    <field name='name'/>
+                                    <field name="employee_id"/>
+                                    <field name="date_from"/>
+                                    <field name="date_to"/>
+                                    <field name="department_id"/>
+                                </group>
+                                <group>
+                                    <field name="aircraft_id"/>
+                                    <field name="etd"/>
+                                    <field name="eta"/>
+                                    <field name="flight_type"/>
+                                    <field name="customer_id"/>
+                                </group>
+                            </group>
+                            <field name="remark" colspan="2" nolabel="1" placeholder="Remarks..."/>
+                        </sheet>
+                    </form>
+                </xpath>
+            </field>
+        </record>
+        <record id="inherit1_crew_schedule_tree" model='ir.ui.view'>
+            <field name="name">inherit1.crew.schedule.tree</field>
+            <field name="model">crew.schedule</field>
+            <field name="inherit_id" ref="pelita_crew.crew_schedule_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='employee_id']" position="after">
+                    <field name="department_id" invisible="True"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="inherit1_crew_schedule_actual_form" model="ir.ui.view">
+            <field name="name">inherit1.crew.schedule.actual.form</field>
+            <field name="model">crew.schedule.actual</field>
+            <field name="inherit_id" ref="pelita_crew.crew_schedule_actual_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="replace">
+                    <form string="Crew Schedule Actual">
+                        <sheet>
+                            <group>
+                                <group>
+                                    <field name='name'/>
+                                    <field name="employee_id"/>
+                                    <field name='fml_id'/>
+                                    <field name="date_from"/>
+                                    <field name="date_to"/>
+                                    <field name="department_id"/>
+                                </group>
+                                <group>
+                                    <field name="aircraft_id"/>
+                                    <field name="etd"/>
+                                    <field name="eta"/>
+                                    <field name="flight_type"/>
+                                    <field name="customer_id"/>
+                                </group>
+                            </group>
+                            <field name="remark" colspan="2" nolabel="1" placeholder="Remarks..."/>
+                        </sheet>
+                    </form>
+                </xpath>
+            </field>
+        </record>
+        <record id="inherit1_crew_schedule_actual_tree" model="ir.ui.view">
+            <field name="name">crew.schedule.actual.tree</field>
+            <field name="model">crew.schedule.actual</field>
+            <field name="inherit_id" ref="pelita_crew.crew_schedule_actual_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='employee_id']" position="after">
+                    <field name="department_id" invisible="True"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="flight_requisition_act_tree_view" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="pelita_operation.flight_requisition_tree"/>
+            <field name="act_window_id" ref="pelita_operation.flight_requisition_action"/>
+        </record>
+        <record id="flight_requisition_act_form_view" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="pelita_operation.flight_requisition_form"/>
+            <field name="act_window_id" ref="pelita_operation.flight_requisition_action"/>
+        </record>
+                
+        <record id="viewer_flt_requisition_form" model='ir.ui.view'>
+            <field name="name">viewer.flight.requisition.form</field>
+            <field name="model">flight.requisition</field>
+            <field name="arch" type="xml">
+                <form string="Flt Requisition" create="false" edit="false" delete="false" name="Flt Requisition">
+                    <header>
+                        <button string="Set to Draft" name="action_set_to_draft" type="object" states="cancel"
+                                groups="pelita_operation.group_ops_user,pelita_operation.group_ops_manager,
+                                pelita_operation.group_ops_user_own_docs,pelita_operation.group_ops_manager_own_docs" />
+                        <button string="Validate" name="action_validate" type="object" 
+                                states="draft" class="oe_highlight" 
+                                groups="pelita_operation.group_ops_manager,pelita_operation.group_ops_manager_own_docs"/>
+                        <button string="Cancel" name="action_cancel" type="object" 
+                                class="oe_highlight" states="validated" 
+                                groups="pelita_operation.group_ops_manager,pelita_operation.group_ops_manager_own_docs" />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,validated,cancel"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label string="Flight Requisition "/>
+                            <h1>
+                                <field name="name" class="oe_inline" nolabel="1" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="customer_id" domain="[('customer','=',True)]" 
+                                       context="{'search_default_customer':1, 'show_address': 1}" 
+                                       options='{"always_reload": True}'/>
+                                <field name="aircraft_id" domain="[('aircraft_state','=','serviceable'),
+                                        ('availability_aircraft','=','available')]" string="A/C Reg.Code" 
+                                           context="{'show_complete': 1}" options='{"always_reload": True}'/>
+                                <field name="route_operation_id" domain="[('status','=','validated')]"/>
+                                <field name="date_from"/>
+                                <field name="creator_id" readonly="True"/>
+                                <field name="department_id"/>
+                            </group>
+                            <group>
+                                <field name="date_request"/>
+                                <field name="base_operation_id"/>
+                                <field name="etd"/>
+                                <field name="date_to"/>
+                                <field name="order_line_id" invisible="True" readonly="True" options='{"no_open": True}'/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Flight Route" name="flight_route_pg">
+                                <field name='requisition_route_ids'>
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="add_need_id"/>
+                                    </tree>
+                                </field>
+                                <field name="note" class="oe_inline" placeholder="Additional notes..."/>
+                                <div class="oe_clear"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="viewer_flt_requisition_tree" model='ir.ui.view'>
+            <field name="name">viewer.flight.requisition.tree</field>
+            <field name="model">flight.requisition</field>
+            <field name="arch" type="xml">
+                <tree string="Flt Requisition" create="false" edit="false" delete="false" name="Flt Requisition">
+                    <field name="message_needaction" invisible="1"/>
+                    <field name="name"/>
+                    <field name="date_request"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="etd"/>
+                    <field name="aircraft_id"/>
+                    <field name="customer_id"/>
+                    <field name="base_operation_id"/>
+                    <field name="route_operation_id"/>
+                    <field name="order_id"/>
+                    <field name="creator_id"/>
+                    <field name="state"/>
+                    <field name="department_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="flt_requisition_viewer_action" model='ir.actions.act_window'>
+            <field name="name">Flight Requisition [FR-Viewer]</field>
+            <field name="res_model">flight.requisition</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_flight_requisition_filter"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create"> 
+                    Click for Create New Flight Requsition [FR-Viewer]
+                </p>
+            </field>
+        </record>
+        <record id="flt_requisition_viewer_act_tree_view" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="viewer_flt_requisition_tree"/>
+            <field name="act_window_id" ref="flt_requisition_viewer_action"/>
+        </record>
+        <record id="flt_requisition_viewer_act_form_view" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="viewer_flt_requisition_form"/>
+            <field name="act_window_id" ref="flt_requisition_viewer_action"/>
+        </record>
+        <menuitem action="flt_requisition_viewer_action" parent="pelita_operation.schedule_planning_menu" 
+                  id="flt_requisition_viewer_menu" groups="ib_base_pelita.group_operation_viewer" 
+                  name="Flight Requisition" sequence="2"/>
+        
+        <record id="viewer_flt_shcedule_form" model='ir.ui.view'>
+            <field name="name">viewer.flight.schedule.form</field>
+            <field name="model">flight.schedule</field>
+            <field name="arch" type="xml">
+                <form string="Flt Schedule" create="false" edit="false" delete="false" name="Flt Schedule">
+                    <header>
+                        <button string="Set to Draft" name="action_set_to_draft" 
+                                type="object" states="cancel" 
+                                groups="pelita_operation.group_ops_manager,pelita_operation.group_ops_manager_own_docs" />
+                        <button string="Set Crew" name="action_crew_schedule" type="object"
+                                states="validated" class="oe_highlight" invisible="True"
+                                groups="pelita_operation.group_ops_user,pelita_operation.group_ops_manager"/>
+                        <button string="Validate" name="action_validate" type="object" 
+                                states="draft" class="oe_highlight" 
+                                groups="pelita_operation.group_ops_manager,pelita_operation.group_ops_manager_own_docs"/>
+                        <button name="action_process_crew_approval" type="object" string="Set Crew"
+                                class="oe_highlight" states="validated"
+                                groups="pelita_operation.group_ops_manager,pelita_operation.group_ops_manager_own_docs"/>
+                        <button string="Cancel" name="action_cancel" type="object" class="oe_highlight"
+                                states="validated,setcrew" 
+                                groups="pelita_operation.group_ops_manager,pelita_operation.group_ops_manager_own_docs" />
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,validated,setcrew,cancel"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_inline"/>
+                            <label string=" || " class="oe_inline" />
+                            <label for="flight_order_no" class="oe_inline"/>
+                        </div>
+                        <h1>
+                            <field name="name" class="oe_inline" nolabel="True" required="True"/>
+                            <label string=" , " class="oe_inline" />
+                            <field name="flight_order_no" class="oe_inline" nolabel="True"
+                                   placeholder="e.g. C270350" required="True"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="base_operation_id"/>
+                                <field name="date_schedule"/>
+                                <field name="etd"/>
+                                <field name="eta"/>
+                            </group>
+                            <group>
+                                <field name="fl_acquisition_id" string="A/C Reg.Code" required="True"  
+                                       context="{'show_complete': 1}" options='{"always_reload": True}'/>
+                                <field name="aircraft_id"/>
+                                <field name='aircraft_type_id'/>
+                                <field name="type_aircraft" invisible="True"/>
+                                <field name="customer_id"/>
+                            </group>
+                            <group>
+                                <field name="flight_type"/>
+                                <field name="internal_flight_type_id"/>
+                                <field name="flight_category"/>
+                            </group>
+                            <group name='regulation'>
+                                <field name="regulation_id" required="True" domain="[('aircraft_categ','=',type_aircraft)]"/>
+                                <field name="fl_hours_price_id" invisible="True"/>
+                                <field name="schedule_commercial_id"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string='Route' name="routes">
+                                <field name='route_ids'>
+                                    <tree editable='buttom'>
+                                        <field name="route_id" string='Route Name'/>
+                                        <field name="cycle" 
+                                               attrs="{'required': [('aircraft_categ', '=', 'rotary')]}"/>
+                                        <!--'invisible': [('aircraft_categ', '!=', 'rotary')]-->
+                                        <field name="customer_id"/>
+                                        <field name="aircraft_categ" invisible="True"/>
+                                        <field name="from_area_id"/>
+                                        <field name="to_area_id"/>
+                                        <field name="distance_nm"/>
+                                        <field name="distance_km"/>
+                                    </tree>
+                                </field>
+                                <field name="note" class="oe_inline" placeholder="Additional notes..."/>
+                                <div class="oe_clear"/>
+                            </page>
+                            <page string='Crew Assignment' attrs="{'invisible':[('state', '=', 'draft')]}">
+                                <field name="all_allowed" invisible="True" groups="pelita_operation.group_ops_manager"/>
+                                <label for="all_allowed" invisible="True" string="All Crew Allowed"
+                                       groups="pelita_operation.group_ops_manager"/>
+                                <field name="crew_assignment_ids">
+                                    <tree editable="buttom">
+                                        <field name="id" invisible="True"/>
+                                        <field name="allowed" nolabel="True" invisible="True" groups="pelita_operation.group_ops_manager"/>
+                                        <field name="route_id" required="True"/>
+                                        <field name="crew_assign_id" invisible="True"/>
+                                        <field name="category" invisible="True"/>
+                                        <field name="crew_id" required="True"/>
+                                        <field name="qualification"/>
+                                        <field name="is_standby"/>
+                                        <field name="crew_type_id"/>
+                                        <field name="fl_hours_price_id" required="True"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string='Technician Assignment' attrs="{'invisible':[('state', '=', 'draft')]}">
+                                <field name='assigned_technician_ids'>
+                                    <tree editable='buttom'>
+                                        <field name="fl_schedule_id" invisible='True'/>
+                                        <field name="route_id" required="True"/>
+                                        <field name="employee_id" required="True"/>
+                                        <field name="fl_hours_price_id" required="True"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string='Unregulated Crew' attrs="{'invisible':[('state', '=', 'draft')]}">
+                                <field name='reason_crew_allowed_ids' readonly="True">
+                                    <tree>
+                                        <field name="crew_id" />
+                                        <field name="reason" />
+                                        <field name="approved_id" />
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string='Other Info' name="other_info">
+                                <group>
+                                    <group name="split_duty" string="Split Duty">
+                                        <field name="start_date"/>
+                                        <field name="finish_date"/>
+                                        <field name="department_id"/>
+                                    </group>
+                                    <group name="reference" string="References">
+                                        <field name="order_line_id" invisible="True"/>
+                                        <field name="contract_id" options="{'no_quick_create': True,'no_create_edit': True,
+                                            'no_create': True, 'no_open': True}" attrs="{'invisible':[('order_id', '=', True)]}"/>
+                                        <field name="order_id" attrs="{'invisible':[('order_id', '=', False)]}"
+                                               options="{'no_quick_create': True,'no_create_edit': True,'no_create': True, 'no_open': True}"/>
+                                        <field name="sale_id" invisible="True"
+                                               options="{'no_quick_create': True,'no_create_edit': True,'no_create': True, 'no_open': True}"/>
+                                        <field name="type_flight" attrs="{'invisible':[('order_line_id', '=', False)]}" />
+                                        <field name="create_uid"/>
+                                        <field name="write_uid"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="viewer_flt_schedule_tree" model='ir.ui.view'>
+            <field name="name">viewer.flight.schedule.tree</field>
+            <field name="model">flight.schedule</field>
+            <field name="arch" type="xml">
+                <tree string="Flt Schedule" create="false" edit="false" delete="false" name="Flt Schedule">
+                    <field name="message_needaction" invisible="True"/>
+                    <field name="name"/>
+                    <field name="flight_order_no"/>
+                    <field name="date_schedule"/>
+                    <field name="base_operation_id"/>
+                    <field name="fl_acquisition_id"/>
+                    <field name="customer_id"/>
+                    <field name="eta"/>
+                    <field name="etd"/>
+                    <field name="schedule_commercial_id"/>
+                    <field name="flight_category"/>
+                    <field name="flight_type"/>
+                    <field name="internal_flight_type_id"/>
+                    <field name="state"/>
+                    <field name="department_id" invisible="True"/>
+                    <field name="create_uid" invisible="True"/>
+                </tree>
+            </field>
+        </record>
+        <record id="flt_schedule_viewer_action" model='ir.actions.act_window'>
+            <field name="name">Flight Schedule [FS-Viewer]</field>
+            <field name="res_model">flight.schedule</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="pelita_operation.view_flight_schedule_filter"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click for Create New Flight Schedule [FS-Viewer]
+                </p>
+            </field>
+        </record>
+        <record id="flt_schedule_viewer_act_tree_view" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="viewer_flt_schedule_tree"/>
+            <field name="act_window_id" ref="flt_schedule_viewer_action"/>
+        </record>
+        <record id="flt_schedule_viewer_act_form_view" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="viewer_flt_shcedule_form"/>
+            <field name="act_window_id" ref="flt_schedule_viewer_action"/>
+        </record>
+        <menuitem action="flt_schedule_viewer_action" parent="pelita_operation.schedule_planning_menu" 
+                  groups="ib_base_pelita.group_operation_viewer" sequence="4"
+                  id="flt_schedule_viewer_menu" name="Flight Schedule"/>
+        
+        <record id="ac_acquisition_viewer_view_form" model='ir.ui.view'>
+            <field name="name">aircraft.acquisition.form</field>
+            <field name="model">aircraft.acquisition</field>
+            <field name="arch" type="xml">
+                <form string="Form Aircraft Acquistion" create="false" edit="false" delete="false">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" string="Registration Number" />
+                                <h1><field name="name" select="1"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                              <field name='aircraft_name'/>
+                              <field name='category'/>
+                              <field name='aircraft_type_id'/> 
+                                <field name='date_manufacture'/>
+                                <field name='propeller_type_id' 
+                                       attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/>
+                            </group>
+                            <group>
+                                <field name='msn'/>
+                                <field name='esn1'/>
+                                <field name='esn2'/>
+                            </group>
+                            <group>
+                              <field name='ownership'/>
+                              <field name='delivery_date' attrs="{'invisible':[('ownership', '!=', 'owner')]}"/>
+                              <field name='lessor' attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+                              <field name='start_lease' attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+                              <field name='normal_termination' 
+                                     attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+                            </group>
+                            <group>
+                              <field name='rh_ldg'  attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/>
+                              <field name='lh_ldg' attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/>
+                              <field name='n_ldg' attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/>
+                            </group>
+                            <group>
+                              <field name='propeller1' attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/>
+                              <field name='propeller2' attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                        <page string='Airframe'>
+                            <group>
+                                <group>
+                                <field name='airframe_tsn'/>
+                                <field name='airframe_csn'/>
+                                <field name='airframe_lastoh'/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string='LDG' attrs="{'invisible':[('category', '!=', 'fixedwing')]}">
+                          <group>
+                            <group>
+                            <field name='rh_ldg_csn'/>
+                            <field name='rh_ldg_lastoh'/>
+                            </group>
+                            <group>
+                            <field name='lh_ldg_csn'/>
+                            <field name='lh_ldg_lastoh'/>
+                            </group>
+                            <group>
+                            <field name='n_ldg_csn'/>
+                            <field name='n_ldg_lastoh'/>
+                            </group>
+                          </group>
+                        </page>
+                         <page string='Engine #1'>
+                          <group>
+                            <group>
+                            <field name='engine_type_id'/>
+                            <field name='engine1_tsn' string='TSN'/>
+                            <field name='engine1_csn' string='CSN'/>
+                            <field name='engine1_tslsv' string='TSLSV OH'/>
+                            <field name='engine1_tslsv_hsi' string='TSLSV HSI'/>
+                            <field name='engine1_cslsv' string='CSLSV OH'/>
+                            <field name='engine1_cslsv_hsi' string='CSLSV HSI'/>
+                            <field name='engine1_lastoh' string='Last OH'/>
+                            <field name='engine1_hsi' string='Last HSI'/>
+                            </group>
+                          </group>
+                        </page>
+                        <page string='Engine#2'>
+                          <group>
+                          <group>
+                            <field name='engine2_type_id'/>
+                            <field name='engine2_tsn' string='TSN'/>
+                            <field name='engine2_csn' string='CSN'/>
+                            <field name='engine2_tslsv' string='TSLSV OH'/>
+                            <field name='engine2_tslsv_hsi' string='TSLSV HSI'/>
+                            <field name='engine2_cslsv' string='CSLSV OH'/>
+                            <field name='engine2_cslsv_hsi' string='CSLSV HSI'/>
+                            <field name='engine2_lastoh' string='Last OH'/>
+                            <field name='engine2_hsi' string='Last HSI'/>
+                            </group>
+                            </group>
+                        </page>
+                       <page string='Propeller #1' attrs="{'invisible':[('category', '!=', 'fixedwing')]}">
+                          <group>
+                            <group>
+                            <field name='propeller1_tsn' string='TSN'/>
+                            <field name='propeller1_tslsv' string='TSLSV'/> 
+                            <field name='propeller1_lastoh' string='Last OH'/>
+                            </group>
+                           </group>
+                        </page>
+                         <page string='Propeller #2' attrs="{'invisible':[('category', '!=', 'fixedwing')]}">
+                            <group>
+                            <group>
+                            <field name='propeller2'/>
+                            <field name='propeller2_tsn' string='TSN'/>
+                            <field name='propeller2_tslsv' string='TSLSV'/>
+                            <field name='propeller2_lastoh' string='Last OH'/>
+                          </group>
+                            </group>
+                        </page>
+                        <page string='Documents Certificate'>
+                          <field name='document_ids'>
+                            <tree editable='button'>
+                              <field name='document_id' string='Document Name'/>
+                              <field name='file_data' widget='binary' file_name='file_name'/>
+                              <field name='date_expired'/>
+                            </tree>
+                          </field>
+                        </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="ac_acquisition_viewer_view_tree" model='ir.ui.view'>
+            <field name="name">aircraft.acquisition.tree</field>
+            <field name="model">aircraft.acquisition</field>
+            <field name="arch" type="xml">
+                <tree string="List Aircraft Acquisition" create="false" edit="false" delete="false">
+                    <field name='name'/>
+                    <field name='aircraft_name'/>
+                    <field name='aircraft_type_id'/> 
+                    <field name='date_manufacture'/>
+                    <field name='engine_type_id'/>
+                    <field name='propeller_type_id'/>
+                    <field name='msn'/>
+                    <field name='esn1'/>
+                    <field name='rgb1'/>
+                    <field name='esn2'/>
+                    <field name='rgb2'/>
+                    <field name='ownership'/>
+                    <field name='delivery_date'/>
+                    <field name='lessor'/>
+                    <field name='start_lease'/>
+                    <field name='normal_termination'/>
+                </tree>
+            </field>
+        </record>
+        <record id='ac_acquisition_viewer_action' model='ir.actions.act_window'>
+            <field name="name">Fleet Acquisition [A/Acquisition-Viewer]</field>
+            <field name="res_model">aircraft.acquisition</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click for Create New Aircraft Acquisition [A/Acquisition-Viewer]
+              </p>
+            </field>
+        </record>
+        <record id="ac_acquisition_viewer_act_tree_view" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="ac_acquisition_viewer_view_tree"/>
+            <field name="act_window_id" ref="ac_acquisition_viewer_action"/>
+        </record>
+        <record id="ac_acquisition_viewer_act_form_view" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="ac_acquisition_viewer_view_form"/>
+            <field name="act_window_id" ref="ac_acquisition_viewer_action"/>
+        </record>
+        <menuitem action="ac_acquisition_viewer_action" parent="pelita_master_data.aircraft_data_menu" 
+                  groups="ib_base_pelita.group_fleet_management_viewer" sequence="2"
+                  id="ac_acquisition_viewer_menu" name="Fleet Acquisition"/>
+        
+        
+        <record id='view_hr_crew_tree_viewer' model='ir.ui.view'>
+            <field name="name">hr.crew.tree.viewer</field>
+            <field name="model">hr.employee</field>
+            <field name="arch" type="xml">
+                <tree string="Crew List" create="false" edit="false" delete="false">
+                    <field name='name'/>
+                    <field name="employee_no"/>
+                    <field name="date_employee"/>
+                    <field name='work_email'/>
+                    <field name='place_of_birth'/>
+                    <field name='birthday'/>
+                    <field name="gender"/>
+                    <field name="religion"/>
+                </tree>
+            </field>
+        </record>
+        <record id='view_hr_crew_form_viewer' model='ir.ui.view'>
+            <field name="name">hr.crew.form.viewer</field>
+            <field name="model">hr.employee</field>
+            <field name="arch" type="xml">
+                <form string="My Curriculum Vitae" create="false" edit="false" delete="false">
+                <sheet>
+                    <field name="image" widget='image' class="oe_avatar" options='{"preview_image":"image_medium"}'/>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="Crew's Name"/>
+                        </h1>
+                    </div>
+                    <field name="is_crew" invisible="True"/>
+                    <group>
+                        <group>
+                            <field name="employee_no"/>
+                            <field name="qualification_id" attrs="{'required': [('is_crew', '=', True)]}"/>
+                            <field name="religion"/>
+                            <field name="date_employee"/>
+                        </group>
+                        <group>
+                            <field name="pilot_categ_id" attrs="{'required': [('is_crew', '=', True)]}"/>
+                            <field name="crew_categ" attrs="{'required': [('is_crew', '=', True)]}"/>
+                            <field name="license_no"/>
+                            <field name="instructor_id"/>
+                            <field name="otr_no"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="public" string="Public Info">
+                            <group>
+                                <group string="Contact Information">
+                                    <field name='work_address'/>
+                                    <field name="mobile_phone"/>
+                                    <field name="work_location"/>
+                                    <field name="work_email" widget="email"/>
+                                    <field name="work_phone"/>
+                                </group>
+                            </group>
+                            <field name="notes" placeholder="Other Information ..." colspan="4"/>
+                        </page>
+                        <page name="personal_information" string="Personal Info" groups="hr.group_hr_user">
+                            <group>
+                                <group string="Citizenship &amp; Other Information">
+                                    <field name="country_id" options='{"no_open": True, "no_create": True}'/>
+                                    <field name="identification_id" groups="hr.group_hr_user"/>
+                                    <field name="passport_id" groups="hr.group_hr_user"/>
+                                    <field name="bank_account_id" context="{'default_partner_id': address_home_id}"/>
+                                </group>
+                                <group string="Contact Information">
+                                    <field name='address'/>
+                                </group>
+                                <group string="Status">
+                                    <field name="gender"/>
+                                    <field name="marital"/>
+                                </group>
+                                <group string="Birth">
+                                    <field name="birthday"/>
+                                    <field name='place_of_birth'/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Instructor">
+                            <group>
+                                <field name='ground_instructor'/>
+                                <field name='flight_instructor'/>
+                                <field name='simulator_instructor'/>
+                                <field name='company_check_pilot'/>
+                            </group>
+                        </page>
+                        <page string='Current Rating'>
+                            <field name='rating_ids'>
+                                <tree editable='buttom'>
+                                    <field name="aircraft_id" required="True"/>
+                                    <field name='rating_qualification' required="True"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string='CV'>
+                            <field name='cv_ids' string='CV'>
+                                <form string='CV' >
+                                    <group string='Education'>
+                                        <field name='education_ids' string='Education'>
+                                               <tree editable='buttom'>
+                                                <field name='name'/>
+                                                <field name='year'/>
+                                                <field name='location'/>
+                                               </tree>
+                                        </field>
+                                    </group>
+                                    <group>
+                                        <field name='carrier_ids' string='Carrier History'>
+                                                <tree editable='buttom'>
+                                                <field name='name'/>
+                                                <field name='company_name'/>
+                                                <field name='year_from'/>
+                                                <field name='year_until'/>
+                                               </tree>
+                                        </field>
+                                    </group>
+                                    <group>
+                                        <field name='train_ids' string='Training'>
+                                                <tree editable='buttom'>
+                                                <field name='training_id'/>
+                                                <field name='date_training'/>
+                                                <field name='training_type'/>
+                                                <field name='valid_from'/>
+                                                <field name='valid_to'/>
+                                                <field name='upload_certificate'/>
+                                               </tree>
+                                        </field>
+                                    </group>
+                                    <group>
+                                        <field name='document_ids' string='Document'>
+                                                <tree editable='buttom'>
+                                                <field name='name'/>
+                                                <field name='date_doc'/>
+                                                <field name='next_due'/>
+                                                <field name='upload_doc'/>
+                                               </tree>
+                                        </field>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string='Flying Hours'>
+                            <field name="flying_hours_ids">
+                                <tree editable='buttom'>
+                                    <field name="fl_acquisition_id"/>
+                                    <field name="fml_id"/>
+                                    <field name="date_flight"/>
+                                    <field name="qualification_id"/>
+                                    <field name="eta" invisible="True"/>
+                                    <field name="flying_hours" sum='flying_hours'/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string='Duty Time'>
+                            <field name='duty_time_ids'>
+                                <tree editable='buttom'>
+                                    <field name="fl_acquisition_id"/>
+                                    <field name='fml_id'/>
+                                    <field name='date_flight'/>
+                                    <field name='time_in' widget='float_time'/>
+                                    <field name='login' widget='float_time'/>
+                                    <field name='time_out' widget='float_time'/>
+                                    <field name='logout' widget='float_time'/>
+                                    <field name='duty_time' sum='duty_time'/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="action_crew_employee_viewer" model="ir.actions.act_window">
+            <field name="name">List Crew [Viewer]</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_hr_crew_tree_viewer"/>
+            <field name="domain">['|',('user_id','=',uid),('user_id','=',False)]</field>
+            <field name="context">{'default_user_id': uid, 'search_default_user_id': uid}</field>
+            <field name="search_view_id" ref="pelita_crew.view_hr_crew_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click for Create New Crew. [Viewer]
+              </p>
+            </field>
+        </record>
+        <record id="action_list_crew_employee_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_hr_crew_tree_viewer"/>
+            <field name="act_window_id" ref="action_crew_employee_viewer"/>
+        </record>
+        <record id="action_list_crew_employee_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_hr_crew_form_viewer"/>
+            <field name="act_window_id" ref="action_crew_employee_viewer"/>
+        </record>
+        <menuitem action="action_crew_employee_viewer" parent="pelita_crew.crew_menu" 
+                  id="menu_list_crew_for_viewer" name="List Crew" sequence="2"
+                  groups="pelita_crew.group_crw_user_own_docs,pelita_crew.group_crw_manager_own_docs"/>
+
+    </data>
+</odoo>

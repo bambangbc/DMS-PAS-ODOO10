@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="craft_charter_contract_tools_form_view" model="ir.ui.view">
+            <field name="name">craft_charter_contract_tools_form_view.form</field>
+            <field name="model">craft.tools</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Accessories/Tools">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                                <field name="price"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="craft_charter_contract_tools_tree_view" model="ir.ui.view">
+            <field name="name">craft_charter_contract_tools_tree_view.tree</field>
+            <field name="model">craft.tools</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Accessories/Tools">
+                    <field name="name"/>
+                    <field name="price"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_fleet_craft_tools" model="ir.actions.act_window">
+            <field name="name">Accessories/Tools</field>
+            <field name="res_model">craft.tools</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_craft_tools" parent="menu_craft_parent" name="Accessories/Tools"
+                  action="action_fleet_craft_tools" sequence="3"/>
+    </data>
+</odoo>

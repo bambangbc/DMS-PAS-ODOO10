@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<!-- MaintenanceLogFixedWings -->
+    <record id='fml_form' model='ir.ui.view'>
+        <field name="name">fml.form</field>
+        <field name="model">flight.maintenance.log</field>
+        <field name="arch" type="xml">
+            <form string="Flight Maintenance Log">
+                <header>
+                    <button string="Set to Draft" name="action_set_to_draft"
+                            type="object" states="cancel" 
+                            groups="pelita_operation.group_ops_user,pelita_operation.group_ops_manager,
+                            pelita_operation.group_ops_user_own_docs,pelita_operation.group_ops_manager_own_docs" />
+                    <button string="Validate" name="action_validate" type="object" 
+                            states="draft" class="oe_highlight" 
+                            groups="pelita_operation.group_ops_manager,pelita_operation.group_ops_manager_own_docs"/>
+                    <button string="Cancel" name="action_cancel" type="object" class="oe_highlight"
+                            states="validated" 
+                            groups="pelita_operation.group_ops_manager,pelita_operation.group_ops_manager_own_docs" />
+                    <field name="state" widget="statusbar" statusbar_visible="draft,validated,cancel"/>
+                </header>
+            <sheet>
+                <div class="oe_title">
+                    <label string="Maintenance Log Number " class="oe_inline"/>
+                    <label string=" [ DRAFT ]" attrs="{'invisible':[('state','!=','draft')]}" class="oe_inline"/>
+                    <h1>
+                        <field name="name" class="oe_inline" nolabel="1" placeholder="e.g. R1196462"/>
+                    </h1>
+                </div>
+                <group>
+                    <group>
+                        <field name='fl_acquisition_id' required="True"/>
+                        <field name="customer_id"/>
+                        <field name="etd" placeholder="Estimated Time Departure"/>
+                        <field name="eta" placeholder="Estimated Time Arrival"/>
+                    </group>
+                    <group>
+                        <field name="date_lt" required="True"/>
+                        <field name="flight_schedule_id"/>
+                        <field name="flight_number"/>
+                        <field name="flight_order_number"/>
+                        <field name="location_id"/>
+                        <field name="schedule_date"/>
+                    </group>
+                    <group>
+                        <field name="flight_category"/>
+                        <field name="flight_type"/>
+                    </group>
+                    <group>
+                        <field name="internal_flight_type_id" required="True"/>
+                        <field name='regulation_id' required="True" domain="[('aircraft_categ','=',aircraft_type)]"/>
+                    </group>
+                </group>
+                <notebook>
+                <page string='Mtc Fixed Wing' autofocus="True"
+                      attrs="{'invisible':[('aircraft_type', '!=', 'fixedwing')]}">
+                    <field name='maintenance_fixed_ids' help="Maintenance Log [Fixed Wing Type]">
+                        <form string='Fixed Wing'>
+                            <field name='fl_acquisition_id' invisible="True" />
+                            <separator string="Crew List" colspan="4"/>
+                            <field name='fixed_crew_ids'>
+                                <tree editable='buttom'>
+                                    <field name='aircraft_id' invisible="True" />
+                                    <field name='crew_id' required="True" options="{'no_create_edit': True}"/>
+                                    <field name='qualification'/>
+                                    <field name='is_instructor'/>
+                                    <field name='crew_type_id'/>
+                                    <field name='type_duty_id'/>
+                                       <!-- <field name='payment_type' string='Type Duty'/> -->
+                                    <field name='brief_time' attrs="{'required':[('is_instructor', '=', True)]}"/>
+                                    <field name='flt'/>
+                                    <field name='total_time'/>
+                                    <field name='fl_hours_price_id' required="True"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name='aircraft_id' invisible="True"/>
+                                        <field name='crew_id' required="True" options="{'no_create_edit': True}"/>
+                                        <field name='crew_type_id'/>
+                                        <field name='qualification'/>
+                                        <field name='is_instructor'/>
+                                        <field name='type_duty_id'/>
+                                        <!-- <field name='payment_type'/> -->
+                                        <field name='brief_time' attrs="{'required':[('is_instructor', '=', True)]}"/>
+                                        <field name='flt'/>
+                                        <field name='total_time'/>
+                                        <field name='fl_hours_price_id' required="True"/>
+                                    </group>
+                                </form>
+                            </field>
+                            <group>
+                                <group>
+                                    <field name='route_id'/>
+                                    <label for="from_id" string="Area (From-To)" />
+                                    <div name="from_to_route">
+                                        <field name='from_id' class="oe_inline" nolabel="1" readonly="1"/>
+                                        <label string="  to " class="oe_inline"/>
+                                        <field name='to_id' class="oe_inline" nolabel="1" readonly="1"/>
+                                    </div>
+                                    <label for="distance_nm" string="Distance" />
+                                    <div name="distance_route">
+                                        <label string="NM: " class="oe_inline"/>
+                                        <field name='distance_nm' class="oe_inline" nolabel="1" readonly="1"/>
+                                        <label string="  | KM: " class="oe_inline"/>
+                                        <field name='distance_km' class="oe_inline" nolabel="1" readonly="1"/>
+                                    </div>
+                                    <field name='take_off' widget="float_time"/>
+                                    <field name='landing' widget="float_time"/>
+                                    <field name='flight_hours' widget="float_time"/>
+                                    <field name='flight_hour_matrix'/>
+                                </group>
+                                <group>
+                                    <field name='customer_id'/>
+                                    <field name='block_off' widget="float_time" required="True"/>
+                                    <field name='block_on' widget="float_time" required="True"/>
+                                    <field name='flight_time' widget="float_time" invisible="True"/>
+                                    <field name='flt_time' widget="float_time"/>
+                                    <field name='flight_time_matrix' widget="float_time" invisible="True"/>
+                                    <field name='flt_time_mtx'/>
+                                    <field name='no_pax'/>
+                                </group>
+                                <group string='PAX'>
+                                    <field name='pax'/>
+                                    <field name='uom_pax'/>
+                                </group>
+                                <group string='Lugg'>
+                                    <field name='lugg'/>
+                                    <field name='uom_lugg'/>
+                                </group>
+                                <group string='Freight'>
+                                    <field name='freight'/>
+                                    <field name='uom_freight'/>
+                                </group>
+                                <group string='Total'>
+                                    <field name='total'/>
+                                    <field name='uom_total'/>
+                                </group>
+                                <group>
+                                    <field name='fuel_payload_available'/>
+                                </group>
+                                <group string='Fuel' colspan='4'>
+                                    <group>
+                                        <field name='fuel_uplift'/>
+                                        <field name='uom_uplift'/>
+                                    </group>
+                                    <group>
+                                        <field name='fuel_cons'/>
+                                        <field name='uom_cons'/>
+                                    </group>
+                                    <group>
+                                        <field name='fuel_rem'/>
+                                        <field name='uom_rem'/>
+                                    </group>
+                                    <group>
+                                        <field name='fuel_total'/>
+                                        <field name='uom_fuel_total'/>
+                                    </group>
+                                </group>
+                                <group string='Oil'>
+                                    <field name='oil_added1'/>
+                                    <field name='oil_added2'/>
+                                    <field name='oil_added3'/>
+                                    <field name='oil_added4'/>
+                                </group>
+                                <group>
+                                    <field name='remark'/>
+                                    <field name='current_user' required="True"/>
+                                    <field name='otr_no'/>
+                                </group>
+                            </group>
+                        </form>
+                        <tree> <!-- icon="STOCK_COPY"-->
+                            <button name="action_duplicate_line" string="Copy Lines" type="object" class="oe_edit_only" icon="fa-files-o" help="Copy this line in FML"/>
+                            <field name='aircraft_type' string='Type'/>
+                            <field name='from_id'/>
+                            <field name='to_id'/>
+                            <field name='customer_id'/>
+                            <field name='take_off' widget="float_time"/>
+                            <field name='landing' widget="float_time"/>
+                            <field name='flight_hours' widget="float_time"/>
+                            <field name='flight_hour_matrix' sum='flight_hour_matrix'/>
+                            <field name='block_off' widget="float_time" required="True"/>
+                            <field name='block_on' widget="float_time" required="True"/>
+                            <field name='flight_time' widget="float_time" invisible="True"/>
+                            <field name='flight_time_matrix' sum='flight_time_matrix' invisible="True"/>
+                            <field name='flt_time' widget="float_time"/>
+                            <field name='flt_time_mtx' sum='flight_time_matrix'/>
+                            <field name='no_pax'/>
+                            <field name='pax'/>
+                            <field name='lugg'/>
+                            <field name='freight'/>
+                            <field name='total'/>
+                            <field name='fuel_payload_available'/>
+                            <field name='fuel_uplift'/>
+                            <field name='fuel_cons'/>
+                            <field name='fuel_rem'/>
+                            <field name='fuel_total'/>
+                            <field name='oil_added1'/>
+                            <field name='oil_added2'/>
+                            <field name='oil_added3'/>
+                            <field name='oil_added4'/>
+                            <field name='remark'/>
+                            <field name='current_user'/>
+                            <field name='otr_no'/>
+                            <!--<field name='state' invisible="True"/>-->
+                        </tree>
+                    </field>
+                </page>
+                <page string='Mtc Rotary' autofocus="True"
+                        attrs="{'invisible':[('aircraft_type', '!=', 'rotary')]}">
+                    <field name='maintenance_rotary_ids' help="Maintenance Log [Rotary Type]">
+                        <form>
+                            <field name='fl_acquisition_id' invisible="True"/>
+                            <separator string="Crew List" colspan="4"/>
+                            <field name='rotary_crew_ids'>
+                                <tree editable='buttom'>
+                                    <field name='aircraft_id' invisible="True"/>
+                                    <field name='crew_id' required="True" options="{'no_create_edit': True}"/>
+                                    <field name='qualification'/>
+                                    <field name='crew_type_id'/>
+                                    <field name='is_instructor'/>
+                                    <field name='type_duty_id'/>
+                                    <field name='brief_time' attrs="{'required':[('is_instructor', '=', True)]}"/>
+                                    <field name='flt'/>
+                                    <field name='total_time'/>
+                                    <field name='fl_hours_price_id' required="True"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name='aircraft_id' invisible="True"/>
+                                        <field name='crew_id' required="True" options="{'no_create_edit': True}"/>
+                                        <field name='crew_type_id'/>
+                                        <field name='qualification'/>
+                                        <field name='is_instructor'/>
+                                        <field name='type_duty_id'/>
+                                       <!-- <field name='payment_type'/> -->
+                                        <field name='brief_time' attrs="{'required':[('is_instructor', '=', True)]}"/>
+                                        <field name='flt'/>
+                                        <field name='total_time'/>
+                                        <field name='fl_hours_price_id' required="True"/>
+                                    </group>
+                                </form>
+                            </field>
+                            <separator string="Routes" colspan="4"/>
+                            <field name='rotary_route_ids'>
+                                <tree editable='buttom'>
+                                    <field name='route_id'/>
+                                    <field name='distance_nm'/>
+                                    <field name='distance_km'/>
+                                    <field name='penumpang'/>
+                                    <field name='ldg' sum='ldg'/>
+                                    <field name='cycle_start1' sum='cycle_start1'/>
+                                    <field name='cycle_start2' sum='cycle_start2'/>
+                                    <field name='cycle_gg' sum='cycle_gg'/>
+                                    <field name='cycle_ft' sum='cycle_ft'/>
+                                    <field name='cargo' sum='cargo'/>
+                                    <field name='fuel_added' sum='fuel_added'/>
+                                    <field name='fuel_total' sum='fuel_total'/>
+                                    <field name='customer_id'/>
+                                </tree>
+                            </field>
+                            <separator string="Time" colspan="4"/>
+                            <field name='rotary_time_ids'>
+                                <tree editable='buttom'>
+                                   <field name="lift_off" widget='float_time'/>
+                                    <field name="landing" widget='float_time'/>
+                                    <field name="in_service" widget='float_time'/>
+                                    <field name="in_service_matrix"/>
+                                </tree>
+                            </field>
+                            <group>
+                                <group>
+                                    <field name="rotor_engage" widget='float_time' required="True"/>
+                                    <field name="rotor_stop" widget='float_time' required="True"/>
+                                    <field name="block" widget='float_time'/>
+                                    <field name='block_matrix'/>
+                                <!--<field name='inservice' widget='float_time'/> -->
+                                </group>
+                                <group>
+                                    <field name="pax_no"/>
+                                    <field name="cargo"/>
+                                    <field name="uom_cargo" string='Cargo Weight'/>
+                                    <field name="cargo_conversi_kgs"/>
+                                    <field name="cargo_conversi_lbs"/>
+                                </group>
+                                <group>
+                                    <field name="sing_hoist_no"/>
+                                    <field name="ldg"/>
+                                </group>
+                                <group string='Cycle'>
+                                    <field name="cycle_start1"/>
+                                    <field name="cycle_start2"/>
+                                    <field name="cycle_gg"/>
+                                    <field name="cycle_ft"/>
+                                </group>
+                                <group string='Engine Oil' colspan='4'>
+                                    <group>
+                                        <field name="oil_added1"/>
+                                        <field name="uom_oil1"/>
+                                    </group>
+                                    <group>
+                                        <field name="oil_added2"/>
+                                        <field name="uom_oil2"/>
+                                    </group>
+                                </group>
+                                <group string='Fuel' colspan='4'>
+                                    <group>
+                                        <field name="fuel_added"/>
+                                        <field name="uom_fuel_added"/>
+                                    </group>
+                                    <group>
+                                        <field name="fuel_total"/>
+                                        <field name="uom_fuel_total"/>
+                                        <field name='fuel_consumption'/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <field name='current_user' required="True"/>
+                                    <field name='otr_no'/>
+                                </group>
+                                <field name="remark" nolabel="True" class="oe_inline"
+                                       placeholder="Remarks or Internal Note."/>
+                                <div class="oe_clear"/>
+                            </group>
+                        </form>
+                        <tree> <!--attrs="{'invisible':[('state','!=','draft')]}"-->
+                            <button name="action_duplicate_line" string="Copy Lines" type="object" class="oe_edit_only" icon="fa-files-o" help="Copy this line in FML"/>
+                            <field name="rotor_engage" widget='float_time' required="True"/>
+                            <field name="rotor_stop" widget='float_time' required="True"/>
+                            <field name="block" widget='float_time'/>
+                            <field name="block_matrix" sum='block_matrix'/>
+                            <field name="pax_no"/>
+                            <field name="cargo"/>
+                            <field name="cargo_conversi_kgs"/>
+                            <field name="cargo_conversi_lbs"/>
+                            <field name="sing_hoist_no"/>
+                            <field name="ldg"/>
+                            <field name="cycle_start1"/>
+                            <field name="cycle_start2"/>
+                            <field name="cycle_gg"/>
+                            <field name="cycle_ft"/>
+                            <field name="fuel_added"/>
+                            <field name="fuel_total"/>
+                            <field name='fuel_consumption' sum='fuel_consumption'/>
+                            <field name="oil_added1"/>
+                            <field name="oil_added1"/>
+                            <field name='current_user'/>
+                            <field name='otr_no'/>
+                        </tree>
+                    </field>
+                </page>
+                <page string='Late Departure/Cancel flight'>
+                    <group>
+                        <group>
+                            <field name='cancel_reason_id'/>
+                            <field name='late_departure_id'/>
+                            <field name='total_late' widget="float_time"/>
+                        </group>
+                        <group>
+                            <field name="aircraft_unserviceable_reason" placeholder="Aircraft Unserviceable"/>
+                            <field name="rtb" widget="float_time"/>
+                            <field name="rtb_reason" placeholder="Description of Reason for RTB..."/>
+                        </group>
+                    </group>
+                </page>
+                <page string='Corrective Actions'>
+                    <field name='corective_action_ids'>
+                        <tree editable='buttom'>
+                            <field name='name'/>
+                            <field name='action'/>
+                        </tree>
+                    </field>
+                </page>
+                <page string='Other Info'>
+                    <group>
+                        <group>
+                            <field name='aircraft_type'/>
+                        </group>
+                        <group>
+                            <field name='create_date' readonly='True'/>
+                            <field name='create_uid' readonly='True'/>
+                        </group>
+                    </group>
+                    <field name="note" class="oe_inline" placeholder="Additional notes..."/>
+                    <div class="oe_clear"/>
+                </page>
+            </notebook>
+            </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers"/>
+                <field name="message_ids" widget="mail_thread"/>
+            </div>
+            </form>
+        </field>
+    </record>  
+
+    <record id='fml_tree' model='ir.ui.view'>
+        <field name="name">fml.tree</field>
+        <field name="model">flight.maintenance.log</field>
+        <field name="arch" type="xml">
+            <tree string='Flight Maintenance Log' decoration-bf="message_needaction==True" 
+                colors="blue:state == 'draft';gray:state == 'cancel';black:state == 'validated'">
+                <field name="message_needaction" invisible="1"/>
+                <field name="name"/>
+                <field name='fl_acquisition_id'/>
+                <field name='aircraft_type'/>
+                <field name="date_lt"/>
+                <field name="etd"/>
+                <field name="eta"/>
+                <field name='create_date'/>
+                <field name="flight_schedule_id"/>
+                <field name="flight_number"/>
+                <field name="flight_order_number"/>
+                <field name="location_id"/>
+                <field name="customer_id"/>
+                <field name="schedule_commercial_id"/>
+                <field name="flight_category"/>
+                <field name="flight_type"/>
+                <field name="internal_flight_type_id"/>
+                <field name="schedule_date"/>
+                <field name='state'/>
+                <field name="create_uid" invisible="True"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_fml_filter" model="ir.ui.view">
+        <field name="name">flight.maintenance.log.list.select</field>
+        <field name="model">flight.maintenance.log</field>
+        <field name="arch" type="xml">
+            <search string="Search Flight Maintenance Log">
+                <field name="name" string="Mtc.Log.No/AC.Reg.No/FS" filter_domain="['|','|',('name','ilike',self),('fl_acquisition_id','ilike',self),('flight_schedule_id','ilike',self)]"/>
+                <field name="location_id"/>
+                <field name="customer_id"/>
+                <filter string="My FML" domain="[('create_uid','=',uid)]" name="my_fml_filter"/>
+                <separator/>
+                <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction','=',True)]"/>
+                <group expand="1" string="Group By">
+                    <filter string="A/C Registration No" domain="[]" context="{'group_by':'fl_acquisition_id'}"/>
+                    <filter name="customer" string="Customer" domain="[]" context="{'group_by':'customer_id'}"/>
+                    <filter string="Date [LT]" domain="[]" context="{'group_by':'date_lt'}"/>
+                    <filter string="ETD" domain="[]" context="{'group_by':'etd'}"/>
+                    <filter string="ETA" domain="[]" context="{'group_by':'eta'}"/>
+                    <filter string="Regulation" domain="[]" context="{'group_by':'regulation_id'}"/>
+                    <filter string="Status" domain="[]" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id='fml_action' model='ir.actions.act_window'>
+        <field name="name">Flight Maintenance Log [FML]</field>
+        <field name="res_model">flight.maintenance.log</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_fml_filter"/>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click for Create New Flight Maintenance Log [FML]
+            </p>
+        </field>
+    </record>
+    <menuitem action="fml_action" parent="schedule_planning_menu" id="fml_menu"
+            name="Flight Maintenance Log"/>
+
+</odoo>

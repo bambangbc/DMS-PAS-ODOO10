@@ -1,0 +1,57 @@
+<odoo>
+	<data>
+
+		<record id="ews_dms_tree" model="ir.ui.view">
+			<field name="name">ews.dms.tree</field>
+			<field name="model">ews.dms</field>
+			<field name="arch" type="xml">
+				<tree string="Files">
+					<field name="name"/>
+					<field name="warning"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="ews_dms_form">
+            <field name="name">ews.dms.form</field>
+            <field name="model">ews.dms</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            	<form name="Early Warning System">
+            		<group>
+            			<field name="name"/>
+            			<field name="warning"/>
+            		</group>
+            	</form>
+            </field>
+        </record>
+
+		<record id="action_ews" model="ir.actions.act_window">
+			<field name="name">Early Warning System</field>
+			<field name="res_model">ews.dms</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<record id="action_ews" model="ir.actions.act_window">
+			<field name="name">Early Warning System</field>
+			<field name="res_model">ews.dms</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<record id="action_ews_active" model="ir.actions.act_window">
+			<field name="name">Early Warning System File</field>
+			<field name="res_model">muk_dms.file</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('active_ews','=',True)]</field>
+		</record>
+
+		<menuitem id="menu_dms_ews" name="Early Warning System"
+			parent="muk_dms.cat_menu_muk_dms_config" action="action_ews"/>
+
+		<menuitem id="menu_dms_ews_active" 
+			name="EWS File" 
+			parent="muk_dms.cat_menu_muk_dms_config"
+			action="action_ews_active"/>
+
+	</data>
+</odoo>

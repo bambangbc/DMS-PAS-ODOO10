@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<!-- Aircraft Type -->
+
+<record id='aircraft_acquisition_view_form' model='ir.ui.view'>
+        <field name="name">aircraft.acquisition.form</field>
+        <field name="model">aircraft.acquisition</field>
+        <field name="arch" type="xml">
+            <form string="Form Aircraft Acquistion">
+            <sheet>
+              <div class="oe_title">
+                    <label for="name" string="Registration Number" />
+                        <h1>
+                            <field name="name" select="1"/>
+                        </h1>
+              </div>
+            <group>
+           	<group>
+           	  <field name='aircraft_name'/>
+              <field name='category'/>
+              <field name='aircraft_type_id'/> 
+           		<field name='date_manufacture'/>
+           		<field name='propeller_type_id' attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/>
+           	</group>
+           	<group>
+           	<!--	<field name='registration'/> -->
+           		<field name='msn'/>
+           		<field name='esn1'/>
+           	<!--	<field name='rgb1'/> -->
+           		<field name='esn2'/>
+           	<!--	<field name='rgb2'/> -->
+           	</group>
+            <group>
+            <!--  <field name='aircraft_lease_status'/> -->
+              <field name='ownership'/>
+              <field name='delivery_date' attrs="{'invisible':[('ownership', '!=', 'owner')]}"/>
+              <field name='lessor' attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+              <field name='start_lease' attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+              <field name='normal_termination' attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+            </group>
+            <group>
+              <field name='rh_ldg'  attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/>
+              <field name='lh_ldg' attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/>
+              <field name='n_ldg' attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/>
+            </group>
+            <group>
+             <!-- <field name='propeller' attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/> -->
+              <field name='propeller1' attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/>
+              <field name='propeller2' attrs="{'invisible':[('category', '!=', 'fixedwing')]}"/>
+            </group>
+           </group>
+           <notebook>
+           	<page string='Airframe'>
+              <group>
+           		<group>
+           	<!--	<field name='airframe'/> -->
+           		<field name='airframe_tsn'/>
+           		<field name='airframe_csn'/>
+           		<field name='airframe_lastoh'/>
+           		</group>
+            </group>
+           	</page>
+            <page string='LDG' attrs="{'invisible':[('category', '!=', 'fixedwing')]}">
+              <group>
+                <group>
+                <field name='rh_ldg_csn'/>
+                <field name='rh_ldg_lastoh'/>
+                </group>
+                <group>
+                <field name='lh_ldg_csn'/>
+                <field name='lh_ldg_lastoh'/>
+                </group>
+                <group>
+                <field name='n_ldg_csn'/>
+                <field name='n_ldg_lastoh'/>
+                </group>
+              </group>
+            </page>
+             <page string='Engine #1'>
+              <group>
+                <group>
+                <field name='engine_type_id'/>
+              
+                <field name='engine1_tsn' string='TSN'/>
+                <field name='engine1_csn' string='CSN'/>
+                <field name='engine1_tslsv' string='TSLSV OH'/>
+                <field name='engine1_tslsv_hsi' string='TSLSV HSI'/>
+                <field name='engine1_cslsv' string='CSLSV OH'/>
+                <field name='engine1_cslsv_hsi' string='CSLSV HSI'/>
+                <field name='engine1_lastoh' string='Last OH'/>
+                <field name='engine1_hsi' string='Last HSI'/>
+                </group>
+              </group>
+            </page>
+            <page string='Engine#2'>
+              <group>
+              <group>
+                <field name='engine2_type_id'/>
+                <field name='engine2_tsn' string='TSN'/>
+                <field name='engine2_csn' string='CSN'/>
+                <field name='engine2_tslsv' string='TSLSV OH'/>
+                <field name='engine2_tslsv_hsi' string='TSLSV HSI'/>
+                <field name='engine2_cslsv' string='CSLSV OH'/>
+                <field name='engine2_cslsv_hsi' string='CSLSV HSI'/>
+                <field name='engine2_lastoh' string='Last OH'/>
+                <field name='engine2_hsi' string='Last HSI'/>
+                </group>
+                </group>
+            </page>
+           <page string='Propeller #1' attrs="{'invisible':[('category', '!=', 'fixedwing')]}">
+              <group>
+                <group>
+                <field name='propeller1_tsn' string='TSN'/>
+                <field name='propeller1_tslsv' string='TSLSV'/> 
+                <field name='propeller1_lastoh' string='Last OH'/>
+                </group>
+               </group>
+            </page>
+             <page string='Propeller #2' attrs="{'invisible':[('category', '!=', 'fixedwing')]}">
+                <group>
+                <group>
+                <field name='propeller2'/>
+                <field name='propeller2_tsn' string='TSN'/>
+                <field name='propeller2_tslsv' string='TSLSV'/>
+                <field name='propeller2_lastoh' string='Last OH'/>
+              </group>
+                </group>
+            </page>
+            <page string='Documents Certificate'>
+              <field name='document_ids'>
+                <tree editable='button'>
+                  <field name='document_id' string='Document Name'/>
+                  <field name='file_data' widget='binary' file_name='file_name'/>
+                  <field name='date_expired'/>
+                </tree>
+              </field>
+            </page>
+          </notebook>
+           	</sheet>
+            </form>
+        </field>
+</record>  
+<record id='aircraft_acquisition_view_tree' model='ir.ui.view'>
+        <field name="name">aircraft.acquisition.tree</field>
+        <field name="model">aircraft.acquisition</field>
+        <field name="arch" type="xml">
+            <tree string="List Aircraft Acquisition">
+              <field name='name'/>
+            	<field name='aircraft_name'/>
+              <field name='aircraft_type_id'/> 
+              <field name='date_manufacture'/>
+              <field name='engine_type_id'/>
+              <field name='propeller_type_id'/>
+              <field name='msn'/>
+              <field name='esn1'/>
+              <field name='rgb1'/>
+              <field name='esn2'/>
+              <field name='rgb2'/>
+              <field name='ownership'/>
+              <field name='delivery_date'/>
+              <field name='lessor'/>
+              <field name='start_lease'/>
+              <field name='normal_termination'/>
+           	</tree>
+        </field>
+</record>  
+
+<record id='aircraft_acquisition_action' model='ir.actions.act_window'>
+        <field name="name">Fleet Acquisition</field>
+        <field name="res_model">aircraft.acquisition</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create New Aircraft Acquisition
+          </p>
+        </field>
+</record>
+<!-- Aircraft Lease -->
+<record id='aircraft_lease_view_tree' model='ir.ui.view'>
+        <field name="name">aircraft.lease.tree</field>
+        <field name="model">aircraft.acquisition</field>
+        <field name="arch" type="xml">
+            <tree string="List Aircraft Acquisition">
+              <field name='name'/>
+              <field name='aircraft_name'/>
+              <field name='aircraft_type_id'/> 
+              <field name='date_manufacture'/>
+              <field name='engine_type_id'/>
+              <field name='propeller_type_id'/>
+              <field name='msn'/>
+              <field name='esn1'/>
+              <field name='rgb1'/>
+              <field name='esn2'/>
+              <field name='rgb2'/>
+              <field name='ownership'/>
+          <!--    <field name='delivery_date'/> -->
+              <field name='lessor'/>
+              <field name='start_lease'/>
+              <field name='normal_termination'/>
+            </tree>
+        </field>
+</record>  
+<record model="ir.ui.view" id="aircraft_lease_filter">
+  <field name="name">aircraft.lease.search</field>
+  <field name="model">aircraft.acquisition</field>
+  <field name="arch" type="xml">
+    <search string="Aircraft Lease">
+      <field name="ownership" string="Ownership" filter_domain="[('ownership','==','lease')]"/>
+      </search>
+  </field>
+</record>
+<record id='aircraft_lease_action' model='ir.actions.act_window'>
+        <field name="name">Aircraft Lease</field>
+        <field name="res_model">aircraft.acquisition</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{"search_default_ownership" : True}</field>
+            
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create New Aircraft Acquisition
+          </p>
+        </field>
+</record>
+
+<!-- Engine Spare -->
+<record id='engine_spare_view_form' model='ir.ui.view'>
+        <field name="name">engine.spare.form</field>
+        <field name="model">engine.spare</field>
+        <field name="arch" type="xml">
+            <form string="Form Engine Spare">
+            <sheet>
+            <group>
+              <group>
+                 <field name='name'/>
+                 <field name='acquisition_id'/>
+                 <field name='description'/>
+                 <field name='date_pemasangan'/>
+                 <field name='date_penurunan'/>
+              </group>
+            </group>
+            <notebook>
+            <page string='Engine'>
+              <group>
+                <group>
+                <field name='engine_tsn' string='TSN'/>
+                <field name='engine_csn' string='CSN'/>
+                <field name='engine_tslsv' string='TSLSV OH'/>
+                <field name='engine_tslsv_hsi' string='TSLSV HSI'/>
+                <field name='engine_cslsv' string='CSLSV OH'/>
+                <field name='engine_cslsv_hsi' string='CSLSV HSI'/>
+                <field name='engine_lastoh' string='Last OH'/>
+                <field name='engine_hsi' string='Last HSI'/>
+                </group>
+              </group>
+            </page>
+            <page string='Propeller'>
+              <group>
+                <group>
+                 <field name='propeller'/>
+                <field name='propeller_tsn' string='TSN'/>
+                <field name='propeller_tslsv' string='TSLSV'/> 
+                <field name='propeller_lastoh' string='Last OH'/>
+                </group>
+               </group>
+            </page>
+            </notebook>
+          </sheet>
+            </form>
+        </field>
+</record>
+
+<record id='engine_spare_view_tree' model='ir.ui.view'>
+        <field name="name">engine.spare.tree</field>
+        <field name="model">engine.spare</field>
+        <field name="arch" type="xml">
+            <tree string="Form Engine Spare">
+                 <field name='name'/>
+                 <field name='acquisition_id'/>
+                 <field name='description'/>
+                 <field name='date_pemasangan'/>
+                 <field name='date_penurunan'/>
+            </tree>
+        </field>
+</record>
+<record id='engine_spare_action' model='ir.actions.act_window'>
+        <field name="name">Engine Spare</field>
+        <field name="res_model">engine.spare</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create New Engine Spare
+          </p>
+        </field>
+</record>
+
+
+<menuitem action="aircraft_acquisition_action" parent="aircraft_data_menu" id="aircraft_acquisition_menu"/>
+<menuitem action="engine_spare_action" parent="aircraft_data_menu" id="engine_spare_menu"/>
+
+<!--
+<menuitem action="aircraft_lease_action" parent="fleet_administration_menu" id="aircraft_lease_menu"/>
+
+-->
+
+</odoo>

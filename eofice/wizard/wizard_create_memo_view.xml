@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record model="ir.ui.view" id="eof_create_memo_form">
+            <field name="name">create.memo.form</field>
+            <field name="model">create.memo</field>
+            <field name="arch" type="xml">
+                <form string="Surat Masuk">
+                    <group>
+                        <group>
+                            <field name="kepada" widget="many2many_tags"/>
+                            <field name="tembusan" widget="many2many_tags"/>
+                            <field name="template"/>
+                            <field name="pengirim"/>
+                            <field name="user_id"/>
+                            <field name="type_memo" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="perihal"/>
+                            <field name="date"/>
+                        </group>
+                        <field name="content"/>
+                    </group>
+                    <footer>
+                        <button name="create_memo" string="Create Memorandum" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="act_create_memo" model="ir.actions.act_window">
+            <field name="name">Create Memorandum</field>
+            <field name="res_model">create.memo</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="context">{'default_type_memo': 'creatememo'}</field>
+            <field name="target">new</field>
+        </record>
+
+        <record id="act_reply_memo" model="ir.actions.act_window">
+            <field name="name">Create Memorandum</field>
+            <field name="res_model">create.memo</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="context">{'default_type_memo': 'replymemo'}</field>
+            <field name="target">new</field>
+        </record>
+
+        <!--act_window name="Create Memorandum" id="act_create_memo"
+        res_model="create.memo"
+        view_mode="form" target="new"/-->
+
+    </data>
+</odoo>

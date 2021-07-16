@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Flight Schedule -->
+        <record id='flight_schedule_form' model='ir.ui.view'>
+            <field name="name">flight.schedule.form</field>
+            <field name="model">flight.schedule</field>
+            <field name="arch" type="xml">
+                <form string="Flight Schedule Planning">
+                    <header>
+                        <button string="Set to Draft" name="action_set_to_draft" 
+                                type="object" states="cancel" 
+                                groups="pelita_operation.group_ops_manager,pelita_operation.group_ops_manager_own_docs" />
+                        <button string="Set Crew" name="action_crew_schedule" type="object"
+                                states="validated" class="oe_highlight" invisible="True"
+                                groups="pelita_operation.group_ops_user,pelita_operation.group_ops_manager"/>
+                        <button string="Validate" name="action_validate" type="object" 
+                                states="draft" class="oe_highlight" 
+                                groups="pelita_operation.group_ops_manager,pelita_operation.group_ops_manager_own_docs"/>
+                        <button name="action_process_crew_approval" type="object" string="Set Crew"
+                                class="oe_highlight" states="validated"
+                                groups="pelita_operation.group_ops_manager,pelita_operation.group_ops_manager_own_docs"/>
+                        <button string="Cancel" name="action_cancel" type="object" class="oe_highlight"
+                                states="validated,setcrew" 
+                                groups="pelita_operation.group_ops_manager,pelita_operation.group_ops_manager_own_docs" />
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,validated,setcrew,cancel"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="flight_order_no"/>
+                                <field name="base_operation_id"/>
+                                <field name="date_schedule"/>
+                            </group>
+                            <group>
+                                <field name="fl_acquisition_id"/>
+                                <field name="aircraft_id"/>
+                                <field name="aircraft_type_id"/>
+                                <field name="etd"/>
+                                <field name="eta"/>
+                            </group>
+                            <group>
+                                <field name="flight_type"/>
+                                <field name="internal_flight_type_id"/>
+                                <field name="flight_category"/>
+                                <field name="schedule_commercial_id"/>
+                                <field name="customer_id"/>
+                            </group>
+                            <group name="split_duty" string="Split Duty">
+                                <field name="start_date"/>
+                                <field name="finish_date"/>
+                            </group>
+                            <group name='regulation' string='Regulation'>
+                                <field name='regulation_id' required="True"/>
+                                <field name="fl_hours_price_id" invisible="True"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string='Route' name="routes">
+                                <field name='route_ids'>
+                                    <tree editable='buttom'>
+                                        <field name="route_id" string='Route Name'/>
+                                        <field name="cycle"/>
+                                        <field name="customer_id"/>
+                                        <field name="distance_nm"/>
+                                        <field name="distance_km"/>
+                                    </tree>
+                                </field>
+                                <field name="note" class="oe_inline" placeholder="Additional notes..."/>
+                                <div class="oe_clear"/>
+                            </page>
+                            <page string='Crew Assignment' attrs="{'invisible':[('state', '=', 'draft')]}">
+                                <field name="all_allowed" invisible="True" groups="pelita_operation.group_ops_manager"/>
+                                <label for="all_allowed" invisible="True" string="All Crew Allowed"
+                                       groups="pelita_operation.group_ops_manager"/>
+                                <field name="crew_assignment_ids">
+                                    <tree editable="buttom">
+                                        <field name="id" invisible="True"/>
+                                        <field name="allowed" nolabel="True" invisible="True" groups="pelita_operation.group_ops_manager"/>
+                                        <field name="route_id" required="True"/>
+                                        <field name="crew_assign_id" invisible="True"/>
+                                        <field name="category" invisible="True"/>
+                                        <field name="crew_id" required="True"/>
+                                        <field name="qualification"/>
+                                        <field name="is_standby"/>
+                                        <field name="crew_type_id"/>
+                                        <field name="fl_hours_price_id" required="True"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string='Technician Assignment' attrs="{'invisible':[('state', '=', 'draft')]}">
+                                <field name='assigned_technician_ids'>
+                                    <tree editable='buttom'>
+                                        <field name="fl_schedule_id" invisible='True'/>
+                                        <field name="route_id" required="True"/>
+                                        <field name="employee_id" required="True"/>
+                                        <field name="fl_hours_price_id" required="True"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string='Unregulated Crew' attrs="{'invisible':[('state', '=', 'draft')]}">
+                                <field name='reason_crew_allowed_ids' readonly="True">
+                                    <tree>
+                                        <field name="crew_id" />
+                                        <field name="reason" />
+                                        <field name="approved_id" />
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string='Crew Stand By' attrs="{'invisible':[('state', '=', 'draft')]}" invisible='True'>
+                                <field name='crew_standby_ids' invisible='True'>
+                                    <tree editable='buttom'>
+                                        <field name='crew_stb_id' invisible='True'/>
+                                        <field name='crew_type'/>
+                                        <field name='crew_id'/>
+                                        <field name='qualification'/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id='flight_schedule_tree' model='ir.ui.view'>
+            <field name="name">new.flight.schedule.tree</field>
+            <field name="model">flight.schedule</field>
+            <field name="arch" type="xml">
+                <tree string="Flight Schedule" decoration-bf="message_needaction==True" 
+                      decoration-info="state == 'draft'" decoration-muted="state == 'cancel'">
+                    <field name="message_needaction" invisible="True"/>
+                    <field name="name"/>
+                    <field name="flight_order_no"/>
+                    <field name="date_schedule"/>
+                    <field name="base_operation_id"/>
+                    <field name="fl_acquisition_id"/>
+                    <field name="customer_id"/>
+                    <field name="eta"/>
+                    <field name="etd"/>
+                    <field name="schedule_commercial_id"/>
+                    <field name="flight_category"/>
+                    <field name="flight_type"/>
+                    <field name="internal_flight_type_id"/>
+                    <field name="state"/>
+                    <field name="create_uid" invisible="True"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_flight_schedule_filter" model="ir.ui.view">
+            <field name="name">flight.schedule.list.select</field>
+            <field name="model">flight.schedule</field>
+            <field name="arch" type="xml">
+                <search string="Search Flight Schedule">
+                    <field name="name" string="Flt.No/Flt Ord.No/AC.Reg.No" filter_domain="['|','|',('name','ilike',self),('flight_order_no','ilike',self),('fl_acquisition_id','ilike',self)]"/>
+                    <field name="base_operation_id"/>
+                    <field name="aircraft_id"/>
+                    <field name="customer_id"/>
+                    <field name="schedule_commercial_id"/>
+                    <field name="flight_type"/>
+                    <field name="flight_category"/>
+                    <filter string="My Flight Schedule" domain="[('create_uid','=',uid)]" name="my_flight_schedule_filter"/>
+                    <separator/>
+                    <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction','=',True)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="A/C Registration No" domain="[]" context="{'group_by':'fl_acquisition_id'}"/>
+                        <filter name="customer" string="Customer" domain="[]" context="{'group_by':'customer_id'}"/>
+                        <filter string="ETD" domain="[]" context="{'group_by':'etd'}"/>
+                        <filter string="ETA" domain="[]" context="{'group_by':'eta'}"/>
+                        <filter string="Regulation" domain="[]" context="{'group_by':'regulation_id'}"/>
+                        <filter string="Aircraft Type" domain="[]" context="{'group_by':'aircraft_type_id'}"/>
+                        <filter string="Status" domain="[]" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id='flight_schedule_action' model='ir.actions.act_window'>
+            <field name="name">Flight Schedule [FS]</field>
+            <field name="res_model">flight.schedule</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_flight_schedule_filter"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click for Create New Flight Schedule [FS]
+                </p>
+            </field>
+        </record>
+
+        <!-- Internal Flight Type -->
+        <record id='internal_flight_type_form' model='ir.ui.view'>
+            <field name="name">internal.flight.type.form</field>
+            <field name="model">internal.flight.type</field>
+            <field name="arch" type="xml">
+                <form string="Internal Flight Type">
+                <sheet>
+                    <group>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </group>
+                </sheet>
+                </form>
+            </field>
+        </record>  
+
+        <record id='internal_flight_type_tree' model='ir.ui.view'>
+            <field name="name">internal.flight.type.tree</field>
+            <field name="model">internal.flight.type</field>
+            <field name="arch" type="xml">
+                <tree string="Internal Flight Type">
+                        <field name="name"/>
+                </tree>
+            </field>
+        </record>  
+
+        <record id='internal_flight_type_action' model='ir.actions.act_window'>
+            <field name="name">Internal Flight Type</field>
+            <field name="res_model">internal.flight.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click for Create New Internal Flight Type
+              </p>
+            </field>
+        </record>
+    
+        <!-- Crew Type -->
+        <record id='crew_type_form' model='ir.ui.view'>
+            <field name="name">crew.type.form</field>
+            <field name="model">crew.type</field>
+            <field name="arch" type="xml">
+                <form string="Crew Type">
+                <sheet>
+                    <group>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </group>
+                </sheet>
+                </form>
+            </field>
+        </record>  
+
+        <record id='crew_type_tree' model='ir.ui.view'>
+            <field name="name">crew.type.tree</field>
+            <field name="model">crew.type</field>
+            <field name="arch" type="xml">
+                <tree string="Crew Type">
+                        <field name="name"/>
+                </tree>
+            </field>
+        </record>  
+
+        <record id='crew_type_action' model='ir.actions.act_window'>
+            <field name="name">Crew Type</field>
+            <field name="res_model">crew.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click for Create New Crew Type
+              </p>
+            </field>
+        </record>
+        
+        <record id="flight_schedule_usr_action_tree_view" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="flight_schedule_tree"/>
+            <field name="act_window_id" ref="flight_schedule_action"/>
+        </record>
+        <record id="flight_schedule_usr_action_form_view" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="flight_schedule_form"/>
+            <field name="act_window_id" ref="flight_schedule_action"/>
+        </record>
+
+        <menuitem name="Schedule Planning" parent="operation_management" id="schedule_planning_menu"/>
+        <menuitem action="flight_schedule_action" parent="schedule_planning_menu" id="flight_schedule_menu"
+                  name="Flight Schedule" sequence="3"/>
+        <menuitem action="internal_flight_type_action" parent="config_operation_menu" id="internal_flight_type_menu"/>
+        <menuitem action="crew_type_action" parent="config_operation_menu" id="crew_type_menu"/> 
+
+    </data>
+</odoo>

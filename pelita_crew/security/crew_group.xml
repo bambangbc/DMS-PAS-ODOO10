@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record model="ir.module.category" id="module_category_crew">
+            <field name="name">iCrew</field>
+            <field name="description">Crew</field>
+            <field name="sequence">1</field>
+        </record>
+        <record id="group_crw_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="category_id" ref="module_category_crew"/>
+            <!--<field name="implied_ids" eval="[(4,ref('pelita_operation.group_ops_user'))]"/>-->
+        </record>
+        <record id="group_crw_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/> 
+            <field name="category_id" ref="module_category_crew"/>
+            <field name="implied_ids" eval="[(4,ref('group_crw_user'))]"/>
+        </record>
+        <record id="group_crw_user_own_docs" model="res.groups">
+            <field name="name">User Own Document</field>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="category_id" ref="module_category_crew"/>
+            <!--<field name="implied_ids" eval="[(4,ref('pelita_operation.group_ops_user_own_docs'))]"/>-->
+        </record>
+        <record id="group_crw_manager_own_docs" model="res.groups">
+            <field name="name">Manager Own Document</field>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="category_id" ref="module_category_crew"/>
+            <field name="implied_ids" eval="[(4,ref('group_crw_user_own_docs'))]"/>
+        </record>
+    </data>
+</odoo>

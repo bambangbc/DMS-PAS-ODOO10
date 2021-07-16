@@ -1,0 +1,142 @@
+<odoo>
+    <data>
+        <template id="report_surat_keluar">
+            <t t-name="eofice.report_surat_keluar">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="header">
+                        <img style="float: right;" src="/eofice/static/src/img/logo-pelita.jpeg" width="150" />
+                    </div>
+                    <div class="page">
+                        <div class="row">
+                            <table style="width: 528px;">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="3">Jakarta, 
+                                            <t t-if="o.backdate == false">
+                                                <span t-field="o.date" t-field-options="{&quot;format&quot;: &quot;dd MMMM y&quot;}"/>
+                                            </t>
+                                            <t t-if="o.backdate != false">
+                                                <span t-field="o.backdate" t-field-options="{&quot;format&quot;: &quot;dd MMMM y&quot;}"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 84px; text-align: left;">Nomor 
+                                            <br />
+                                            <br />
+                                        </td>
+                                        <td style="width: 13.203125px;">:</td>
+                                        <td style="width: 447.796875px;">
+                                            <t t-if="o.backdate == false">
+                                                <span t-field="o.name"/>
+                                            </t>
+                                            <t t-if="o.backdate != false">
+                                                <span t-field="o.nomor_manual"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 84px; text-align: left;">Lampiran</td>
+                                        <td style="width: 13.203125px;">:</td>
+                                        <td style="width: 447.796875px;"><span t-field="o.lampiran"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 84px; text-align: left;">Perihal</td>
+                                        <td style="width: 13.203125px;">:</td>
+                                        <td style="width: 447.796875px;"><span t-field="o.perihal"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br />
+                            <br />
+                            <br />
+                            <p>Kepada Yth.<br />
+                                <span t-field="o.kepada"/><br />
+                                <span t-field="o.alamat"/><br />
+                                <span t-field="o.kota"/><br />
+                                No. Fax. <span t-field="o.kepada.fax"/><br/>
+                                <t t-foreach="o.up" t-as="i">
+                                    <br/>Up. <t t-esc="i.name"/>
+                                </t>
+                            </p>
+                            <br/>
+                            <br/>
+                            <table>
+                                <tr>
+                                    <td>
+                                    Dengan hormat,
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span t-field="o.content"/></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    Demikian disampaikan, terima kasih atas perhatian dan kerjasama yang diberikan.
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- <table width="100%">
+                                <tr>
+                                    <td width="40%"/>
+                                    <td width="30%"/>
+                                    <td width="30%">Hormat Kami,</td>
+                                </tr>
+                            </table> -->
+                            <table width="100%" style="margin-top:40px;">
+                                <tr>
+                                    <td width="40%"/>
+                                    <td width="30%"/>
+                                    <td width="30%">
+                                        <span t-field="o.template.user_id6.partner_id.job_id.name"/>
+                                        <br /><br /><br /><br />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="40%"/>
+                                    <td width="30%"/>
+                                    <td width="30%"><span t-field="o.template.user_id6.name"/></td>
+                                </tr>
+                                <tr>
+                                    <td width="40%">Tembusan :</td>
+                                    <td width="30%"/>
+                                    <td width="30%"/>
+                                </tr>
+                                <t t-foreach="o.tembusan" t-as="i">
+                                    <tr>
+                                        <td width="40%"><li><t t-esc="i.name"/></li></td>
+                                        <td width="30%"/>
+                                        <td width="30%"/>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="footer">
+                        <div style="float: right; margin-top:25px; font-size:9px;">
+                            <b>Kantor Pusat :</b>
+                            <p style="font-size: 7pt;">
+                                Jl. Abdul Muis No. 52-56 A <br />
+                                Jakarta Pusat 10160 Indonesia
+                                <table>
+                                    <tr>
+                                        <td width="50px">Phone</td>
+                                        <td>: +62 21 2312030</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fax</td>
+                                        <td>: +62 21 2312063</td>
+                                    </tr>
+                                </table>
+                                www.pelita-air.com
+                            </p>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,58 @@
+<odoo>
+    <data>
+        <record  model="ir.ui.view" id="view_month_of_year_tree">
+            <field name="name">Month of Year Tree</field>
+            <field name="model">month.of.year</field>
+            <field name="arch" type="xml">
+                <tree default_order="year month">
+                    <field name="name"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="date_cutoff"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_month_of_year_form">
+            <field name="name">Month of Year Form</field>
+            <field name="model">month.of.year</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="year"/>
+                            <field name="month"/>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                            <field name="date_cutoff"/>
+                        </group>
+                        <group>
+                            <field name="name" invisible="1"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="ref_moy_action">
+            <field name="name">Month of Year</field>
+            <field name="res_model">month.of.year</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="limit">20</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create new month of year
+                </p>
+            </field>
+        </record>
+
+        <!-- ========== Spesifikasi Menu ========== -->
+		<menuitem 	name	= "Month of year"
+					action	= "ref_moy_action"
+					id		= "menu_ref_moy"
+					parent	= "pelita_operation.config_operation_menu"
+					sequence= "50" />
+
+    </data>
+</odoo>

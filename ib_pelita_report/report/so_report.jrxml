@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="so_report" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c7b0fbd4-137a-4faf-a343-6220451b8b47">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="OPENERP_RELATIONS" value="[&apos;order_line&apos;]"/>
+	<queryString language="xPath">
+		<![CDATA[data/record]]>
+	</queryString>
+	<field name="Total-amount_total" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Total-amount_total]]></fieldDescription>
+	</field>
+	<field name="Untaxed_Amount-amount_untaxed" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Untaxed_Amount-amount_untaxed]]></fieldDescription>
+	</field>
+	<field name="Taxes-amount_tax" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Taxes-amount_tax]]></fieldDescription>
+	</field>
+	<field name="Order_Date-date_order" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Order_Date-date_order]]></fieldDescription>
+	</field>
+	<field name="Order_Reference-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Order_Reference-name]]></fieldDescription>
+	</field>
+	<field name="Name-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Customer-partner_id/Name-name]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d2750204-6523-4191-82df-b5ba02a0b3e6" x="0" y="0" width="555" height="28"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SALES ORDER SINGLE REPORT]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="88" splitType="Stretch">
+			<textField>
+				<reportElement uuid="74d77efa-d85e-4520-9936-ff6c9c1047f0" x="70" y="56" width="286" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Order_Date-date_order}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d8723cc4-66dd-48fb-95e7-80af9cdb614c" x="70" y="36" width="286" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Order_Reference-name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f1c44859-a3b9-44d4-8f4a-f76ab970fef0" x="70" y="16" width="286" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Name-name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band height="60" splitType="Stretch">
+			<textField>
+				<reportElement uuid="1ba8d1fb-3d1d-487d-9a36-d20c9fb8b78a" x="340" y="20" width="215" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Taxes-amount_tax}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6e806e29-9b3f-40c1-90c4-1b72c0bac015" x="340" y="0" width="215" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Untaxed_Amount-amount_untaxed}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2ac3de8a-f0e8-4f05-bc3f-a7ff796b7dee" x="340" y="40" width="215" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Total-amount_total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="hr_surat_nota_view_search" model="ir.ui.view">
+            <field name="name">surat.nota.search</field>
+            <field name="model">surat.nota</field>
+            <field name="arch" type="xml">
+                <search string="Search Surat Nota">
+                    <field name="name" string="nomor Nota"/>
+                    <field name="kepada" string="Ditujukan Untuk"/>
+                    <field name="tembusan" string="Tembusan"/>
+                    <field name="perihal" string="Perihal"/>
+                    <field name="dispo_id" string="No Disposisi"/>
+                    <field name="no_tanda_terima" string="No Nota"/>
+                    <filter name="status" domain="[('state', '=', 'inprogres')]" string="Status"/>
+                    <separator/>
+                    <!-- <filter name="ditujukan" domain="[('user_tujuan', '=', uid)]" string="Ditujukan"/> -->
+                    <separator/>
+                    <filter name="pembuat" domain="[('user_id', '=', uid)]" string="Pembuat Nota"/>
+                    <group expand="0" string="Group By">
+                        <!--filter string="Status Surat" domain="[]" context="{'group_by':'status_surat'}"/-->
+                        <!-- <filter name="state" domain="[]" context="{'group_by':'state'}"/> -->
+                        <filter string="Tembusan" domain="[]" context="{'group_by':'tembusan'}"/>
+                        <filter string="Ditujukan Untuk" domain="[]" context="{'group_by':'kepada'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+    	<record model='ir.ui.view' id='eof_nota_tree'>
+            <field name='name'>surat.nota.tree</field>
+            <field name='model'>surat.nota</field>
+            <field name='arch' type='xml'>
+                <tree string='Surat Masuk'>
+                    <field name='name'/>
+                    <field name="kepada"/>
+                    <field name="tembusan"/>
+                    <field name="active_user" invisible="1"/>
+                    <field name="pengirim"/>
+                    <field name="perihal"/>
+                    <field name="date"/>
+                    <field name="dispo_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_disposisi_nota" model="ir.actions.act_window">
+            <field name="name">Disposisi</field>
+            <field name="res_model">disposisi.masuk</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_no_nota': [active_id], 'default_no_nota': active_id}</field>
+        </record>
+
+        <record id="action_view_disposisi_nota_form" model="ir.actions.act_window">
+            <field name="name">Disposisi</field>
+            <field name="res_model">disposisi.masuk</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="context">{'search_default_no_nota': [active_id], 'default_no_nota': active_id}</field>
+        </record>
+
+        <record model="ir.ui.view" id="eof_nota_form">
+            <field name="name">surat.nota.form</field>
+            <field name="model">surat.nota</field>
+            <field name="arch" type="xml">
+                <form string="Nota Keluar">
+                	<header>
+                        <button name="%(action_view_disposisi_nota_form)d" string="Create Disposisi"
+                            type="action" class="btn-primary"
+                            attrs="{'invisible': ['|',('state','=','draft'),('button_dispo','=',False)]}"/>
+                        <!--button name="Save_dms" string="Save to DMS"
+                            Type="object" class="oe_highlight"
+                            attrs="{'invisible': ['|',('state','=','draft'),('active_user','!=',True)]}"/-->
+                		<button name="confirm" states="draft" string="Confirm" type="object" class="oe_highlight"/>
+                        <button name="validate" attrs="{'invisible': ['|',('state','!=','inprogres'),('active_user','!=',True)]}" string="Validate" type="object" class="oe_highlight"/>
+                        <button name="refuse" string="Refuse" attrs="{'invisible': ['|',('state','!=','inprogres'),('active_user','!=',True)]}" type="object" class="oe_highlight"/>
+                		<field name="state" widget="statusbar" nolabel="1"/>
+                	</header>
+                	<sheet>
+                        <!--div class="oe_button_box" name="button_box">
+                            <button type="action"  name="%(action_view_disposisi_nota)d"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o"
+                                attrs="{'invisible': ['|',('state','=','draft'),('active_user','!=',True)]}">
+                                <field name="nota_count" widget="statinfo" string="Disposisi"/>
+                            </button>
+                        </div-->
+                		<div class="oe_title">
+	                        <label string="Nota Keluar" attrs="{'invisible': [('state','in',('draft'))]}"/>
+	                        <h1>
+	                            <field name="name" readonly="1"/>
+	                        </h1>
+	                    </div>
+	                	<group>
+	                		<group>
+			           			<field name="kepada" attrs="{'readonly': [('state','=','done')]}"/>
+                                <field name="user_tujuan" invisible="1"/>
+		    					<field name="tembusan" attrs="{'readonly': [('state','=','done')]}"/>
+		    				</group>
+		    				<group>
+		    					<field name="perihal" attrs="{'readonly': [('state','=','done')]}"/>
+		    					<field name="date" attrs="{'readonly': [('state','=','done')]}"/>
+                                <field name="button_dispo" invisible="1"/>
+                                <field name="jenis_surat" invisible="1"/>
+                                <field name="active_user" invisible="1"/>
+		    				</group>
+		    			</group>
+                        <notebook>
+                            <page string="Content">
+        	                	<group>
+        	                		<field name="content" attrs="{'readonly': [('state','=','done')]}"/>
+        	                	</group>
+                            </page>
+                            <page string="Other Info">
+                                <group>
+                                    <field name="user_id" invisible="1"/>
+                                    <field name="pengirim" invisible="1"/>
+                                    <field name="dispo_id" attrs="{'readonly': [('state','=','done')],'invisible':[('dispo_id','=',False)]}"/>
+                                    <field name="no_tanda_terima" attrs="{'readonly': [('state','=','done')],'invisible':[('no_tanda_terima','=',False)]}"/>
+                                </group>
+                            </page>
+                        </notebook>
+	                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="open_create_surat_nota" model="ir.actions.act_window">
+            <field name="name">Create a Surat Nota</field>
+            <field name="res_model">surat.nota</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <!--field name="view_id" ref="project_project_view_form_simplified"/-->
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.ui.view" id="view_surat_nota_kanban">
+            <field name="name">surat.nota.kanban</field>
+            <field name="model">surat.nota</field>
+            <field name="arch" type="xml">
+                <kanban on_create="eofice.open_create_surat_nota">
+                    <field name="name"/>
+                    <field name="perihal"/>
+                    <field name="date"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <strong><span><t t-esc="record.name.value"/></span></strong>
+                                    </div>
+                                    <div class="col-xs-6 pull-right text-right">
+                                        <strong><field name="date"/></strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6 text-muted">
+                                        <span><t t-esc="record.perihal.value"/></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+    	<record id="eof_nota_action" model="ir.actions.act_window">
+            <field name="name">Nota masuk</field>
+            <field name="res_model">surat.nota</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,graph,pivot</field>
+            <field name="domain">[('state','!=','draft')]</field>
+            <!-- <field name="context">{'search_default_state': 1,'search_default_ditujukan': 1}</field> -->
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="hr_surat_nota_view_search"/>
+        </record>
+
+        <record id="eof_nota_keluar_action" model="ir.actions.act_window">
+            <field name="name">Nota Keluar</field>
+            <field name="res_model">surat.nota</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,graph,pivot</field>
+            <field name="domain">[('user_id','=',uid)]</field>
+            <!-- <field name="context">{'search_default_state': 1,'search_default_pembuat': 1}</field> -->
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="hr_surat_nota_view_search"/>
+        </record>
+
+        <menuitem
+            action="eof_nota_action"
+            id="eof_nota_view_menu"
+            parent="eof_nota_menu" sequence="30"/>
+
+        <menuitem
+            action="eof_nota_keluar_action"
+            id="eof_nota_keluar_view_menu"
+            parent="eof_nota_menu" sequence="40"/>
+
+        <data noupdate="1">
+		  <record id="seq_surat_nota_keluar" model="ir.sequence">
+		    <field name="name">Nota Keluar</field>
+		    <field name="code">surat.nota</field>
+		    <field name="prefix"></field>
+		    <field name="padding">5</field>
+		  </record>
+		</data>
+
+    </data>
+</odoo>

@@ -1,0 +1,40 @@
+<openerp>
+	<data>
+
+		<record id="muk_dms.view_dms_file_tree" model="ir.ui.view">
+			<field name="name">muk_dms_file.tree</field>
+			<field name="model">muk_dms.file</field>
+			<field name="arch" type="xml">
+				<tree string="Files">
+					<field name="locked" invisible="1" />
+					<field name="perm_create" invisible="1" />
+					<field name="perm_write" invisible="1" />
+					<field name="perm_unlink" invisible="1" />
+					<field name="name" />
+					<field name="mimetype" />
+					<field name="size" widget="dms_size" />
+					<field name="write_date" />
+					<field name="path" widget="dms_path" />
+					<field name="expiration"/>
+					<field name="pic"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="hrd_view_employee_form">
+            <field name="name">muk_dms.file.form</field>
+            <field name="model">muk_dms.file</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="muk_dms.view_dms_file_form"/>
+            <field name="arch" type="xml">
+            	<field name='relational_path' position="after">
+            		<field name='expiration'/>
+            		<field name="pic" attrs="{'invisible':[('expiration','=', False)],'required':[('expiration','!=',False)]}"/>
+            		<field name="ews" attrs="{'invisible':[('expiration','=', False)],'required':[('expiration','!=',False)]}"/>
+            		<!-- <button name="early_warning_system" type="object" string="tes ews" class="oe_highlight"/> -->
+            	</field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

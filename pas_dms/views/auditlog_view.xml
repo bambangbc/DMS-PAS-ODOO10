@@ -1,0 +1,101 @@
+<odoo>
+	<data>
+
+		<!-- filter -->
+        <record id="view_aditlog_filter" model="ir.ui.view">
+            <field name="name">audit.log.select</field>
+            <field name="model">audit.log</field>
+            <field name="arch" type="xml">
+                <search string="Search report by">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="method"/>
+                    <field name="user_id"/>
+                    <group expand="1" string="Group By...">
+    
+                        <filter string="Nama File" name="name"
+                             icon="terp-personal" domain="[]" 
+                             context="{'group_by':'name'}"/>
+
+                        <filter string="Tanggal" name="date"
+                             icon="terp-personal" domain="[]" 
+                             context="{'group_by':'date'}"/> 
+
+                        <filter string="Method" name="method"
+                             icon="terp-personal" domain="[]" 
+                             context="{'group_by':'method'}"/>    
+                                                 
+                        <filter string="Users" name="user_id"
+                                 icon="terp-personal" domain="[]"
+                                 context="{'group_by':'user_id'}"/> 
+
+                    </group>                                     
+                </search>
+            </field>
+        </record>
+
+		<record id="auditlog_tree" model="ir.ui.view">
+			<field name="name">audit.log.tree</field>
+			<field name="model">audit.log</field>
+			<field name="arch" type="xml">
+				<tree string="Files" create="false" delete="false" edit="false">
+					<field name="date"/>
+					<field name="name"/>
+					<field name="method"/>
+					<field name="user_id"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="auditlog_form">
+            <field name="name">audit.log.form</field>
+            <field name="model">audit.log</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            	<form name="Early Warning System" create="false" delete="false" edit="false">
+            		<group>
+            			<field name="date"/>
+            			<field name="name"/>
+            			<field name="method"/>
+            			<field name="user_id"/>
+            		</group>
+                    <notebook attrs="{'invisible': [('method','!=','Write')]}">
+                            <page string="Write">
+                                <group>
+                                    <group>
+                                        <field name='name_old' attrs="{'invisible': [('name_old','=',False)]}"/>
+                                        <field name='name_new' attrs="{'invisible': [('name_new','=',False)]}"/>
+                                        <field name='exp_old' attrs="{'invisible': [('exp_old','=',False)]}"/>
+                                        <field name='exp_new' attrs="{'invisible': [('exp_new','=',False)]}"/>
+                                        <field name='pic_old' attrs="{'invisible': [('pic_old','=',False)]}"/>
+                                        <field name='pic_new' attrs="{'invisible': [('pic_new','=',False)]}"/>
+                                    </group>
+                                    <group>
+                                        <field name='ews_old' attrs="{'invisible': [('ews_old','=',False)]}"/>
+                                        <field name='ews_new' attrs="{'invisible': [('ews_new','=',False)]}"/>
+                                        <field name='content_old' attrs="{'invisible': [('content_old','=',False)]}"/>
+                                        <field name='content_new' attrs="{'invisible': [('content_new','=',False)]}"/>
+                                        <field name='directory_old' attrs="{'invisible': [('directory_old','=',False)]}"/>
+                                        <field name='directory_new' attrs="{'invisible': [('directory_new','=',False)]}"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+            	</form>
+            </field>
+        </record>
+
+		<record id="action_auditlog" model="ir.actions.act_window">
+			<field name="name">AuditLog File</field>
+			<field name="res_model">audit.log</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+		<menuitem id="menu_auditlog" 
+			name="AuditLog Files" 
+			parent="muk_dms.cat_menu_muk_dms_config"
+			action="action_auditlog"/>
+
+	</data>
+</odoo>

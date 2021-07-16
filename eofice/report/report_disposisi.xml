@@ -1,0 +1,255 @@
+<odoo>
+    <data>
+        <!--template id="report_disposisi">
+            <t t-name="eofice.report_disposisi">
+			    <t t-name="eofice.report_disposisi">
+			        <t t-call="report.html_container">
+			            <t t-foreach="docs" t-as="o">
+			                <div class="page">
+			                    <div class="row">
+			                        <table style="width: 100%;">
+			                            <tr>
+			                                <td width="30%"><img src="/eofice/static/src/img/logo.png" width="150" height="56"/></td>
+			                                <td width="40%" style="text-align: center;">
+			                                    <br/><span style="text-decoration: underline;">LEMBAR PENERUS</span>
+			                                    <br/><span t-field="o.job_delegasi"/>
+			                                </td>
+			                                <td width="30%"/>
+			                            </tr>
+			                        </table>
+			                        <p><span style="color: #ffffff;">a</span></p>
+			                        <table style="border:1px solid black;border-collapse:collapse;" width="100%">
+			                            <tr style="border:1px solid black;">
+			                                <td width="10%" colspan="3">
+			                                	Nomor Surat Masuk :
+			                                	<t t-if="o.name_ref == false">
+			                                		-
+			                                	</t>
+			                                	<t t-if="o.name_ref">
+			                                		<span t-field="o.name_ref"/>
+			                                	</t>
+			                                </td>
+			                                <td width="9%">No Set</td>
+			                                <td width="1%">:</td>
+			                                <td width="15%"><span t-field="o.total_set"/></td>
+			                                <td width="9%">Agenda</td>
+			                                <td width="1%">:</td>
+			                                <td width="15%"><span t-field="o.name"/></td>
+			                            </tr>
+			                            <tr style="border:1px solid black;">
+			                                <td width="10%">Asal Dok  </td>
+			                                <td width="1%">:</td>
+			                                <td width="39%"><span t-field="o.partner"/></td>
+			                                <td width="9%">Tanggal</td>
+			                                <td width="1%">:</td>
+			                                <td width="15%"><span t-field="o.date2"/></td>
+			                                <td width="9%">Tanggal</td>
+			                                <td width="1%">:</td>
+			                                <td width="15%"><span t-field="o.date"/></td>
+			                            </tr>
+			                            <tr style="border:1px solid black;">
+			                                <td width="10">Perihal</td>
+			                                <td width="1%">:</td>
+			                                <td width="89%" colspan="7"><span t-field="o.subject"/></td>
+			                            </tr>
+			                            <tr style="border:1px solid black;">
+			                                <td colspan="3">Status Surat</td>
+			                                <td colspan="6">:<span t-field="o.status_surat"/></td>
+			                            </tr>
+			                            <tr  style="border:1px solid black;color: #ffffff;">
+			                                <td colspan="9" style="#ffffff;">aaa</td>
+			                            </tr>
+			                        </table>
+			                        <table width="100%" style="border:1px solid black;border-collapse:collapse;">
+			                            <tr>
+			                                <td width="25%" style="border:1px solid black;">Action</td>
+			                                <td width="75%" style="border:1px solid black;">Ditujukan Untuk</td>
+			                            </tr>
+			                            <tr>
+			                                <td width="25" style="border:1px solid black;">
+			                                    <br/><span t-field="o.action2"/>
+			                                </td>
+			                                <td  width="30" colspan="3" style="border:1px solid black;">
+			                                    <t t-foreach="o.user_ids1" t-as="i">
+			                                        <br/><t t-esc="i.name"/>
+			                                    </t>
+			                                </td>
+			                            </tr>
+			                            <tr>
+			                                <td width="25" style="border:1px solid black;">
+			                                    <br/><span t-field="o.action3"/>
+			                                </td>
+			                                <td  width="30" colspan="3" style="border:1px solid black;">
+			                                    <t t-foreach="o.user_ids2" t-as="i">
+			                                        <br/><t t-esc="i.name"/>
+			                                    </t>
+			                                </td>
+			                            </tr>
+			                        </table>
+			                        <table style="border:1px solid black;border-collapse:collapse;" width="100%">
+			                            <tr>
+			                                <td width="25">Catatan :</td>
+			                                <td width="75"><span t-field="o.note"/></td>
+			                            </tr>
+			                        </table>
+			                        <table style="border:1px solid black;border-collapse:collapse;text-align: center;" width="60%">
+			                        	<tr style="border:1px solid black;">
+			                        		<td width="30%" style="border:1px solid black;">
+			                        			<p><span style="color: #ffffff;">a</span></p>
+			                        			<p><span style="color: #ffffff;">a</span></p>
+			                        			<p><span style="color: #ffffff;">a</span></p>
+			                        			<br><span style="color: #ffffff;">a</span></br>
+			                        			Nama &amp; Jabatan
+			                        		</td>
+			                        		<td width="30%" style="border:1px solid black;">
+			                        			<p><span style="color: #ffffff;">a</span></p>
+			                        			<p><span style="color: #ffffff;">a</span></p>
+			                        			<p><span style="color: #ffffff;">a</span></p>
+			                        			Tanggal
+			                        			<br><span style="color: #ffffff;">a</span></br>
+			                        		</td>
+			                        	</tr>
+			                        </table>
+			                        <br>Forward Kepada : <span t-field="o.forward_to"/></br>
+			                        <br>catatan Forward : <span t-field="o.note_forward"/></br>
+			                    </div>
+			                </div>
+			            </t>
+			        </t>
+			    </t>
+			</t>
+		</template-->
+
+
+		<template id="report_disposisi">
+			<t t-name="eofice.report_disposisi">
+			    <t t-name="eofice.report_disposisi">
+			        <t t-call="report.html_container">
+			            <t t-foreach="docs" t-as="o">
+			                <div class="page">
+			                    <div class="row">
+			                        <table style="width: 100%;">
+			                            <tr>
+			                                <td width="40%" style="text-align: left;">
+			                                    <br/><span>Lembar Penerus</span>
+			                                    <br/><span t-field="o.job_delegasi"/>
+			                                </td>
+			                                <td width="30%"/>
+			                                <td style="text-align: right;" width="30%"><img src="/eofice/static/src/img/logo.png" width="200" height="45"/></td>
+			                            </tr>
+			                        </table>
+			                        <table style="border:1px solid black;border-collapse:collapse;" width="100%">
+			                            <tr style="border:1px solid black;">
+			                                <td width="50%" style="border:1px solid black;text-align: center;">NO. AGENDA</td>
+			                                <td colspan="4" width="20%" style="border:1px solid black;text-align: center;">DITERIMA</td>
+			                                <td colspan="4" width="30%" style="border:1px solid black;text-align: center;">TINGKAT SURAT</td>
+
+			                            </tr>
+			                            <tr style="border:1px solid black;">
+			                                <td width="50%" style="border:1px solid black;text-align: center;"><span t-field="o.name"/></td>
+			                                <td colspan="4" width="20%" style="border:1px solid black;text-align: center;"><span t-field="o.date" t-field-options="{&quot;format&quot;: &quot;dd MMMM y&quot;}"/></td>
+			                                <td width="7.5%" style="border:1px solid black;text-align: center;">R<div t-if="o.status_surat == 'rahasia'">&#10004;</div></td>
+			                                <td width="7.5%" style="border:1px solid black;text-align: center;">P<div t-if="o.status_surat == 'penting'">&#10004;</div></td>
+			                                <td width="7.5%" style="border:1px solid black;text-align: center;">S<div t-if="o.status_surat == 'segera'">&#10004;</div></td>
+			                                <td width="7.5%" style="border:1px solid black;text-align: center;">B<div t-if="o.status_surat == 'biasa'">&#10004;</div></td>
+			                            </tr>
+			                            <tr style="border:1px solid black;">
+			                                <td width="50%" style="border:1px solid black;text-align: center;"><br/><br/><br/><br/>DITERUSKAN KEPADA<br/><br/><br/><br/><br/></td>
+			                                <td width="5%" style="border:1px solid black;text-align: center;"><br/>A<br/>C<br/>T<br/>I<br/>O<br/>N<br/><br/><br/></td>
+			                                <td width="5%" style="border:1px solid black;text-align: center;">T<br/>A<br/>N<br/>G<br>G</br><br/>A<br/>P<br/>A<br/>N<br/></td>
+			                                <td width="5%" style="border:1px solid black;text-align: center;"><br/><br/>I<br/>N<br/>F<br/>O<br/><br/><br/><br/></td>
+			                                <td width="5%" style="border:1px solid black;text-align: center;"><br/><br/>F<br/>I<br/>L<br/>E<br/><br/><br/><br/></td>
+			                                <td colspan="2" width="15%" style="border:1px solid black;text-align: center;"><br/><br/><br/><br/>PARAF<br/><br/><br/><br/><br/></td>
+			                                <td colspan="2" width="15%" style="border:1px solid black;text-align: center;"><br/><br/><br/><br/>TANGGAL DITERUSKAN<br/><br/><br/><br/><br/></td>
+			                            </tr>
+			                            <t t-set="l" t-value="1" />
+			                            <t t-foreach="o.user_ids1" t-as="i">
+			                                <tr style="border:1px solid black;">
+			                                    <td width="50%" style="border:1px solid black;">
+			                                        <span t-esc="l"/>. <t t-esc="i.name"/>
+			                                    </td>
+			                                    <td width="5%" style="border:1px solid black;text-align: center;">&#10004;</td>
+			                                    <td width="5%" style="border:1px solid black;text-align: center;"></td>
+			                                    <td width="5%" style="border:1px solid black;text-align: center;"></td>
+			                                    <td width="5%" style="border:1px solid black;text-align: center;"></td>
+			                                    <td colspan="2" width="15%" style="border:1px solid black;text-align: center;"></td>
+			                                    <td colspan="2" width="15%" style="border:1px solid black;text-align: center;"></td>
+			                                </tr>
+			                                <t t-set="l" t-value="l+1"/>
+			                            </t>
+			                            <t t-foreach="o.user_ids2" t-as="i">
+			                                <tr style="border:1px solid black;">
+			                                    <td width="50%" style="border:1px solid black;">
+			                                        <span t-esc="l"/>. <t t-esc="i.name"/>
+			                                    </td>
+			                                    <td width="5%" style="border:1px solid black;text-align: center;"></td>
+			                                    <td width="5%" style="border:1px solid black;text-align: center;">&#10004;</td>
+			                                    <td width="5%" style="border:1px solid black;text-align: center;"></td>
+			                                    <td width="5%" style="border:1px solid black;text-align: center;"></td>
+			                                    <td colspan="2" width="15%" style="border:1px solid black;text-align: center;"></td>
+			                                    <td colspan="2" width="15%" style="border:1px solid black;text-align: center;"></td>
+			                                </tr>
+			                                <t t-set="l" t-value="l+1"/>
+			                            </t>
+			                            <t t-foreach="o.user_ids4" t-as="i">
+			                                <tr style="border:1px solid black;">
+			                                    <td width="50%" style="border:1px solid black;">
+			                                        <span t-esc="l"/>. <t t-esc="i.name"/>
+			                                    </td>
+			                                    <td width="5%" style="border:1px solid black;text-align: center;"></td>
+			                                    <td width="5%" style="border:1px solid black;text-align: center;"></td>
+			                                    <td width="5%" style="border:1px solid black;text-align: center;">&#10004;</td>
+			                                    <td width="5%" style="border:1px solid black;text-align: center;"></td>
+			                                    <td colspan="2" width="15%" style="border:1px solid black;text-align: center;"></td>
+			                                    <td colspan="2" width="15%" style="border:1px solid black;text-align: center;"></td>
+			                                </tr>
+			                                <t t-set="l" t-value="l+1"/>
+			                            </t>
+			                            <t t-foreach="o.user_ids5" t-as="i">
+			                                <tr style="border:1px solid black;">
+			                                    <td width="50%" style="border:1px solid black;">
+			                                        <span t-esc="l"/>. <t t-esc="i.name"/>
+			                                    </td>
+			                                    <td width="5%" style="border:1px solid black;text-align: center;"></td>
+			                                    <td width="5%" style="border:1px solid black;text-align: center;"></td>
+			                                    <td width="5%" style="border:1px solid black;text-align: center;"></td>
+			                                    <td width="5%" style="border:1px solid black;text-align: center;">&#10004;</td>
+			                                    <td colspan="2" width="15%" style="border:1px solid black;text-align: center;"></td>
+			                                    <td colspan="2" width="15%" style="border:1px solid black;text-align: center;"></td>
+			                                </tr>
+			                                <t t-set="l" t-value="l+1"/>
+			                            </t>
+			                            <tr>
+			                                <td colspan="9" width="100%"><br/>DISPOSISI :</td>
+			                            </tr>
+			                            <tr>
+			                                <td colspan="9" width="100%"><br/><span t-field="o.note"/><span style="color: #ffffff;"><br/><br/><br/>DISPOSISI</span></td>
+			                            </tr>
+			                            <tr>
+			                                <td colspan="5" width="70%"/>
+			                                <td colspan="2" width="15%" style="border:1px solid black;text-align: center;">PARAF</td>
+			                                <td colspan="2" width="15%" style="border:1px solid black;text-align: center;">TANGGAL</td>
+			                            </tr>
+			                            <tr>
+			                                <td colspan="5" width="70%"/>
+			                                <td colspan="2" width="15%" style="border:1px solid black;text-align: center;"><br/><br/><br/></td>
+			                                <td colspan="2" width="15%" style="border:1px solid black;text-align: center;"><br/><br/><br/></td>
+			                            </tr>
+			                            <t t-if="o.forward_to">
+				                            <tr>
+				                                <td colspan="9" width="100%" style="border:1px solid black;">
+					                                	Forward Kepada : <span t-field="o.forward_to"/>
+					                                	<br/>catatan Forward : <span t-field="o.note_forward"/>
+				                            	</td>
+				                            </tr>
+				                        </t>
+			                        </table>
+			                    </div>
+			                </div>
+			            </t>
+			        </t>
+			    </t>
+			</t>
+		</template>
+	</data>
+</odoo>

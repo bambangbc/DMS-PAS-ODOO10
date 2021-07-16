@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="so_excel" pageWidth="1190" pageHeight="842" orientation="Landscape" columnWidth="1176" leftMargin="7" rightMargin="7" topMargin="12" bottomMargin="12" uuid="bff3a993-eaa7-44cc-99cf-d1ecd77afe1e">
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="OPENERP_RELATIONS" value="order_line"/>
+	<queryString language="xPath">
+		<![CDATA[]]>
+	</queryString>
+	<field name="Customer_Reference-client_order_ref" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Customer_Reference-client_order_ref]]></fieldDescription>
+	</field>
+	<field name="Sales_Area_Code-code" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Sales_Area-area_id/Sales_Area_Code-code]]></fieldDescription>
+	</field>
+	<field name="Division-code" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Division-division_id/Code-code]]></fieldDescription>
+	</field>
+	<field name="Sales_Team-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Sales_Team-team_id/Sales_Team-name]]></fieldDescription>
+	</field>
+	<field name="Sales-off" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Sales_Off-sales_off/Code-code]]></fieldDescription>
+	</field>
+	<field name="Sales_type" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Sales_Type-trx_type_id/Code-code]]></fieldDescription>
+	</field>
+	<field name="Sales_Type-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Sales_Type-trx_type_id/Sales_Type-name]]></fieldDescription>
+	</field>
+	<field name="Customer-code" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Customer-partner_id/Code-code]]></fieldDescription>
+	</field>
+	<field name="Customer-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Customer-partner_id/Name-name]]></fieldDescription>
+	</field>
+	<field name="Invoice-partner-code" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Invoice_Address-partner_invoice_id/Code-code]]></fieldDescription>
+	</field>
+	<field name="Invoice-partner-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Invoice_Address-partner_invoice_id/Name-name]]></fieldDescription>
+	</field>
+	<field name="Delv-partner-code" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Delivery_Address-partner_shipping_id/Code-code]]></fieldDescription>
+	</field>
+	<field name="Delv-partner-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Delivery_Address-partner_shipping_id/Name-name]]></fieldDescription>
+	</field>
+	<field name="Payer-partner-code" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Payer-partner_payer_id/Code-code]]></fieldDescription>
+	</field>
+	<field name="Payer-partner-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Payer-partner_payer_id/Name-name]]></fieldDescription>
+	</field>
+	<field name="Registration_Number-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Fleet_Acquisition-fl_acquisition_id/Registration_Number-name]]></fieldDescription>
+	</field>
+	<field name="Date-date_schedule" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Flight_schedule_id-flight_schedule_id/Date-date_schedule]]></fieldDescription>
+	</field>
+	<field name="Description-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Order_Lines-order_line/Description-name]]></fieldDescription>
+	</field>
+	<field name="Internal_Reference-default_code" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Order_Lines-order_line/Product-product_id/Internal_Reference-default_code]]></fieldDescription>
+	</field>
+	<field name="Quantity-product_uom_qty" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Order_Lines-order_line/Quantity-product_uom_qty]]></fieldDescription>
+	</field>
+	<field name="Unit_of_Measure-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Order_Lines-order_line/Unit_of_Measure-product_uom/Unit_of_Measure-name]]></fieldDescription>
+	</field>
+	<field name="Salesperson" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Salesperson-user_id/Name-name]]></fieldDescription>
+	</field>
+	<field name="Sales_Off-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Sales_Off-sales_off/Sales_Off-name]]></fieldDescription>
+	</field>
+	<field name="Description-description" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Order_Lines-order_line/Product-product_id/Description-description]]></fieldDescription>
+	</field>
+	<field name="Flight_Order_Number-flight_order_no" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Order_Lines-order_line/Flight_Schedule-flight_schedule_ids/Flight_Order_Number-flight_order_no]]></fieldDescription>
+	</field>
+	<field name="ETD__local_time-etd" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Order_Lines-order_line/Flight_Schedule-flight_schedule_ids/ETD__local_time-etd]]></fieldDescription>
+	</field>
+	<field name="Internal_Reference-default_code2" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Order_Lines-order_line/Product-product_id/Internal_Reference-default_code]]></fieldDescription>
+	</field>
+	<field name="ETD-etd" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Order_Lines-order_line/ETD-etd]]></fieldDescription>
+	</field>
+	<field name="Departure-departure" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Order_Lines-order_line/Departure-departure]]></fieldDescription>
+	</field>
+	<field name="Code-code" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Distribution_Channel-dist_channel_id/Code-code]]></fieldDescription>
+	</field>
+	<field name="Distribution_Channel-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Distribution_Channel-dist_channel_id/Distribution_Channel-name]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="6a3b8311-061a-49d8-b117-75d887e38b2d" mode="Opaque" x="0" y="0" width="60" height="20" forecolor="#010101" backcolor="#FFF300"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[PO No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="84ec7313-b24c-4da2-9b2f-e0da8d04faa0" mode="Opaque" x="60" y="0" width="60" height="20" forecolor="#010101" backcolor="#FFF300"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Sales Area]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c138f544-acdb-43d0-8f29-2dd0589ab6d7" mode="Opaque" x="120" y="0" width="75" height="20" forecolor="#010101" backcolor="#FFF300"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Dist. Channel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fd18e8a9-60d1-448c-adaa-622f261d4d98" mode="Opaque" x="195" y="0" width="50" height="20" forecolor="#010101" backcolor="#FFF300"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Division]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e5b39868-35c4-4984-a3e1-9b181c8d1b06" mode="Opaque" x="305" y="0" width="60" height="20" forecolor="#010101" backcolor="#FFF300"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Sales Off]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f05d3ead-0499-4c04-8ed6-18e18c5e7470" mode="Opaque" x="365" y="0" width="60" height="20" forecolor="#010101" backcolor="#FFF300"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Sales Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9cc21f8c-ab4f-4c5a-87da-58b7bd27ab04" mode="Opaque" x="425" y="0" width="60" height="20" forecolor="#010101" backcolor="#FFF300"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Sold To]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3bc988a4-cd10-4076-b213-a180b29b0fac" mode="Opaque" x="545" y="0" width="60" height="20" forecolor="#010101" backcolor="#FFF300"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Bill To]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b9aa24e6-f4bf-4d44-b716-151ca7620486" mode="Opaque" x="485" y="0" width="60" height="20" forecolor="#010101" backcolor="#FFF300"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Ship To]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a975674-c123-4c7d-88b0-52f097396600" mode="Opaque" x="605" y="0" width="60" height="20" forecolor="#010101" backcolor="#FFF300"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Payer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d94efb9e-861d-47eb-834c-096b29dc2c1c" mode="Opaque" x="730" y="0" width="70" height="20" forecolor="#010101" backcolor="#FFF300"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Flight Order]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="400fd5ff-cc41-41b5-9299-0538b8282504" mode="Opaque" x="800" y="0" width="60" height="20" forecolor="#010101" backcolor="#FFF300"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Reg No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fc26249f-0d49-4895-8a4a-a8d32f21971c" mode="Opaque" x="860" y="0" width="65" height="20" forecolor="#010101" backcolor="#FFF300"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Flight Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c77f3969-a21c-44e4-8bd3-314ee9cc5344" mode="Opaque" x="985" y="0" width="87" height="20" forecolor="#010101" backcolor="#FFF300"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bca4fefc-6b5b-4476-90ce-66c5f8d1a1a0" mode="Opaque" x="925" y="0" width="60" height="20" forecolor="#010101" backcolor="#FFF300"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Material]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e3caa1b9-068f-43a1-9746-9bfeac868c15" mode="Opaque" x="1072" y="0" width="52" height="20" forecolor="#010101" backcolor="#FFF300"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="90b35123-098a-4152-a757-9e4fc186b084" mode="Opaque" x="1124" y="0" width="52" height="20" forecolor="#010101" backcolor="#FFF300"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[UOM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c964f305-9578-4dca-a9db-673ab4d7c9af" mode="Opaque" x="245" y="0" width="60" height="20" forecolor="#010101" backcolor="#FFF300"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Sales Grp]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7fd95bbe-a106-4d60-8bca-6e7edd944f44" mode="Opaque" x="665" y="0" width="65" height="20" forecolor="#010101" backcolor="#FFF300"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Salesperson]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="bdbae6ac-3511-4cda-85c5-3baf30940173" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="60" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Customer_Reference-client_order_ref}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="d1cf181a-73c1-4607-91cd-1be34ce5bebb" positionType="Float" stretchType="RelativeToTallestObject" x="60" y="0" width="60" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Sales_Area_Code-code}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="763ada22-7779-4570-abbe-232f7b15418f" positionType="Float" stretchType="RelativeToTallestObject" x="120" y="0" width="75" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{Code-code}.isEmpty() ?
+    $F{Distribution_Channel-name} : $F{Code-code})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="b6b1dfd2-b6f6-4872-948b-438c978bf2dc" positionType="Float" stretchType="RelativeToTallestObject" x="195" y="0" width="50" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Division-code}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="83f779a2-87c0-44c4-9b26-fccbbe384530" positionType="Float" stretchType="RelativeToTallestObject" x="305" y="0" width="60" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{Sales-off}.isEmpty() ?
+    $F{Sales_Off-name} : $F{Sales-off})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="6019bbed-b1b5-4b7f-af66-0b46d68c7bd8" positionType="Float" stretchType="RelativeToTallestObject" x="365" y="0" width="60" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Sales_type}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="4dcc3d68-c67a-40ee-835b-ce4eff2708e5" positionType="Float" stretchType="RelativeToTallestObject" x="425" y="0" width="60" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Customer-code}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="fe0d14c7-b90b-48d8-8105-21675ad46063" positionType="Float" stretchType="RelativeToTallestObject" x="545" y="0" width="60" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Invoice-partner-code}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="76b5d4f2-2c01-4e52-95c5-d652ffd64d26" positionType="Float" stretchType="RelativeToTallestObject" x="485" y="0" width="60" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Delv-partner-code}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="dc370e4e-8e2b-499f-ac8a-4f57ad0b79cf" positionType="Float" stretchType="RelativeToTallestObject" x="605" y="0" width="60" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Payer-partner-code}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="11e665c3-844e-48cb-aaeb-0254b1df93bb" positionType="Float" stretchType="RelativeToTallestObject" x="730" y="0" width="70" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Flight_Order_Number-flight_order_no}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="58cf7f11-1716-4ddc-965c-119fa3224499" positionType="Float" stretchType="RelativeToTallestObject" x="800" y="0" width="60" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Internal_Reference-default_code2}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="1cfa802d-c1c7-4cdc-8254-c0733ac26b60" positionType="Float" stretchType="RelativeToTallestObject" x="860" y="0" width="65" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{Departure-departure}.isEmpty() ? null : new SimpleDateFormat("dd.MM.yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse($F{Departure-departure})))]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="53767e00-a916-4edf-b6a5-41c4f28d1c52" positionType="Float" stretchType="RelativeToTallestObject" x="985" y="0" width="87" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Description-name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="bb51d61e-bae9-4282-9b32-a1a095854bf3" positionType="Float" stretchType="RelativeToTallestObject" x="925" y="0" width="60" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Description-description}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="a2deb9cc-3aea-407d-be5e-9532a2cc31d6" positionType="Float" stretchType="RelativeToTallestObject" x="1072" y="0" width="52" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new DecimalFormat("#,##0;(#,##0)").format(Double.valueOf($F{Quantity-product_uom_qty}))]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="2204d488-9370-4721-8840-26c5c292741f" positionType="Float" stretchType="RelativeToTallestObject" x="1124" y="0" width="52" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Unit_of_Measure-name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="f9a561b6-7749-4024-bfd9-6179e3e84f87" positionType="Float" stretchType="RelativeToTallestObject" x="245" y="0" width="60" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Sales_Team-name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="cfef1084-75e2-443f-a3dc-33e044fa3c78" positionType="Float" stretchType="RelativeToTallestObject" x="665" y="0" width="65" height="20"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Salesperson}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

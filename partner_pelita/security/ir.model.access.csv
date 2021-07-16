@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_company_type_base_user,company_type.basic_user,partner_pelita.model_res_company_type,base.group_user,1,1,1,0
+access_company_type_erp_mgr,company_type.erp_mgr,partner_pelita.model_res_company_type,base.group_erp_manager,1,1,1,1
+access_company_type_usr_multi_company,company_type.usr_multi_company,partner_pelita.model_res_company_type,base.group_multi_company,1,1,1,1
+access_company_type_user_sales,company_type.user_sales,partner_pelita.model_res_company_type,sales_team.group_sale_salesman,1,1,1,0
+access_industries_base_user,company_type.basic_user,partner_pelita.model_res_partner_industries,base.group_user,1,1,1,0
+access_industries_erp_mgr,company_type.erp_mgr,partner_pelita.model_res_partner_industries,base.group_erp_manager,1,1,1,1
+access_industries_usr_multi_company,company_type.usr_multi_company,partner_pelita.model_res_partner_industries,base.group_multi_company,1,1,1,1
+access_industries_user_sales,company_type.user_sales,partner_pelita.model_res_partner_industries,sales_team.group_sale_salesman,1,1,1,0
+access_sales_off_base_user,sales_off.base_user,ib_base_pelita.model_sale_sales_office,base.group_user,1,0,0,0
+access_dist_channel_base_user,dist_channel.base_user,ib_base_pelita.model_sale_distribution_channel,base.group_user,1,0,0,0
+access_sales_area_base_user,sales_area.base_user,ib_base_pelita.model_sale_sales_area,base.group_user,1,0,0,0

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--<data>
+        <record id="seq_log_fixwing" model="ir.sequence">
+            <field name="name">Maintenance Log FixedWing</field>
+            <field name="code">maintenance.fixedwing</field>
+            <field name="prefix">F-</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_log_rotary" model="ir.sequence">
+            <field name="name">Maintenance Log Rotary</field>
+            <field name="code">maintenance.rotary</field>
+            <field name="prefix">R-</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>-->
+    <data noupdate="1">
+        <!-- Sequences for Maintenance Log Rotary -->
+        <record id="seq_fml" model="ir.sequence">
+            <field name="name">Flight Maintenance Log</field>
+            <field name="code">flight.maintenance.log</field>
+          <!--  <field name="prefix">R</field> -->
+            <field name="padding">5</field>
+            <!--<field name="suffix">/%(month)s/%(range_year)s</field> -->
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

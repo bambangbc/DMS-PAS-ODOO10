@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_pelita_reporting" name="Reports"
+              parent="pelita_operation.operation_management" sequence="100"/>
+
+    <record id="pelita_operational_report_view" model="ir.ui.view">
+        <field name="name">Operational Reports</field>
+        <field name="model">operational.reports</field>
+        <field name="arch" type="xml">
+            <form string="Operational Reports">
+                <group>
+                    <group colspan="2"> <!--col="2"-->
+                        <field name="report_type" />
+                        <field name="pdf_ok" invisible="True"/>
+                    </group>
+                    <group>
+                        <field name="date_from"/>
+                    </group>
+                    <group>
+                        <field name="crew_id" invisible="True"/>
+                        <field name="date_to"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_report" string="Print Report"
+                            type="object" class="oe_highlight" default_focus="1"/>
+	                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pelita_operational_report" model="ir.actions.act_window">
+        <field name="name">Operational Reports</field>
+        <field name="res_model">operational.reports</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="pelita_operational_report_view"/>
+        <field name="target">new</field>
+    </record>
+
+        <!--<menuitem id="menu_pelita_operational_report" name="Operational Reports"
+              action="action_pelita_operational_report" parent="menu_pelita_reporting" sequence="5"/>-->
+
+        <record model="ir.ui.view" id="view_export_csv_order_wizard">
+            <field name="name">Export CSV Order</field>
+            <field name="model">sale.export.csv</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form col="4" string="Eksport CSV Order Wizard">
+                    <group>
+						<field name="name" invisible="True"/>
+						<separator colspan="4"/>
+                        <field name="data_file" filename="name" nolabel="1" colspan="4"/>
+					</group>
+					<footer>
+	                    <button name="eksport_csv_sale_order" string="Eksport CSV Order" type="object" class="oe_highlight"/>
+	                    or
+	                    <button string="Cancel" class="oe_link" special="cancel" />
+	                </footer>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_export_csv_order">
+            <field name="name">Export CSV Order</field>
+            <field name="res_model">sale.export.csv</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        <!--<record model="ir.values" id="more_button_inherit_export_csv_order">
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="name">Export CSV Order</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_export_csv_order'))" />
+            <field name="key">action</field>
+            <field name="model">sale.order</field>
+        </record>-->
+        <!--<menuitem id="menu_export_csv_order" name="Export CSV Order" action="action_export_csv_order" parent= "sales_team.menu_sale_config"/>-->
+
+
+</odoo>

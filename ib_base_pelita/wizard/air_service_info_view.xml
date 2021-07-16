@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_air_service_info_wizard" model="ir.ui.view">
+        <field name="name">Air Service Info</field>
+        <field name="model">sale.air_service_info</field>
+        <field name="arch" type="xml">
+            <form string="Air Service Info">
+                <field name="order_line_id"  invisible="1" class="oe_inline"/>
+                <group>
+                    <group string="Aircraft Information" name="aircraft_info">
+                        <field name="craft_name" readonly="True"/>
+                        <field name="craft_type" readonly="True"/>
+                        <field name="craft_reg_code" readonly="True"/>
+                        <field name="craft_categ" readonly="True"/>
+                    </group>
+                    <group string="Ownership Information" name="aircraft_ownership">
+                        <field name="craft_ownership" readonly="True"/>
+                        <field name="craft_availseat" readonly="True"/>
+                        <field name="craft_color" readonly="True"/>
+                        <field name="craft_status" readonly="True"/>
+                    </group>
+                    <group string="Base Operation Info" name="base_operation_info">
+                        <field name="base_code" readonly="True"/>
+                        <field name="base_desc" readonly="True"/>
+                        <field name="base_coordinate" readonly="True"/>
+                    </group>
+                    <group string="Area Information" name="area_info">
+                        <field name="area_code" readonly="True"/>
+                        <field name="area_desc" readonly="True"/>
+                        <field name="area_coordinate" readonly="True"/>
+                    </group>
+                    <group string="Passenger Information" name="passenger_info">
+                        <field name="pass_qty" readonly="True"/>
+                        <field name="pass_cargo" readonly="True"/>
+                        <field name="pass_ticket" readonly="True"/>
+                    </group>
+                    <group string="Crew Information" name="crew_info">
+                        <field name="crew_set" readonly="True"/>
+                        <field name="technician_set" readonly="True"/>
+                        <field name="fuel_consump" readonly="True"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Close" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_air_service_info" model="ir.actions.act_window">
+        <field name="name">Air Service Info</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.air_service_info</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

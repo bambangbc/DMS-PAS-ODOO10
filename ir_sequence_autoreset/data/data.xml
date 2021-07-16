@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="group_notif_invoice_due_date" model="res.groups">
+        <field name="name">Due date notification</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+
+    <record model="ir.cron" id="invoice_due_date_cron">
+        <field name="name">autoreset sequence per month</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">months</field>
+        <field name="numbercall">-1</field>
+        <field name="user_id" ref="base.user_root" />
+        <field name="active" eval="False"/>
+        <field name="doall" eval="False"/>
+        <field name="model" eval="'ir.sequence'"/>
+        <field name="function" eval="'autoreset_sequence'"/>
+        <field name="args" eval="'()'" />
+    </record>
+
+</odoo>

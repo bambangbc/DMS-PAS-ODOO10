@@ -1,0 +1,139 @@
+<odoo>
+    <data>
+        <template id="report_memorandum">
+            <t t-name="eofice.report_memorandum">
+		        <t t-call="report.html_container">
+		            <t t-foreach="docs" t-as="o">
+						<div class="header">
+							<p style="float: left; display: inline-block; font-weight: bold; font-size: 16px;">MEMORANDUM
+							</p>
+							<img style="float: right;" src="/eofice/static/src/img/logo-pelita.jpeg" width="150" />
+						</div>
+		                <div class="page">
+							<style>
+							table tr td {
+								vertical-align: top;
+							}
+							</style>
+		                    <div class="row">
+								Jakarta, <span t-field="o.date" t-field-options="{&quot;format&quot;: &quot;dd MMMM y&quot;}"/>
+		                        <table width="100%">
+									<tbody>
+										<tr>
+											<td width="100px">Nomor
+											</td>
+											<td width="10px">:</td>
+											<td>
+												<span t-field="o.name"/>
+												<br /><br />
+											</td>
+										</tr>
+										<tr>
+											<td>
+												Kepada
+											</td>
+											<td>:</td>
+											<td>
+												<span t-if="o.report_true == 'true'">
+													Periksa Alamat Dibawah )*
+												</span>
+												<span t-if="o.report_true == 'false'">
+													<span t-field="o.kepada.name"/>
+												</span>
+											</td>
+										</tr>
+										<tr>
+											<td>Dari</td>
+											<td>:</td>
+											<td>
+												<span t-field="o.pengirim.name"/>
+												<br /><br />
+											</td>
+										</tr>
+										<tr>
+											<td>Lampiran</td>
+											<td width="5px;">:</td>
+											<td>
+												<span t-field="o.lampiran"/>
+											</td>
+										</tr>
+										<tr>
+											<td>Perihal</td>
+											<td>:</td>
+											<td>
+												<span t-field="o.perihal"/>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+		                        <p style="margin-bottom: 20px;"><span t-field="o.content"/></p>
+								<p style="margin-bottom: 50px;">Demikian disampaikan, terima kasih atas perhatian dan kerjasama yang diberikan.</p>
+		                        <table width="100%">
+		                            <tr>
+		                                <td width="30%"/>
+		                                <td width="30%"/>
+		                                <td width="40%" style="text-align: center"><span t-field="o.template.user_id6.partner_id.job_id.name"/></td>
+		                            </tr>
+		                        </table>
+		                        <p><span style="color: #ffffff;">a</span></p>
+		                        <p><span style="color: #ffffff;">a</span></p>
+		                        <p><span style="color: #ffffff;">a</span></p>
+		                        <p><span style="color: #ffffff;">a</span></p>
+		                        <table width="100%">
+		                            <tr>
+		                                <td width="30%"/>
+		                                <td width="30%"/>
+		                                <td width="40%" style="text-align: center"><span t-field="o.template.user_id6.partner_id.name"/></td>
+		                            </tr>
+		                        </table>
+		                        <table width="100%">
+		                        	<tr>
+		                        		<td width="100%">
+		                        			<div t-if="o.report_true == 'true'">
+		                        				Kepada Yth :
+		                        			</div>
+		                        		</td>
+		                        	</tr>
+		                        	<tr>
+		                        		<td width="100%">
+			                        		<div t-if="o.report_true == 'true'">
+			                        			<t t-foreach="o.kepada" t-as="i">
+					                                <br/><li><t t-esc="i.name"/></li>
+					                            </t>
+											</div>
+										</td>
+									</tr>
+									<tr>
+		                        		<td><span style="color: #ffffff;">a</span></td>
+									</tr>
+									<tr>
+		                        		<td width="100%">
+		                        			Tembusan :
+		                        			<!--div t-if="o.report_tem_true == 'true'">
+		                        				Tembusan :
+		                        			</div-->
+		                        		</td>
+		                        	</tr>
+		                        	<tr>
+		                        		<td width="100%">
+		                        			<t t-foreach="o.tembusan" t-as="i">
+					                            <br/><li><t t-esc="i.name"/></li>
+					                        </t>
+			                        		<!--div t-if="o.report_tem_true == 'true'">
+												<t t-foreach="o.tembusan" t-as="i">
+					                                <br/><li><t t-esc="i.name"/></li>
+					                            </t>
+											</div-->
+										</td>
+									</tr>
+								</table>
+		                    </div>
+		                </div>
+		            </t>
+		        </t>
+		    </t>
+	    </template>
+	</data>
+</odoo>

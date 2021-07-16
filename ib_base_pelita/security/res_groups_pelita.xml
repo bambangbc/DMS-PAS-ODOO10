@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="0">
+        <record id="group_operation_viewer" model="res.groups">
+            <field name="name">Viewer</field>
+            <field name="category_id" ref="pelita_operation.module_category_operation"/>
+        </record>
+        <record id="group_fleet_management_viewer" model="res.groups">
+            <field name="name">Viewer</field>
+            <field name="category_id" ref="pelita_master_data.module_category_fleet"/>
+        </record>
+        <record id="group_crew_viewer" model="res.groups">
+            <field name="name">Viewer</field>
+            <field name="category_id" ref="pelita_crew.module_category_crew"/>
+        </record>
+        
+        <record id="group_pas_subordination" model="res.groups">
+            <field name="name">PAS (Pelita Air Service)</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+        <record id="group_paf_subordination" model="res.groups">
+            <field name="name">Subordination: PAF (Pelita Avionic Facility)</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+        <record id="group_ptc_subordination" model="res.groups">
+            <field name="name">Subordination: PTC (Pelita Air Training Center)</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+        <record id="group_pca_subordination" model="res.groups">
+            <field name="name">Subordination: PCA (Pondok Cabe Airport SBU)</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+        
+        <record model="ir.module.category" id="module_category_pelita_maintenane">
+            <field name="name">Maintenance Management</field>
+            <field name="description">Maintenance</field>
+            <field name="sequence">2</field>
+        </record>
+        <record id="group_maintenance_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="module_category_pelita_maintenane"/>
+        </record>
+        <record id="group_maintenance_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="category_id" ref="module_category_pelita_maintenane"/>
+            <field name="implied_ids" eval="[(4, ref('group_maintenance_user'))]"/>
+        </record>
+        <record id="group_maintenance_viewer" model="res.groups">
+            <field name="name">Viewer</field>
+            <field name="category_id" ref="module_category_pelita_maintenane"/>
+        </record>
+        <record id="group_mtc_user_own_docs" model="res.groups">
+            <field name="name">User Own Document</field>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="category_id" ref="module_category_pelita_maintenane"/>
+        </record>
+        <record id="group_mtc_manager_own_docs" model="res.groups">
+            <field name="name">Manager Own Document</field>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="category_id" ref="module_category_pelita_maintenane"/>
+            <field name="implied_ids" eval="[(4, ref('group_mtc_user_own_docs'))]"/>
+        </record>
+    </data>
+    
+    <data noupdate="0"> <!-- Record Rules - default: noupdate="1"-->
+        <!--Maintenance Management - Rules -->
+        <record id="maintenance_rule_admin_user" model="ir.rule">
+            <field name="name">Maintenance administrator</field>
+            <field name="model_id" ref="maintenance.model_maintenance_equipment"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_maintenance_manager'))]"/>
+        </record>
+        <record id="maintenance_rule_user" model="ir.rule">
+            <field name="name">Users are allowed to access equipments they follow</field>
+            <field name="model_id" ref="maintenance.model_maintenance_equipment"/>
+            <field name="domain_force">[('message_partner_ids', 'in', [user.partner_id.id])]</field>
+            <field name="groups" eval="[(4, ref('group_maintenance_user')),
+                (4, ref('group_maintenance_viewer'))]"/>
+        </record>
+        <record id="maintenance_request_rule_admin_user" model="ir.rule">
+            <field name="name">Maintenance Request: All Documents</field>
+            <field name="model_id" ref="maintenance.model_maintenance_request"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_maintenance_manager')),(4, ref('group_maintenance_user')),
+                (4, ref('group_maintenance_viewer'))]"/>
+        </record>
+        <record id="maintenance_request_rule_user" model="ir.rule">
+            <field name="name">Maintenance Request: Own Documents Only</field>
+            <field name="model_id" ref="maintenance.model_maintenance_request"/>
+            <field name="domain_force">['&amp;',('department_id', '=', user.department_id.id),'|','|',('owner_user_id', '=', user.id),('technician_user_id', '=', user.id),('owner_user_id', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('group_mtc_user_own_docs')),(4, ref('group_mtc_manager_own_docs'))]"/>
+        </record>
+        <record id="maintenance_stage_rule_user" model="ir.rule">
+            <field name="name">Maintenance Stage: All Documents</field>
+            <field name="model_id" ref="maintenance.model_maintenance_stage"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="maintenance_team_rule_user" model="ir.rule">
+            <field name="name">Maintenance Teams: All Documents</field>
+            <field name="model_id" ref="maintenance.model_maintenance_team"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        
+        <!--Pelita iCrew - Rules -->
+        <record id="crew_schedule_rule_user" model="ir.rule">
+            <field name="name">Crew Schedule: All Documents</field>
+            <field name="model_id" ref="pelita_crew.model_crew_schedule"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('pelita_crew.group_crw_user')),
+                (4, ref('pelita_crew.group_crw_manager')),(4, ref('ib_base_pelita.group_crew_viewer'))]"/>
+        </record>
+        <record id="crew_schedule_rule_user_own_docs" model="ir.rule">
+            <field name="name">Crew Schedule: Own Documents Only</field>
+            <field name="model_id" ref="pelita_crew.model_crew_schedule"/>
+            <field name="domain_force">['&amp;',('employee_id.department_id', '=', user.department_id.id),'|',('employee_id.user_id', '=', user.id),'&amp;',('department_id', '=', user.department_id.id),('user_id', '=', user.id)]</field>
+            <!--['&amp;',('department_id', '=', user.department_id.id),'|',('user_id', '=', user.id),('user_id', '=', False)]-->
+            <field name="groups" eval="[(4, ref('pelita_crew.group_crw_user_own_docs')),
+                                        (4, ref('pelita_crew.group_crw_manager_own_docs'))]"/>
+        </record>
+        <record id="crew_schedule_actual_rule_user" model="ir.rule">
+            <field name="name">Crew Schedule Actual: All Documents</field>
+            <field name="model_id" ref="pelita_crew.model_crew_schedule_actual"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('pelita_crew.group_crw_user')),
+                (4, ref('pelita_crew.group_crw_manager')),(4, ref('ib_base_pelita.group_crew_viewer'))]"/>
+        </record>
+        <record id="crew_schedule_actual_rule_user_own_docs" model="ir.rule">
+            <field name="name">Crew Schedule Actual: Own Documents Only</field>
+            <field name="model_id" ref="pelita_crew.model_crew_schedule_actual"/>
+            <field name="domain_force">['&amp;',('employee_id.department_id', '=', user.department_id.id),'|',('employee_id.user_id', '=', user.id),'&amp;',('department_id', '=', user.department_id.id),('user_id', '=', user.id)]</field>
+            <!--<field name="domain_force">['&amp;',('department_id', '=', user.department_id.id),'|',('user_id', '=', user.id),('user_id', '=', False)]</field>-->
+            <field name="groups" eval="[(4, ref('pelita_crew.group_crw_user_own_docs')),
+                                        (4, ref('pelita_crew.group_crw_manager_own_docs'))]"/>
+        </record>
+        <record id="flying_hours_rule_user" model="ir.rule">
+            <field name="name">Flying Hours: All Documents</field>
+            <field name="model_id" ref="pelita_crew.model_flying_hours"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('pelita_crew.group_crw_user')),
+                (4, ref('pelita_crew.group_crw_manager')),(4, ref('ib_base_pelita.group_crew_viewer'))]"/>
+        </record>
+        <record id="flying_hours_rule_user_own_docs" model="ir.rule">
+            <field name="name">Flying Hours: Own Documents Only</field>
+            <field name="model_id" ref="pelita_crew.model_flying_hours"/>
+            <field name="domain_force">['&amp;',('crew_id.department_id', '=', user.department_id.id),'|',('crew_id.user_id', '=', user.id),('create_uid', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('pelita_crew.group_crw_user_own_docs')),
+                                        (4, ref('pelita_crew.group_crw_manager_own_docs'))]"/>
+        </record>
+        <record id="crew_duty_time_rule_user" model="ir.rule">
+            <field name="name">Crew Duty Time: All Documents</field>
+            <field name="model_id" ref="pelita_crew.model_crew_duty_time"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('pelita_crew.group_crw_user')),
+                (4, ref('pelita_crew.group_crw_manager')),(4, ref('ib_base_pelita.group_crew_viewer'))]"/>
+        </record>
+        <record id="crew_duty_time_rule_user_own_docs" model="ir.rule">
+            <field name="name">Crew Duty Time: Own Documents Only</field>
+            <field name="model_id" ref="pelita_crew.model_crew_duty_time"/>
+            <field name="domain_force">['&amp;',('crew_id.department_id', '=', user.department_id.id),'|',('crew_id.user_id', '=', user.id),('create_uid', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('pelita_crew.group_crw_user_own_docs')),
+                                        (4, ref('pelita_crew.group_crw_manager_own_docs'))]"/>
+        </record>
+        <record id="rating_qualification_rule_user" model="ir.rule">
+            <field name="name">Rating Qualification: All Documents</field>
+            <field name="model_id" ref="pelita_crew.model_rating_qualification"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="hr_document_rule_user" model="ir.rule">
+            <field name="name">Hr Document: All Documents</field>
+            <field name="model_id" ref="pelita_crew.model_hr_document"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="hr_training_rule_user" model="ir.rule">
+            <field name="name">Hr Training: All Documents</field>
+            <field name="model_id" ref="pelita_crew.model_hr_training"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="hr_carrier_rule_user" model="ir.rule">
+            <field name="name">Hr Carrier: All Documents</field>
+            <field name="model_id" ref="pelita_crew.model_hr_carrier"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="hr_education_rule_user" model="ir.rule">
+            <field name="name">Hr Education: All Documents</field>
+            <field name="model_id" ref="pelita_crew.model_hr_education"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="hr_cv_rule_user" model="ir.rule">
+            <field name="name">HR CV: All Documents</field>
+            <field name="model_id" ref="pelita_crew.model_hr_cv"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('pelita_crew.group_crw_user')),
+                (4, ref('pelita_crew.group_crw_manager')),(4, ref('ib_base_pelita.group_crew_viewer'))]"/>
+        </record>
+        <record id="hr_cv_rule_user_own_docs" model="ir.rule">
+            <field name="name">HR CV: Own Documents Only</field>
+            <field name="model_id" ref="pelita_crew.model_hr_cv"/>
+            <field name="domain_force">['&amp;',('employee_id.department_id', '=', user.department_id.id),'|',('employee_id.user_id', '=', user.id),('create_uid', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('pelita_crew.group_crw_user_own_docs')),
+                                        (4, ref('pelita_crew.group_crw_manager_own_docs'))]"/>
+        </record>
+        <record id="hr_crew_employee_rule_user" model="ir.rule">
+            <field name="name">HR iCrew: All Documents</field>
+            <field name="model_id" ref="pelita_crew.model_hr_employee"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('pelita_crew.group_crw_user')),
+                (4, ref('pelita_crew.group_crw_manager')),(4, ref('ib_base_pelita.group_crew_viewer')),
+                (4, ref('pelita_crew.group_crw_user_own_docs')),(4, ref('pelita_crew.group_crw_manager_own_docs'))]"/>
+        </record>
+        <record id="hr_crew_employee_rule_user_own_docs" model="ir.rule">
+            <field name="name">HR iCrew: Own Documents Only</field>
+            <field name="active" eval="False"/>
+            <field name="model_id" ref="pelita_crew.model_hr_employee"/>
+            <field name="domain_force">['&amp;',('department_id', '=', user.department_id.id),'|',('user_id', '=', user.id),('user_id', '=', False)]</field>
+            <field name="global" eval="True"/>
+            <!--<field name="groups" eval="[(4, ref('pelita_crew.group_crw_user_own_docs')),
+                                        (4, ref('pelita_crew.group_crw_manager_own_docs'))]"/>-->
+        </record>
+        
+        <!--Operation Management - Rules -->
+        <record id="flt_mtc_log_rule_user" model="ir.rule">
+            <field name="name">FML: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_flight_maintenance_log"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="active" eval="True"/>
+            <field name="groups" eval="[(4, ref('pelita_operation.group_ops_user')),
+                                        (4, ref('pelita_operation.group_ops_manager'))]"/>
+        </record>
+        <record id="flt_mtc_log_rule_user_own_docs" model="ir.rule">
+            <field name="name">FML: Own Documents Only</field>
+            <field name="model_id" ref="pelita_operation.model_flight_maintenance_log"/>
+            <field name="domain_force">['|','|',('department_id', '=', user.department_id.id),('create_uid', '=', user.id),('create_uid', '=', False)]</field>
+            <field name="active" eval="True"/>
+            <field name="groups" eval="[(4, ref('pelita_operation.group_ops_user_own_docs')),
+                                        (4, ref('pelita_operation.group_ops_manager_own_docs'))]"/>
+        </record>
+        <record id="flt_mtc_log_rule_viewer_usr" model="ir.rule">
+            <field name="name">FML Viewer: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_flight_maintenance_log"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="active" eval="True"/>
+            <field name="groups" eval="[(4, ref('ib_base_pelita.group_operation_viewer'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+        <record id="flt_requist_rule_user" model="ir.rule">
+            <field name="name">Flight Requisition: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_flight_requisition"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('pelita_operation.group_ops_user')),
+                (4, ref('pelita_operation.group_ops_manager')),(4, ref('ib_base_pelita.group_operation_viewer'))]"/>
+        </record>
+        <record id="flt_requist_rule_user_own_docs" model="ir.rule">
+            <field name="name">Flight Requisition: Own Documents Only</field>
+            <field name="model_id" ref="pelita_operation.model_flight_requisition"/>
+            <field name="domain_force">['|','|',('department_id', '=', user.department_id.id),('creator_id', '=', user.id),('creator_id', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('pelita_operation.group_ops_user_own_docs')),
+                                        (4, ref('pelita_operation.group_ops_manager_own_docs'))]"/>
+        </record>
+        <record id="flt_schedule_rule_user" model="ir.rule">
+            <field name="name">Flight Schedule: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_flight_schedule"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="active" eval="True"/>
+            <field name="groups" eval="[(4, ref('pelita_operation.group_ops_user')),
+                (4, ref('pelita_operation.group_ops_manager')),(4, ref('ib_base_pelita.group_operation_viewer'))]"/>
+        </record>
+        <record id="flt_schedule_rule_user_own_docs" model="ir.rule">
+            <field name="name">Flight Schedule: Own Documents Only</field>
+            <field name="model_id" ref="pelita_operation.model_flight_schedule"/>
+            <field name="domain_force">['|','|',('department_id', '=', user.department_id.id),('create_uid', '=', user.id),('create_uid', '=', False)]</field>
+            <field name="active" eval="True"/>
+            <field name="groups" eval="[(4, ref('pelita_operation.group_ops_user_own_docs')),
+                                        (4, ref('pelita_operation.group_ops_manager_own_docs'))]"/>
+        </record>
+        <record id="mtc_log_rotary_rule_user" model="ir.rule">
+            <field name="name">Mtc Log Rotary: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_maintenance_rotary"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('pelita_operation.group_ops_user')),
+                (4, ref('pelita_operation.group_ops_manager')),(4, ref('ib_base_pelita.group_operation_viewer'))]"/>
+        </record>
+        <record id="mtc_log_rotary_rule_user_own_docs" model="ir.rule">
+            <field name="name">Mtc Log Rotary: Own Documents Only</field>
+            <field name="model_id" ref="pelita_operation.model_maintenance_rotary"/>
+            <field name="domain_force">['|','|',('rotary_id.department_id', '=', user.department_id.id),('rotary_id.create_uid', '=', user.id),('rotary_id.create_uid', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('pelita_operation.group_ops_user_own_docs')),
+                                        (4, ref('pelita_operation.group_ops_manager_own_docs'))]"/>
+        </record>
+        <record id="flt_rotary_crew_rule_user" model="ir.rule">
+            <field name="name">Mtc Log Rotary Crew: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_flight_rotary_crew"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="mtc_log_fixedwing_rule_user" model="ir.rule">
+            <field name="name">Mtc Log Fixedwing: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_maintenance_fixedwing"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('pelita_operation.group_ops_user')),
+                (4, ref('pelita_operation.group_ops_manager')),(4, ref('ib_base_pelita.group_operation_viewer'))]"/>
+        </record>
+        <record id="mtc_log_fixedwing_rule_user_own_docs" model="ir.rule">
+            <field name="name">Mtc Log Fixedwing: Own Documents Only</field>
+            <field name="model_id" ref="pelita_operation.model_maintenance_fixedwing"/>
+            <field name="domain_force">['|','|',('fixedwing_id.department_id', '=', user.department_id.id),('fixedwing_id.create_uid', '=', user.id),('fixedwing_id.create_uid', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('pelita_operation.group_ops_user_own_docs')),
+                                        (4, ref('pelita_operation.group_ops_manager_own_docs'))]"/>
+        </record>
+        <record id="flt_fixedwing_crew_rule_user" model="ir.rule">
+            <field name="name">Mtc Log Fixedwing Crew: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_flight_fixed_crew"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="base_operation_rule_user" model="ir.rule">
+            <field name="name">Base Operation: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_base_operation"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="area_operation_rule_user" model="ir.rule">
+            <field name="name">Area Operation: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_area_operation"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="route_flight_operation_rule_user" model="ir.rule">
+            <field name="name">Route Flight Operation: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_route_flight_operation"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('pelita_operation.group_ops_user')),
+                (4, ref('pelita_operation.group_ops_manager')),(4, ref('group_operation_viewer'))]"/>
+        </record>
+        <record id="route_flight_operation_rule_user_own_docs" model="ir.rule">
+            <field name="name">Route Flight Operation: Own Documents Only</field>
+            <field name="model_id" ref="pelita_operation.model_route_flight_operation"/>
+            <field name="domain_force">['|','|',('schedule_id.department_id', '=', user.department_id.id),('schedule_id.create_uid', '=', user.id),('schedule_id.create_uid', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('pelita_operation.group_ops_user_own_docs')),
+                                        (4, ref('pelita_operation.group_ops_manager_own_docs'))]"/>
+        </record>
+        <record id="fs_assigned_technician_rule_user" model="ir.rule">
+            <field name="name">FS Assigned Technician: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_fs_assigned_technician"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('pelita_operation.group_ops_user')),
+                (4, ref('pelita_operation.group_ops_manager')),(4, ref('group_operation_viewer'))]"/>
+        </record>
+        <record id="fs_assigned_technician_rule_user_own_docs" model="ir.rule">
+            <field name="name">FS Assigned Technician: Own Documents Only</field>
+            <field name="model_id" ref="pelita_operation.model_fs_assigned_technician"/>
+            <field name="domain_force">['|','|',('fl_schedule_id.department_id', '=', user.department_id.id),('fl_schedule_id.create_uid', '=', user.id),('fl_schedule_id.create_uid', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('pelita_operation.group_ops_user_own_docs')),
+                                        (4, ref('pelita_operation.group_ops_manager_own_docs'))]"/>
+        </record>
+        <record id="hr_crews_rule_user" model="ir.rule">
+            <field name="name">FS Crew Assignment: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_hr_crews"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('pelita_operation.group_ops_user')),
+                (4, ref('pelita_operation.group_ops_manager')),(4, ref('group_operation_viewer'))]"/>
+        </record>
+        <record id="hr_crews_rule_user_own_docs" model="ir.rule">
+            <field name="name">FS Crew Assignment: Own Documents Only</field>
+            <field name="model_id" ref="pelita_operation.model_hr_crews"/>
+            <field name="domain_force">['|','|',('crew_assign_id.department_id', '=', user.department_id.id),('crew_assign_id.create_uid', '=', user.id),('crew_assign_id.create_uid', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('pelita_operation.group_ops_user_own_docs')),
+                                        (4, ref('pelita_operation.group_ops_manager_own_docs'))]"/>
+        </record>
+        <record id="corrective_action_rule_user" model="ir.rule">
+            <field name="name">Corrective Action: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_corrective_action"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('pelita_operation.group_ops_user')),
+                (4, ref('pelita_operation.group_ops_manager')),(4, ref('ib_base_pelita.group_operation_viewer'))]"/>
+        </record>
+        <record id="corrective_action_rule_user_own_docs" model="ir.rule">
+            <field name="name">Corrective Action: Own Documents Only</field>
+            <field name="model_id" ref="pelita_operation.model_corrective_action"/>
+            <field name="domain_force">['|','|',('fixedwing_id.department_id', '=', user.department_id.id),('fixedwing_id.create_uid', '=', user.id),('fixedwing_id.create_uid', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('pelita_operation.group_ops_user_own_docs')),
+                                        (4, ref('pelita_operation.group_ops_manager_own_docs'))]"/>
+        </record>
+        <record id="discrepancies_discrepancies_rule_user" model="ir.rule">
+            <field name="name">Discrepancies: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_discrepancies_discrepancies"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('pelita_operation.group_ops_user')),
+                (4, ref('pelita_operation.group_ops_manager')),(4, ref('ib_base_pelita.group_operation_viewer'))]"/>
+        </record>
+        <record id="discrepancies_discrepancies_rule_user_own_docs" model="ir.rule">
+            <field name="name">Discrepancies: Own Documents Only</field>
+            <field name="model_id" ref="pelita_operation.model_discrepancies_discrepancies"/>
+            <field name="domain_force">['|','|',('rotary_id.department_id', '=', user.department_id.id),('rotary_id.create_uid', '=', user.id),('rotary_id.create_uid', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('pelita_operation.group_ops_user_own_docs')),
+                                        (4, ref('pelita_operation.group_ops_manager_own_docs'))]"/>
+        </record>
+        <record id="type_duty_rule_user" model="ir.rule">
+            <field name="name">Type Duty: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_type_duty"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="office_duty_rule_user" model="ir.rule">
+            <field name="name">Office Duty: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_office_duty"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="internal_flight_type_rule_user" model="ir.rule">
+            <field name="name">Internal Flight Type: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_internal_flight_type"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="crew_type_rule_user" model="ir.rule">
+            <field name="name">Crew Type: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_crew_type"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="schedule_commercial_rule_user" model="ir.rule">
+            <field name="name">Schedule Commercial: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_schedule_commercial"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="rotary_route_rule_user" model="ir.rule">
+            <field name="name">Rotary Route: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_rotary_route"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="rotary_time_rule_user" model="ir.rule">
+            <field name="name">Rotary Route: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_rotary_time"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="golongan_golongan_rule_user" model="ir.rule">
+            <field name="name">Golongan: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_golongan_golongan"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="irregularity_operation_rule_user" model="ir.rule">
+            <field name="name">All Irregularity Operation</field>
+            <field name="model_id" ref="pelita_operation.model_irregularity_operation"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="routes_rule_opt_user" model="ir.rule">
+            <field name="name">All Routes</field>
+            <field name="model_id" ref="pelita_operation.model_route_route"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="route_operation_rule_opt_user" model="ir.rule">
+            <field name="name">All Route Operation</field>
+            <field name="model_id" ref="pelita_operation.model_route_operation"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>        
+        <record id="flight_hours_price_rule_opt_user" model="ir.rule">
+            <field name="name">All Flight Hours Price</field>
+            <field name="model_id" ref="pelita_operation.model_flight_hours_price"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="regulation_rule_opt_user" model="ir.rule">
+            <field name="name">All Regulation</field>
+            <field name="model_id" ref="pelita_operation.model_regulation_regulation"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="duty_time_rule_opt_user" model="ir.rule">
+            <field name="name">All Dutty Time</field>
+            <field name="model_id" ref="pelita_operation.model_duty_time"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="fs_reason_crew_allowed_rule_user" model="ir.rule">
+            <field name="name">FS Reason Crew Allowed: All Documents</field>
+            <field name="model_id" ref="pelita_operation.model_fs_reason_crew_allowed"/>
+            <!--<field name="domain_force">[(1, '=', 1)]</field>-->
+            <!--<field name="global" eval="True"/>-->
+            <field name="domain_force">['|','|',('flt_schedule_id.department_id', '=', user.department_id.id),('create_uid', '=', user.id),('create_uid', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('pelita_operation.group_ops_user_own_docs')),
+                                        (4, ref('pelita_operation.group_ops_manager_own_docs'))]"/>
+            
+        </record>
+        <record id="hr_department_rule_opt_user" model="ir.rule">
+            <field name="name">All Departments</field>
+            <field name="model_id" ref="hr.model_hr_department"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="flt_requist_route_line_rule_user" model="ir.rule">
+            <field name="name">FR Route Lines: All Documents</field>
+            <field name="model_id" ref="ib_base_pelita.model_flight_requisition_route_line"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('pelita_operation.group_ops_user')),
+                (4, ref('pelita_operation.group_ops_manager')),(4, ref('ib_base_pelita.group_operation_viewer'))]"/>
+        </record>
+        <record id="flt_requist_route_line_rule_user_own_docs" model="ir.rule">
+            <field name="name">FR Route Lines: Own Documents Only</field>
+            <field name="model_id" ref="ib_base_pelita.model_flight_requisition_route_line"/>
+            <field name="domain_force">['|','|',('flight_requisition_id.department_id', '=', user.department_id.id),('flight_requisition_id.creator_id', '=', user.id),('flight_requisition_id.creator_id', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('pelita_operation.group_ops_user_own_docs')),
+                                        (4, ref('pelita_operation.group_ops_manager_own_docs'))]"/>
+        </record>
+        
+        <!--Fleet Management - Rules -->
+        <!-- <field name="groups" eval="[(4, ref('pelita_master_data.group_flt_mgnt_user')),
+                (4, ref('pelita_master_data.group_flt_mgnt_manager')),(4, ref('group_fleet_management_viewer'))]"/> -->
+        <record id="aircraft_aircraft_rule_user" model="ir.rule">
+            <field name="name">All Aircraft</field>
+            <field name="model_id" ref="pelita_master_data.model_aircraft_aircraft"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="aircraft_type_rule_user" model="ir.rule">
+            <field name="name">All Aircraft Type</field>
+            <field name="model_id" ref="pelita_master_data.model_aircraft_type"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="aircraft_category_rule_user" model="ir.rule">
+            <field name="name">All Aircraft Category</field>
+            <field name="model_id" ref="pelita_master_data.model_aircraft_category"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="engine_type_rule_user" model="ir.rule">
+            <field name="name">All Engine Type</field>
+            <field name="model_id" ref="pelita_master_data.model_engine_type"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="propeller_type_rule_user" model="ir.rule">
+            <field name="name">All Propeller Type</field>
+            <field name="model_id" ref="pelita_master_data.model_propeller_type"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="document_document_rule_user" model="ir.rule">
+            <field name="name">All Documents</field>
+            <field name="model_id" ref="pelita_master_data.model_document_document"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="aircraft_acquisition_rule_user" model="ir.rule">
+            <field name="name">All Aircraft Acquisition</field>
+            <field name="model_id" ref="pelita_master_data.model_aircraft_acquisition"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="document_certificate_rule_user" model="ir.rule">
+            <field name="name">All Document Certificate</field>
+            <field name="model_id" ref="pelita_master_data.model_document_certificate"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="engine_spare_rule_user" model="ir.rule">
+            <field name="name">All Engine Spare</field>
+            <field name="model_id" ref="pelita_master_data.model_engine_spare"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>        
+        <record id="aircraft_rental_rule_user" model="ir.rule">
+            <field name="name">All Aircraft Rental</field>
+            <field name="model_id" ref="pelita_master_data.model_aircraft_rental"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="maintenance_reserved_rule_user" model="ir.rule">
+            <field name="name">All Maintenance Reserved</field>
+            <field name="model_id" ref="pelita_master_data.model_maintenance_reserved"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="reserved_claimed_rule_user" model="ir.rule">
+            <field name="name">All Reserved Claimed</field>
+            <field name="model_id" ref="pelita_master_data.model_reserved_claimed"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="delivery_schedule_rule_user" model="ir.rule">
+            <field name="name">All Delivery Schedule</field>
+            <field name="model_id" ref="pelita_master_data.model_delivery_schedule"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="delivery_schedule_rule_user" model="ir.rule">
+            <field name="name">All Delivery Schedule</field>
+            <field name="model_id" ref="pelita_master_data.model_delivery_schedule"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="redelivery_schedule_rule_user" model="ir.rule">
+            <field name="name">All Delivery Schedule</field>
+            <field name="model_id" ref="pelita_master_data.model_redelivery_schedule"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+        <record id="fleet_assignment_rule_user" model="ir.rule">
+            <field name="name">All Delivery Schedule</field>
+            <field name="model_id" ref="pelita_master_data.model_fleet_assignment"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="global" eval="True"/>
+        </record>
+    </data>
+    
+</odoo>

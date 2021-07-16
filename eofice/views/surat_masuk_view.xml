@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="hr_surat_masuk_view_search" model="ir.ui.view">
+            <field name="name">surat.masuk.search</field>
+            <field name="model">surat.masuk</field>
+            <field name="arch" type="xml">
+                <search string="Search Surat Masuk">
+                    <field name="name" string="nomor Surat Masuk"/>
+                    <field name="date3" string="Tanggal Masuk Surat"/>
+                    <field name="partner" string="Pengirim"/>
+                    <field name="user_id" string="Ditujukan Untuk"/>
+                    <field name="subject" string="Perihal"/>
+                    <filter name="status" domain="[('state', '=', 'inprogres')]" string="Status"/>
+                    <separator/>
+                    <filter name="ditujukan" domain="['|',('user_tujuan', '=', uid),('user_tembusan','=',uid)]" string="Ditujukan"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Status Surat" domain="[]" context="{'group_by':'status_surat'}"/>
+                        <filter string="Pengirim" domain="[]" context="{'group_by':'partner'}"/>
+                        <filter string="Ditujukan Untuk" domain="[]" context="{'group_by':'user_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+    	<record model='ir.ui.view' id='eof_masuk_tree'>
+            <field name='name'>surat.masuk.tree</field>
+            <field name='model'>surat.masuk</field>
+            <field name='arch' type='xml'>
+                <tree string='Surat Masuk'>
+                    <field name='name'/>
+                    <field name="no_ref"/>
+                    <field name="user_id"/>
+                    <field name="user_id1"/>
+                    <field name="partner"/>
+                    <field name="subject"/>
+                    <field name="date3"/>
+                    <field name="status_surat"/>
+                    <field name="manager_pembuat" invisible="1"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Shortcuts -->
+        <record id="action_view_disposisi" model="ir.actions.act_window">
+            <field name="name">Disposisi</field>
+            <field name="res_model">disposisi.masuk</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_no_ref': [active_id], 'default_no_ref': active_id}</field>
+        </record>
+
+        <record id="action_view_disposisi_form" model="ir.actions.act_window">
+            <field name="name">Disposisi</field>
+            <field name="res_model">disposisi.masuk</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="context">{'search_default_no_ref': [active_id], 'default_no_ref': active_id}</field>
+        </record>
+
+        <record model="ir.ui.view" id="eof_masuk_form">
+            <field name="name">surat.masuk.form</field>
+            <field name="model">surat.masuk</field>
+            <field name="arch" type="xml">
+                <form string="Surat Masuk">
+                	<header>
+                        <button name="%(action_view_disposisi_form)d" string="Create Disposisi"
+                            type="action" class="btn-primary"
+                            attrs="{'invisible': ['|',('state','=','draft'),('active_user','!=',True)]}"/>
+                        <!--button name="%(act_save_dms_sm)d" string="Save to DMS" type="action" class="oe_highlight" attrs="{'invisible': [('dms','=',True)]}"/-->
+                		<button name="confirm" string="Confirm" states="draft" type="object" class="oe_highlight"/>
+                        <button name="validate" string="Validate" attrs="{'invisible': ['|',('state','!=','inprogres'),('active_user','!=',True)]}" type="object" class=" oe_highlight"/>
+                		<field name="state" widget="statusbar" nolabel="1"/>
+                	</header>
+                	<sheet>
+                        <!--div class="oe_button_box" name="button_box">
+                            <button type="action"  name="%(action_view_disposisi)d"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o"
+                                attrs="{'invisible': ['|',('state','=','draft'),('active_user','!=',True)]}">
+                                <field name="surat_masuk_count" widget="statinfo" String="Disposisi"/>
+                            </button>
+                        </div-->
+            			<div class="oe_title">
+	                        <label string="Surat Masuk" attrs="{'invisible': [('state','=','draft')]}"/>
+	                        <h1>
+	                            <field name="name" readonly="1"/>
+	                        </h1>
+	                    </div>
+	                	<notebook>
+	                		<page string="Details">
+	                			<group>
+	                				<group>
+	                					<field name="user_id" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                        <field name="tembusan2" widget="many2many_tags" attrs="{'readonly': [('state','!=','draft')]}"/>
+	                					<field name="user_tujuan" invisible="1"/>
+                                        <field name="user_tembusan" invisible="1"/>
+                                        <field name="no_ref" attrs="{'readonly': [('state','!=','draft')]}"/>
+	                					<field name="partner" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                        <field name="user_id1" invisible="1"/>
+                                        <field name="user_id2" invisible="1"/>
+                                        <field name="user_dpt" invisible="1"/>
+	                					<field name="subject" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                        <field name="active_user" invisible="1"/>
+                                        <field name="user_delegasi" invisible="1"/>
+                                        <field name="manager_pembuat" invisible="1"/>
+                                        <field name="dms" invisible="1"/>
+	                				</group>
+	                				<group>
+	                					<field name="total_set" attrs="{'readonly': [('state','!=','draft')]}"/>
+	                					<field name="status_surat" attrs="{'readonly': [('state','!=','draft')]}"/>
+	                					<field name="date" attrs="{'readonly': [('state','!=','draft')]}"/>
+	                					<field name="date3" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                        <field name="jenis_surat" invisible="1"/>
+	                				</group>
+	                			</group>
+	                		</page>
+                            <page string="Surat Keluar">
+                                <group>
+                                    <field name="no_suratklr" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="perihal" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="date_sk" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                </group>
+                            </page>
+	                	</notebook>
+	                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="open_create_surat_masuk" model="ir.actions.act_window">
+            <field name="name">Create a Surat Masuk</field>
+            <field name="res_model">surat.masuk</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <!--field name="view_id" ref="project_project_view_form_simplified"/-->
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.ui.view" id="view_surat_masuk_kanban">
+            <field name="name">surat,masuk.kanban</field>
+            <field name="model">surat.masuk</field>
+            <field name="arch" type="xml">
+                <kanban on_create="eofice.open_create_surat_masuk">
+                    <field name="name"/>
+                    <field name="partner"/>
+                    <field name="perihal"/>
+                    <field name="date3"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <strong><span><t t-esc="record.name.value"/></span></strong>
+                                    </div>
+                                    <div class="col-xs-6 pull-right text-right">
+                                        <strong><field name="date3"/></strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6 text-muted">
+                                        <span><t t-esc="record.partner.value"/></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6 text-muted">
+                                        <span><t t-esc="record.perihal.value"/></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+    	<record id="eof_masuk_action" model="ir.actions.act_window">
+            <field name="name">Surat Masuk</field>
+            <field name="res_model">surat.masuk</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,graph,pivot</field>
+            <!-- <field name="context">{'search_default_status': 1,'search_default_ditujukan': 1}</field> -->
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="hr_surat_masuk_view_search"/>
+        </record>
+
+        <menuitem
+            action="eof_masuk_action"
+            id="eof_masuk_view_menu"
+            parent="eof_main_menu" sequence="10"/>
+
+        <data noupdate="1">
+		  <record id="seq_surat_masuk" model="ir.sequence">
+		    <field name="name">Surat Masukr</field>
+		    <field name="code">surat.masuk</field>
+		    <field name="sufix"></field>
+		    <field name="auto_reset">False</field>
+		    <field name="padding">5</field>
+		  </record>
+		</data>
+
+    </data>
+</odoo>

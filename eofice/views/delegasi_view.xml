@@ -1,0 +1,90 @@
+<odoo>
+	<data>
+
+		<record id="eof_delegasi" model="ir.actions.act_window">
+	        <field name="name">Pendelegasian</field>
+	        <field name="res_model">delegasi</field>
+            <field name="domain">['|',('user_id', '=', uid),('user_id2','=',uid)]</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>
+
+	    <record model='ir.ui.view' id='eof_delegasi_tree'>
+            <field name='name'>delegasi.tree</field>
+            <field name='model'>delegasi</field>
+            <field name='arch' type='xml'>
+                <tree string='Pendelegasian'>
+                    <field name='name'/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="user_id"/>
+                    <field name="user_id2"/>
+                    <field name="user_id3"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+	    <record model="ir.ui.view" id="view_pendelegasian_form">
+	        <field name="name">pendelegasian</field>
+	        <field name="model">delegasi</field>
+	        <field name="arch" type="xml">
+	            <form string="Form Pendelegasian">
+	            	<header>
+	            		<button name="validate" string="Confirm" states="draft" type="object" class="oe_highlight"/>
+	            		<!--button name="automatic_close" string="delegasi" type="object" class="oe_highlight"/-->
+	            		<field name="state" widget="statusbar" nolabel="1"/>
+	            	</header>
+	            	<sheet>
+		            	<group>
+		            		<group>
+		            			<field name="name" attrs="{'readonly': [('state','!=','draft')]}"/>
+		            			<label for="date_from" string="Durasi"/>
+	                            <div>
+	                                <div>
+	                                    <field name="date_from" class="oe_inline" attrs="{'readonly': [('state','!=','draft')]}"/>
+	                                    <label string="-" class="oe_inline"/>
+	                                    <field name="date_to" class="oe_inline" attrs="{'readonly': [('state','!=','draft')]}"/>
+	                                </div>
+	                            </div>
+	                        </group>
+	                       	<group>
+	                       		<field name="user_id"/>
+	                       		<field name="user_id2" attrs="{'readonly': [('state','!=','draft')]}"/>
+	                       		<field name="user_id3" invisible="1"/>
+	                       	</group>
+	                       	<!--notebook>
+	                       		<page string="Hak Akses User">
+	                       			<group>
+		                       			<field name="surat_masuk"/>
+		                       			<field name="disposisi"/>
+		                       			<field name="memorandum"/>
+		                       			<field name="nota"/>
+		                       			<field name="surat_keluar"/>
+		                       			<field name="tanda_terima"/>
+	                       			</group>
+	                       		</page>
+	                       	</notebook-->
+	                    </group>
+	                </sheet>
+                </form>
+	        </field>
+	    </record>
+
+        <menuitem
+            action="eof_delegasi"
+            id="eof_Delegasi"
+            parent="eof_seting" sequence="5"/>
+
+        <data noupdate="1">
+		  <record id="seq_delegasi" model="ir.sequence">
+		    <field name="name">Delegasi</field>
+		    <field name="code">delegasi</field>
+		    <field name="sufix"></field>
+		    <field name="auto_reset">False</field>
+		    <field name="padding">1</field>
+		  </record>
+		</data>
+
+    </data>
+</odoo>

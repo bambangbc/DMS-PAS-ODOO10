@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+		<record id="module_category_eoffice" model="ir.module.category">
+			<field name="name">E-office</field>
+			<field name="description">E-office</field>
+			<field name="sequence">10</field>
+		</record>
+
+		<!--record id="group_eoffice_officer" model="res.groups">
+	        <field name="name">Officer</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	        <field name="comment">level officer seperti staff/manager</field>
+	    </record>
+
+	    <record id="group_eofficer_manager" model="res.groups">
+	        <field name="name">Manager</field>
+	        <field name="comment">level Manager seperti Direktur</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	        <field name="implied_ids" eval="[(4, ref('group_eoffice_officer'))]"/>
+	    </record-->
+
+	    <!--record id="group_eoffice_all" model="res.groups">
+	        <field name="name">eoffice All</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	        <field name="implied_ids" eval="[(4, ref('group_eoffice_sm','group_eoffice_sk_create.'group_eoffice_sk_edit','group_eoffice_sk_read','group_eoffice_sk_delete','group_eoffice_disposisi_create','group_eoffice_disposisi_edit','group_eoffice_disposisi_delete','group_eoffice_disposisi_read','group_eoffice_nota_create','group_eoffice_nota_edit','group_eoffice_nota_delete','group_eoffice_nota_read','group_eoffice_memorandum_delete','group_eoffice_memorandum_create','group_eoffice_memorandum_edit','group_eoffice_memorandum_read','group_eoffice_ttd_create','group_eoffice_ttd_edit','group_eoffice_ttd_delete','group_eoffice_ttd_read'))]"/>
+	    </record-->
+
+	    <record id="group_eoffice_sm" model="res.groups">
+	        <field name="name">Surat Masuk</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	    </record>
+
+	    <record id="group_eoffice_sk_create" model="res.groups">
+	        <field name="name">Surat Keluar Create</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	    </record>
+
+	    <record id="group_eoffice_sk_edit" model="res.groups">
+	        <field name="name">Surat Keluar Edit</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	    </record>
+
+	    <record id="group_eoffice_sk_read" model="res.groups">
+	        <field name="name">Surat Keluar Read</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	    </record>
+
+	    <record id="group_eoffice_sk_delete" model="res.groups">
+	        <field name="name">Surat Keluar Delete</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	    </record>
+
+	    <record id="group_eoffice_disposisi_create" model="res.groups">
+	        <field name="name">Disposisi Create</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	    </record>
+
+	    <record id="group_eoffice_disposisi_edit" model="res.groups">
+	        <field name="name">Disposisi Edit</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	    </record>
+
+	    <record id="group_eoffice_disposisi_delete" model="res.groups">
+	        <field name="name">Disposisi Delete</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	    </record>
+
+	    <record id="group_eoffice_disposisi_read" model="res.groups">
+	        <field name="name">Disposisi Read</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	    </record>
+
+	    <record id="group_eoffice_nota_create" model="res.groups">
+	        <field name="name">Nota Dinas Create</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	    </record>
+
+	    <record id="group_eoffice_nota_read" model="res.groups">
+	        <field name="name">Nota Dinas Read</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	    </record>
+
+	    <record id="group_eoffice_nota_edit" model="res.groups">
+	        <field name="name">Nota Dinas Edit</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	    </record>
+
+	    <record id="group_eoffice_nota_delete" model="res.groups">
+	        <field name="name">Nota Dinas Delete</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	    </record>
+
+	    <record id="group_eoffice_memorandum_delete" model="res.groups">
+	        <field name="name">Memorandum Delete</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	    </record>
+
+	    <record id="group_eoffice_memorandum_create" model="res.groups">
+	        <field name="name">Memorandum Create</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	    </record>
+
+	    <record id="group_eoffice_memorandum_edit" model="res.groups">
+	        <field name="name">Memorandum Edit</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	    </record>
+
+	    <record id="group_eoffice_memorandum_read" model="res.groups">
+	        <field name="name">Memorandum Read</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	    </record>
+
+	    <record id="group_eoffice_ttd_create" model="res.groups">
+	        <field name="name">Tanda Terima Dokumen Create</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	    </record>
+
+	    <record id="group_eoffice_ttd_delete" model="res.groups">
+	        <field name="name">Tanda Terima Dokumen Delete</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	    </record>
+
+	    <record id="group_eoffice_ttd_read" model="res.groups">
+	        <field name="name">Tanda Terima Dokumen Read</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	    </record>
+
+	    <record id="group_eoffice_ttd_edit" model="res.groups">
+	        <field name="name">Tanda Terima Dokumen Edit</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	    </record>
+
+	    <record id="group_eoffice_admin" model="res.groups">
+	        <field name="name">Administrator eoffice</field>
+	        <field name="category_id" ref="module_category_eoffice"/>
+	    </record>
+
+	    <record id="eoffice_smadmin_rule" model="ir.rule">
+	    	<field name="name">surat masuk admin</field>
+	    	<field name="model_id" ref="model_surat_masuk"/>
+	    	<field name="groups" eval="[(4, ref('group_eoffice_admin'))]"/>
+	    	<field name="domain_force">[(1,'=',1)]</field>
+	    </record>
+
+	    <record id="eoffice_skadmin_rule" model="ir.rule">
+	    	<field name="name">Surat Keluar Admin</field>
+	    	<field name="model_id" ref="model_surat_keluar"/>
+	    	<field name="groups" eval="[(4, ref('group_eoffice_admin'))]"/>
+	    	<field name="domain_force">[(1,'=',1)]</field>
+	    </record>
+
+	    <record id="eoffice_dispoadmin_rule" model="ir.rule">
+	    	<field name="name">surat disposisi admin</field>
+	    	<field name="model_id" ref="model_disposisi_masuk"/>
+	    	<field name="groups" eval="[(4, ref('group_eoffice_admin'))]"/>
+	    	<field name="domain_force">[(1,'=',1)]</field>
+	    </record>
+
+	    <record id="eoffice_notaadmin_rule" model="ir.rule">
+	    	<field name="name">surat nota admin</field>
+	    	<field name="model_id" ref="model_surat_nota"/>
+	    	<field name="groups" eval="[(4, ref('group_eoffice_admin'))]"/>
+	    	<field name="domain_force">[(1,'=',1)]</field>
+	    </record>
+
+	    <record id="eoffice_tandaterimaadmin_rule" model="ir.rule">
+	    	<field name="name">surat Tanda Terima admin</field>
+	    	<field name="model_id" ref="model_tanda_terima"/>
+	    	<field name="groups" eval="[(4, ref('group_eoffice_admin'))]"/>
+	    	<field name="domain_force">[(1,'=',1)]</field>
+	    </record>
+
+	    <record id="eoffice_notaadmin_rule" model="ir.rule">
+	    	<field name="name">surat nota admin</field>
+	    	<field name="model_id" ref="model_surat_nota"/>
+	    	<field name="groups" eval="[(4, ref('group_eoffice_admin'))]"/>
+	    	<field name="domain_force">[(1,'=',1)]</field>
+	    </record>
+
+	    <record id="eoffice_sm_rule" model="ir.rule">
+	    	<field name="name">pengirim dan pembuat surat masuk</field>
+	    	<field name="model_id" ref="model_surat_masuk"/>
+	    	<field name="groups" eval="[(4, ref('group_eoffice_sm'))]"/>
+	    	<field name="domain_force">['|','|',('user_id1','=',user.id),('user_id','=',user.job_id.id),('tembusan','=',user.job_id.id)]</field>
+	    </record>
+
+	    <record id="eoffice_disposisi_rule" model="ir.rule">
+	    	<field name="name">pengirim dan pembuat Disposisi</field>
+	    	<field name="model_id" ref="model_disposisi_masuk"/>
+	    	<field name="groups" eval="[(6, 0, [ref('group_eoffice_disposisi_create'),
+	    									ref('group_eoffice_disposisi_edit'),
+	    									ref('group_eoffice_disposisi_delete'),
+	    									ref('group_eoffice_disposisi_read')])]"/>
+	    	<field name="domain_force">['|','|','|','|','|','|',('forward_to','=',user.job_id.id),('user_id1','=',user.job_id.id),('user_id2','=',user.id),('user_ids1','in',user.job_id.id),('user_ids2','in',user.job_id.id),('user_ids4','in',user.job_id.id),('user_ids5','in',user.job_id.id)]</field>
+	    </record>
+
+	    <!--record id="eoffice_nota_user_rule" model="ir.rule">
+	    	<field name="name">Pengirim Dan Pembuat Nota Dinas</field>
+	    	<field name="model_id" ref="model_surat_nota"/>
+	    	<field name="groups" eval="[(6, 0, [ref('group_eoffice_nota_create'),
+	    									ref('group_eoffice_nota_delete'),
+	    									ref('group_eoffice_nota_edit'),
+	    									ref('group_eoffice_nota_read')])]"/>
+	    	<field name="domain_force">['|','|','|',('pengirim','=',user.partner_id.department_id.id),('kepada','=',user.partner_id.job_id.id),('tembusan','=',user.partner_id.job_id.id),('user_delegasi','=',user.id)]</field>
+	    </record-->
+
+	    <record id="eoffice_nota_user_rule" model="ir.rule">
+	    	<field name="name">Pengirim Dan Pembuat Nota Dinas</field>
+	    	<field name="model_id" ref="model_surat_nota"/>
+	    	<field name="groups" eval="[(6, 0, [ref('group_eoffice_nota_create'),
+	    									ref('group_eoffice_nota_delete'),
+	    									ref('group_eoffice_nota_edit'),
+	    									ref('group_eoffice_nota_read')])]"/>
+	    	<field name="domain_force">['|','|','|',('user_id','=',user.id),('kepada','=',user.job_id.id),('tembusan','=',user.job_id.id),('user_delegasi','=',user.id)]</field>
+	    </record>
+
+	    <record id="eoffice_memorandum_user_rule" model="ir.rule">
+	    	<field name="name">Pengirim Dan Pembuat Memorandum</field>
+	    	<field name="model_id" ref="model_surat_memorandum"/>
+	    	<field name="groups" eval="[(6, 0, [ref('group_eoffice_memorandum_edit'),
+	    									ref('group_eoffice_memorandum_delete'),
+	    									ref('group_eoffice_memorandum_create'),
+	    									ref('group_eoffice_memorandum_read')])]"/>
+	    	<field name="domain_force">['|','|','|','|',('user_id','=',user.id),('kepada','in',user.job_id.id),('tembusan','in',user.job_id.id),('kepada_dep','in',user.department_id.id),('tembusan_dep','in',user.department_id.id)]</field>
+	    </record>
+
+	    <record id="eoffice_memorandum_user_rule4" model="ir.rule">
+	    	<field name="name">Memorandum</field>
+	    	<field name="model_id" ref="model_surat_memorandum"/>
+	    	<field name="groups" eval="[(6, 0, [ref('group_eoffice_memorandum_create'),
+	    									ref('group_eoffice_memorandum_edit'),
+	    									ref('group_eoffice_memorandum_delete'),
+	    									ref('group_eoffice_memorandum_read')])]"/>
+	    	<field name="domain_force">
+	    	['|','|','|','|','|',('template.user_id1','=',user.id),('template.user_id2','=',user.id),('template.user_id3','=',user.id),('template.user_id4','=',user.id),('template.user_id5','=',user.id),('template.user_id6','=',user.id)]</field>
+	    </record>
+
+	    <record id="eoffice_tanda_terima_user_rule" model="ir.rule">
+	    	<field name="name">Pengirim Dan Pembuat tanda terima dokumen</field>
+	    	<field name="model_id" ref="model_tanda_terima"/>
+	    	<field name="groups" eval="[(6, 0, [ref('group_eoffice_ttd_create'),
+	    									ref('group_eoffice_ttd_edit'),
+	    									ref('group_eoffice_ttd_delete'),
+	    									ref('group_eoffice_ttd_read')])]"/>
+	    	<field name="domain_force">
+	    	['|','|',('pengirim','=',user.department_id.id),('user_id','=',user.job_id.id),('user_delegasi','=',user.id)]</field>
+	    </record>
+
+	    <record id="eoffice_surat_keluar_user_rule1" model="ir.rule">
+	    	<field name="name">Pengirim Dan Pembuat Surat Keluar</field>
+	    	<field name="model_id" ref="model_surat_keluar"/>
+	    	<field name="groups" eval="[(6, 0, [ref('group_eoffice_sk_create'),
+	    									ref('group_eoffice_sk_edit'),
+	    									ref('group_eoffice_sk_delete'),
+	    									ref('group_eoffice_sk_read')])]"/>
+	    	<field name="domain_force">
+	    	['|','|','|',('user_id','=',user.id),('tembusan','in',user.job_id.id),('template.user_id1','=',user.id),('template.user_id2','=',user.id)]</field>
+	    </record>
+
+	    <record id="eoffice_surat_keluar_user_rule2" model="ir.rule">
+	    	<field name="name">Pengirim Dan Pembuat Surat Keluar 2</field>
+	    	<field name="model_id" ref="model_surat_keluar"/>
+	    	<field name="groups" eval="[(6, 0, [ref('group_eoffice_sk_create'),
+	    									ref('group_eoffice_sk_edit'),
+	    									ref('group_eoffice_sk_delete'),
+	    									ref('group_eoffice_sk_read')])]"/>
+	    	<field name="domain_force">
+	    	['|','|',('template.user_id3','=',user.id),('template.user_id4','=',user.id),('template.user_id5','=',user.id)]</field>
+	    </record>
+
+
+	    <record id="eoffice_surat_keluar_user_rule3" model="ir.rule">
+	    	<field name="name">Pengirim Dan Pembuat Surat Keluar 3</field>
+	    	<field name="model_id" ref="model_surat_keluar"/>
+	    	<field name="groups" eval="[(6, 0, [ref('group_eoffice_sk_create'),
+	    									ref('group_eoffice_sk_edit'),
+	    									ref('group_eoffice_sk_delete'),
+	    									ref('group_eoffice_sk_read')])]"/>
+	    	<field name="domain_force">
+	    	[('template.user_id6','=',user.id)]</field>
+	    </record>
+
+	    <record id="eoffice_surat_keluar_user_rule4" model="ir.rule">
+	    	<field name="name">delegasi</field>
+	    	<field name="model_id" ref="model_surat_keluar"/>
+	    	<field name="groups" eval="[(6, 0, [ref('group_eoffice_sk_create'),
+	    									ref('group_eoffice_disposisi_create'),
+	    									ref('group_eoffice_nota_create'),
+	    									ref('group_eoffice_memorandum_create'),
+	    									ref('group_eoffice_ttd_create')])]"/>
+	    	<field name="domain_force">[('user_id','=',user.id)]</field>
+	    </record>
+	</data>
+</odoo>

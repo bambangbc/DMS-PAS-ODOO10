@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="surat_keluar_view_search" model="ir.ui.view">
+            <field name="name">surat.keluar.search</field>
+            <field name="model">surat.keluar</field>
+            <field name="arch" type="xml">
+                <search string="Search Disposisi">
+                    <field name="name" string="nomor disposisi"/>
+                    <field name="kepada" string="Ditujukan Untuk"/>
+                    <field name="pengirim" string="Pengirim"/>
+                    <group expand="0" string="Group By">
+                        <filter name="jen_sur" string="Jenis Surat" domain="[]" context="{'group_by':'jenis_surat'}"/>
+                        <filter name="state" string="Status" domain="[]" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+    	<record model='ir.ui.view' id='eof_keluar_tree'>
+            <field name='name'>surat.keluar.tree</field>
+            <field name='model'>surat.keluar</field>
+            <field name='arch' type='xml'>
+                <tree string='Surat Masuk'>
+                    <field name='name'/>
+                    <field name="kepada"/>
+                    <field name="up"/>
+                    <field name="tembusan"/>
+                    <field name="perihal"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="eof_keluar_form">
+            <field name="name">surat.keluar.form</field>
+            <field name="model">surat.keluar</field>
+            <field name="arch" type="xml">
+                <form string="Surat Keluar">
+                	<header>
+                		<button name="confirm" string="Confirm" type="object" class="oe_highlight" attrs="{'invisible': [('uid','!=',True)]}"/>
+                        <button name="checker1" attrs="{'invisible': ['|',('state','!=','checker1'),('uid1','!=',True)]}" string="Confirm" type="object" class="oe_highlight"/>
+                        <button name="checker2" attrs="{'invisible': ['|',('state','!=','checker2'),('uid2','!=',True)]}" string="Confirm" type="object" class="oe_highlight"/>
+                        <button name="checker3" attrs="{'invisible': ['|',('state','!=','checker3'),('uid3','!=',True)]}" string="Confirm" type="object" class="oe_highlight"/>
+                        <button name="checker4" attrs="{'invisible': ['|',('state','!=','checker4'),('uid4','!=',True)]}" string="Confirm" type="object" class="oe_highlight"/>
+                        <button name="checker5" attrs="{'invisible': ['|',('state','!=','checker5'),('uid5','!=',True)]}" string="Confirm" type="object" class="oe_highlight"/>
+                        <button name="signer" attrs="{'invisible': ['|',('state','!=','signer'),('uid6','!=',True)]}" string="Confirm" type="object" class="oe_highlight"/>
+                        <button name="%(act_refuse_sk)d" string="Refuse" attrs="{'invisible': ['|',('state','!=','checker1'),('uid1','!=',True)]}" type="action" class="btn_primary"/>
+                        <button name="%(act_refuse_sk)d" string="Refuse" attrs="{'invisible': ['|',('state','!=','checker2'),('uid2','!=',True)]}" type="action" class="btn_primary"/>
+                        <button name="%(act_refuse_sk)d" string="Refuse" attrs="{'invisible': ['|',('state','!=','checker3'),('uid3','!=',True)]}" type="action" class="btn_primary"/>
+                        <button name="%(act_refuse_sk)d" string="Refuse" attrs="{'invisible': ['|',('state','!=','checker4'),('uid4','!=',True)]}" type="action" class="btn_primary"/>
+                        <button name="%(act_refuse_sk)d" string="Refuse" attrs="{'invisible': ['|',('state','!=','checker5'),('uid5','!=',True)]}" type="action" class="btn_primary"/>
+                        <button name="%(act_refuse_sk)d" string="Refuse" attrs="{'invisible': ['|',('state','!=','signer'),('uid6','!=',True)]}" type="action" class="btn_primary"/>
+                		<field name="state" widget="statusbar"  statusbar_visible="draft,checker1,signer,done"  nolabel="1"/>
+                	</header>
+                	<sheet>
+                		<div class="oe_title">
+	                        <label string="Surat Keluar" attrs="{'invisible': [('state','in',('draft'))]}"/>
+	                        <h1>
+	                            <field name="name" readonly="1"/>
+	                        </h1>
+	                    </div>
+	                	<group>
+	                		<group>
+			           			<field name="kepada"/>
+                                <field name="tembusan" widget="many2many_tags"/>
+                                <label for="alamat" string="Alamat"/>
+                                <div class="o_address_format">
+                                    <field name="alamat" placeholder="Alamat..." class="o_address_street" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="alamat2" placeholder="Alamat2..." class="o_address_street" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="kota" placeholder="Kota" class="o_address_city" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="provinsi" placeholder="Provinsi" class="o_address_state" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="negara" placeholder="Negara" class="o_address_country" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                </div>
+                                <field name="up" widget="many2many_tags" attrs="{'readonly': [('state','!=','draft')]}" domain="[('parent_id','=',kepada)]"/>
+		    				</group>
+		    				<group>
+                                <field name="pengirim" attrs="{'readonly': [('state','!=','draft')]}"/>
+		    					<field name="perihal" attrs="{'readonly': [('state','!=','draft')]}"/>
+		    					<field name="date" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                <field name="backdate" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                <field name="nomor_manual" attrs="{'invisible':[('backdate','=',False)],'required':[('backdate','!=',False)]}"/>
+                                <field name="uid" invisible="1"/>
+		    				</group>
+		    			</group>
+	                	<notebook>
+                            <page string="Content">
+                                <group>
+                                    <field name="content" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="note" readonly="1"/> <!--attrs="{'readonly': [('state','!=','draft')]}"/-->
+                                </group>
+                            </page>
+                            <page string="Other Info">
+                                <group>
+                                    <field name="lampiran"/>
+                                    <field name="template" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="uid1" invisible="1"/>
+                                    <field name="uid2" invisible="1"/>
+                                    <field name="uid3" invisible="1"/>
+                                    <field name="uid4" invisible="1"/>
+                                    <field name="uid5" invisible="1"/>
+                                    <field name="uid6" invisible="1"/>
+                                    <field name="user_id"/>
+                                </group>
+                            </page>
+                            <page string="Surat Masuk">
+                                <group>
+                                    <field name="no_ref" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="perihal_sm" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="date2" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                </group>
+                            </page>
+                        </notebook>
+	                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="open_create_surat_keluar" model="ir.actions.act_window">
+            <field name="name">Create a Surat Keluar</field>
+            <field name="res_model">surat.keluar</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <!--field name="view_id" ref="project_project_view_form_simplified"/-->
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.ui.view" id="view_surat_keluar_kanban">
+            <field name="name">surat,keluar.kanban</field>
+            <field name="model">surat.keluar</field>
+            <field name="arch" type="xml">
+                <kanban on_create="eofice.open_create_surat_keluar">
+                    <field name="name"/>
+                    <field name="kepada"/>
+                    <field name="perihal"/>
+                    <field name="date"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <strong><span><t t-esc="record.name.value"/></span></strong>
+                                    </div>
+                                    <div class="col-xs-6 pull-right text-right">
+                                        <strong><field name="date"/></strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6 text-muted">
+                                        <span><t t-esc="record.kepada.value"/></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6 text-muted">
+                                        <span><t t-esc="record.perihal.value"/></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+    	<record id="eof_keluar_action" model="ir.actions.act_window">
+            <field name="name">Surat Keluar</field>
+            <field name="res_model">surat.keluar</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,graph,pivot</field>
+            <!-- <field name="context">{
+                'search_default_state': 1
+                }</field> -->
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="surat_keluar_view_search"/>
+        </record>
+
+        <menuitem
+            action="eof_keluar_action"
+            id="eof_keluar_view_menu"
+            parent="eof_main_menu" sequence="20"/>
+
+        <data noupdate="1">
+		  <record id="seq_surat_nota" model="ir.sequence">
+		    <field name="name">surat Keluar</field>
+		    <field name="code">surat.keluar</field>
+		    <field name="prefix"></field>
+		    <field name="padding">5</field>
+		  </record>
+		</data>
+
+    </data>
+</odoo>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+        <record model="ir.ui.view" id="eof_done_dispo_form">
+            <field name="name">done.disposisi.form</field>
+            <field name="model">done.disposisi</field>
+            <field name="arch" type="xml">
+                <form string="Confirm Surat Masuk">
+                    <p>
+                        Action ini akan merubah status menjadi Done di surat masuk
+                        <br /><div><field name='warning'/></div>
+                    </p>
+                    <footer>
+                        <button string="Validate" name="confirm" type="object" default_focus="1" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window name="Validate" id="act_done_dispo"
+        res_model="done.disposisi"
+        view_mode="form" target="new"/>
+
+    </data>
+</odoo>

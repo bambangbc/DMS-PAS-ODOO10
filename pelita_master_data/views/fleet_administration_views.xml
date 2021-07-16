@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<record id='aircraft_rental_form' model='ir.ui.view'>
+        <field name="name">aircraft.rental.form</field>
+        <field name="model">aircraft.rental</field>
+        <field name="arch" type="xml">
+            <form string="Form Dispatch Reliability">
+            <sheet>
+            	<group>
+            	<group>
+                    <field name='acquisition_id' domain="[('ownership', '=', 'leasing')]"/>
+            		<field name="aircraft_name"/>
+            		<field name="aircraft_type"/>
+            		<field name="lessor"/>
+            		<field name="month"/>
+            		<field name="year"/>
+            	</group>
+            	<group>
+            		<field name='rent_amount'/>
+            		<field name="rent_currency_id"/>
+                    <!--
+            		<field name="rent_payment"/>
+            		<field name='payment_currency_id'/> -->
+            	</group>
+            </group>
+            </sheet>
+            </form>
+        </field>
+	</record>  
+
+	<record id='aircraft_rental_tree' model='ir.ui.view'>
+        <field name="name">aircraft.rental.tree</field>
+        <field name="model">aircraft.rental</field>
+        <field name="arch" type="xml">
+            <tree string="Aircraft Rental">
+                    <field name='acquisition_id'/>
+            		<field name="aircraft_name"/>
+            		<field name="aircraft_type"/>
+            		<field name="lessor"/>
+            		<field name="month"/>
+            		<field name="year"/>
+            		<field name='rent_amount' sum='rent_amount'/>
+            		<field name="rent_currency_id"/>
+                    <!--
+            		<field name="rent_payment" sum='rent_payment'/>
+            		<field name='payment_currency_id'/> -->
+            </tree>
+        </field>
+	</record>  
+	
+	<record id='aircraft_rental_action' model='ir.actions.act_window'>
+        <field name="name">Aircraft Rental</field>
+        <field name="res_model">aircraft.rental</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create Aircraft Rental
+          </p>
+        </field>
+	</record>
+
+<!-- Maintenance Reserved -->
+<record id='maintenance_reserved_form' model='ir.ui.view'>
+        <field name="name">maintenance.reserved.form</field>
+        <field name="model">maintenance.reserved</field>
+        <field name="arch" type="xml">
+            <form string="Form Maintenance Reserved">
+            <sheet>
+            	<group>
+            	<group>
+                    <field name='acquisition_id'/>
+            		<field name="aircraft_name"/>
+            		<field name="aircraft_type"/>
+            		<field name="month"/>
+            		<field name="year"/>
+            	</group>
+            	<group>
+            		<field name='airframe'/>
+            		<field name="ldg"/>
+            		<field name="engine1"/>
+            		<field name='llp_engine1'/>
+            	</group>
+            	<group>
+            		<field name='engine2'/>
+            		<field name="llp_engine2"/>
+            		<field name="propeller1"/>
+            		<field name='propeller2'/>
+            		<field name="rgb1"/>
+            		<field name='rgb2'/>
+            	</group>
+            </group>
+            </sheet>
+            </form>
+        </field>
+	</record>  
+<record id='maintenance_reserved_tree' model='ir.ui.view'>
+        <field name="name">maintenance.reserved.tree</field>
+        <field name="model">maintenance.reserved</field>
+        <field name="arch" type="xml">
+            <tree string="Maintenance Reserved">
+                    <field name='acquisition_id'/>
+            		<field name="aircraft_name"/>
+            		<field name="aircraft_type"/>
+            		<field name="month"/>
+            		<field name="year"/>
+            		<field name='airframe' sum='airframe'/>
+            		<field name="ldg" sum='ldg'/>
+            		<field name="engine1" sum='engine1'/>
+            		<field name='llp_engine1' sum='llp_engine1'/>
+            		<field name='engine2' sum='engine2'/>
+            		<field name="llp_engine2" sum='llp_engine2'/>
+            		<field name="propeller1" sum='propeller1'/>
+            		<field name='propeller2' sum='propeller2'/>
+            		<field name="rgb1" sum='rgb1'/>
+            		<field name='rgb2' sum='rgb2'/>
+            </tree>
+        </field>
+	</record>  
+	
+	<record id='maintenance_reserved_action' model='ir.actions.act_window'>
+        <field name="name">Maintenance Reserved</field>
+        <field name="res_model">maintenance.reserved</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create Maintenance Reserved
+          </p>
+        </field>
+	</record>
+
+<!-- Reserved Claimed -->
+<record id='reserved_claimed_form' model='ir.ui.view'>
+        <field name="name">reserved.claimed.form</field>
+        <field name="model">reserved.claimed</field>
+        <field name="arch" type="xml">
+            <form string="Form Reserved Claimed">
+            <sheet>
+            	<group>
+            	<group>
+                    <field name='acquisition_id'/>
+            		<field name="aircraft_name"/>
+            		<field name="aircraft_type"/>
+            		<field name="month"/>
+            		<field name="year"/>
+            	</group>
+            	<group>
+            		<field name='airframe'/>
+            		<field name="ldg"/>
+            		<field name="engine1"/>
+            		<field name='llp_engine1'/>
+            	</group>
+            	<group>
+            		<field name='engine2'/>
+            		<field name="llp_engine2"/>
+            		<field name="propeller1"/>
+            		<field name='propeller2'/>
+            		<field name="rgb1"/>
+            		<field name='rgb2'/>
+            	</group>
+            </group>
+            </sheet>
+            </form>
+        </field>
+	</record>  
+<record id='reserved_claimed_tree' model='ir.ui.view'>
+        <field name="name">reserved.claimed.tree</field>
+        <field name="model">reserved.claimed</field>
+        <field name="arch" type="xml">
+            <tree string="Reserved Claimed">
+                    <field name='acquisition_id'/>
+            		<field name="aircraft_name"/>
+            		<field name="aircraft_type"/>
+            		<field name="month"/>
+            		<field name="year"/>
+            		<field name='airframe' sum='airframe'/>
+            		<field name="ldg" sum='ldg'/>
+            		<field name="engine1" sum='engine1'/>
+            		<field name='llp_engine1' sum='llp_engine1'/>
+            		<field name='engine2' sum='engine2'/>
+            		<field name="llp_engine2" sum='llp_engine2'/>
+            		<field name="propeller1" sum='propeller1'/>
+            		<field name='propeller2' sum='propeller2'/>
+            		<field name="rgb1" sum='rgb1'/>
+            		<field name='rgb2' sum='rgb2'/>
+            </tree>
+        </field>
+	</record>  
+	
+	<record id='reserved_claimed_action' model='ir.actions.act_window'>
+        <field name="name">Reserved Claimed</field>
+        <field name="res_model">reserved.claimed</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create Reserved Claimed
+          </p>
+        </field>
+	</record>
+
+<!-- Delivery Schedule -->
+<!-- Reserved Claimed -->
+	<record id='delivery_schedule_form' model='ir.ui.view'>
+        <field name="name">delivery.schedule.form</field>
+        <field name="model">delivery.schedule</field>
+        <field name="arch" type="xml">
+            <form string="Form Delivery Schedule">
+            <sheet>
+            	<group>
+            	<group>
+                    <field name='name'/>
+            		<field name="aircraft_type"/>
+            		<field name="aircraft_category"/>
+            		<field name='year'/>
+            		<field name="quantity"/>
+            	</group>
+            </group>
+            </sheet>
+            </form>
+        </field>
+	</record>  
+	<record id='delivery_schedule_tree' model='ir.ui.view'>
+        <field name="name">delivery.schedule.tree</field>
+        <field name="model">delivery.schedule</field>
+        <field name="arch" type="xml">
+            <tree string="Delivery Schedule">
+                    <field name='name'/>
+            		<field name="aircraft_type"/>
+            		<field name="aircraft_category"/>
+            		<field name='year'/>
+            		<field name='quantity' sum='quantity'/>
+            </tree>
+        </field>
+	</record>  
+
+	<record id='delivery_schedule_action' model='ir.actions.act_window'>
+        <field name="name">Delivery Schedule</field>
+        <field name="res_model">delivery.schedule</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create Delivery Schedule
+          </p>
+        </field>
+	</record>
+
+<!-- Redelivery Schedule -->
+<record id='redelivery_schedule_form' model='ir.ui.view'>
+        <field name="name">redelivery.schedule.form</field>
+        <field name="model">redelivery.schedule</field>
+        <field name="arch" type="xml">
+            <form string="Form Re-Delivery Schedule">
+            <sheet>
+            	<group>
+            	<group>
+                    <field name='name'/>
+            		<field name="aircraft_type"/>
+            		<field name="aircraft_category"/>
+            		<field name='year'/>
+            		<field name="quantity"/>
+            	</group>
+            </group>
+            </sheet>
+            </form>
+        </field>
+	</record>  
+	<record id='redelivery_schedule_tree' model='ir.ui.view'>
+        <field name="name">redelivery.schedule.tree</field>
+        <field name="model">redelivery.schedule</field>
+        <field name="arch" type="xml">
+            <tree string="Re-Delivery Schedule">
+                    <field name='name'/>
+            		<field name="aircraft_type"/>
+            		<field name="aircraft_category"/>
+            		<field name='year'/>
+            		<field name='quantity' sum='quantity'/>
+            </tree>
+        </field>
+	</record>  
+
+	<record id='redelivery_schedule_action' model='ir.actions.act_window'>
+        <field name="name">Re-Delivery Schedule</field>
+        <field name="res_model">redelivery.schedule</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create Re-Delivery Schedule
+          </p>
+        </field>
+    </record>
+<!-- Fleet Asignment -->
+<record id='fleet_assignment_form' model='ir.ui.view'>
+        <field name="name">fleet.assignment.form</field>
+        <field name="model">fleet.assignment</field>
+        <field name="arch" type="xml">
+            <form string="Form Fleet Assignment">
+            <sheet>
+            	<group>
+            	<group>
+                    <field name='name'/>
+            		<field name="aircraft_type"/>
+            		<field name="aircraft_category"/>
+            		<field name='year'/>
+            		<field name='month'/>
+            		<field name="quantity"/>
+            	</group>
+            </group>
+            </sheet>
+            </form>
+        </field>
+	</record>  
+	<record id='fleet_assignment_tree' model='ir.ui.view'>
+        <field name="name">fleet.assignment.tree</field>
+        <field name="model">fleet.assignment</field>
+        <field name="arch" type="xml">
+            <tree string="Fleet Assignment">
+                    <field name='name'/>
+            		<field name="aircraft_type"/>
+            		<field name="aircraft_category"/>
+            		<field name='year'/>
+            		<field name='month'/>
+            		<field name='quantity' sum='quantity'/>
+            </tree>
+        </field>
+	</record>  
+
+	<record id='fleet_assignment_action' model='ir.actions.act_window'>
+        <field name="name">Fleet Assignment</field>
+        <field name="res_model">fleet.assignment</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create Fleet Assignment
+          </p>
+        </field>
+    </record>
+
+	<menuitem name='Fleet Administration' parent='aircraft_data_menu' id = 'fleet_administration_menu'/>
+	<menuitem action="aircraft_rental_action" parent="fleet_administration_menu" id="aircraft_rental_menu"/>
+	<menuitem action="maintenance_reserved_action" parent="fleet_administration_menu" id="maintenance_reserved_menu"/>
+	<menuitem action="reserved_claimed_action" parent="fleet_administration_menu" id="reserved_claimed_menu"/>
+	<menuitem action="delivery_schedule_action" parent="fleet_administration_menu" id="delivery_schedule_menu"/>
+	<menuitem action="redelivery_schedule_action" parent="fleet_administration_menu" id="redelivery_schedule_menu"/>
+	<menuitem action="fleet_assignment_action" parent="fleet_administration_menu" id="fleet_assignment_menu"/>
+</odoo>

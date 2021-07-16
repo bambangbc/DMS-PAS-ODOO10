@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id='office_duty_form' model='ir.ui.view'>
+            <field name="name">office.duty.form</field>
+            <field name="model">office.duty</field>
+            <field name="arch" type="xml">
+                <form string="Office Duty">
+                    <header>
+                        <button string="Set to Draft" name="action_set_to_draft" type="object" 
+                                states="validated" groups="pelita_operation.group_ops_manager" />
+                        <button string="Validate" name="action_validate" type="object" 
+                                states="draft" class="oe_highlight" 
+                                groups="pelita_operation.group_ops_user,pelita_operation.group_ops_manager"/>
+                        <field name="state" widget="statusbar" 
+                               statusbar_visible="draft,validated,cancel"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="base_operation_id"/>
+                                <field name='date_from'/>
+                                <field name='date_to'/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id='office_duty_tree' model='ir.ui.view'>
+            <field name="name">office.duty.tree</field>
+            <field name="model">office.duty</field>
+            <field name="arch" type="xml">
+                <tree string="Office Duty">
+                    <field name="name"/>
+                    <field name="base_operation_id"/>
+                    <field name='date_from'/>
+                    <field name='date_to'/>
+                </tree>
+            </field>
+        </record>
+
+        <record id='office_duty_action' model='ir.actions.act_window'>
+            <field name="name">Office Duty</field>
+            <field name="res_model">office.duty</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click for Create New Office Duty
+                </p>
+            </field>
+        </record>
+        <menuitem action="office_duty_action" parent="schedule_planning_menu" id="office_duty_menu"/>
+    
+    </data>
+</odoo>
+

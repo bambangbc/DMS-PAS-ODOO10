@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+
+		<report id="surat_keluar"
+			string="Print Surat Keluar"
+			model="surat.keluar"
+			report_type="qweb-pdf"
+			name="eofice.report_surat_keluar"
+			/>
+
+		<report id="nota"
+			string="Print Nota"
+			model="surat.nota"
+			report_type="qweb-pdf"
+			name="eofice.report_nota"
+			/>
+
+		<report id="memorandum"
+			string="Print Memorandum"
+			model="surat.memorandum"
+			report_type="qweb-pdf"
+			name="eofice.report_memorandum"
+			/>
+
+		<report id="disposisi"
+			string="Print Disposisi"
+			model="disposisi.masuk"
+			report_type="qweb-pdf"
+			name="eofice.report_disposisi"
+			/>
+
+		<!--report id="disposisi2"
+			string="Print Disposisi Presdir"
+			model="disposisi.masuk"
+			report_type="qweb-pdf"
+			name="eofice.report_disposisi2"
+			/-->
+	</data>
+</odoo>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="inherit1_view_customer_invoice_form" model="ir.ui.view">
+            <field name="name">inherit1.view.customer.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook/page[1]/group" position="attributes"> <!--[@class='oe_subtotal_footer']-->
+                    <attribute name="colspan">2</attribute>
+                </xpath>
+                <xpath expr="//field[@name='comment']" position="replace">
+                    <field name="comment" class="oe_inline" placeholder="Terms and conditions..." nolabel="1"/>
+                    <field name="text_amount" class="oe_inline" placeholder="Spelled Out..." nolabel="1"/>
+                    <div class="oe_clear"/>
+                </xpath>
+
+                <xpath expr="/form/sheet/notebook/page[1]/field[@name='invoice_line_ids']/tree/field[@name='invoice_line_tax_ids']" position="after">
+                    <field name="tax_description" invisible="1"/>
+                    <field name="tax_subtotal" invisible="1"/>
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page[1]/field[@name='invoice_line_ids']/tree/field[@name='uom_id']" position="after">
+                    <field name="uom" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_bank_id']" position="replace">
+                    <field domain="[('partner_id.ref_company_ids', 'in', [company_id])]" name="partner_bank_id" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="inherit_detail_bank_view_partner_bank_form" model="ir.ui.view">
+            <field name="name">inherit.detail.bank.res.partner.bank.form</field>
+            <field name="model">res.partner.bank</field>
+            <field name="inherit_id" ref="base.view_partner_bank_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='bank_id']" position="after">
+                    <field name="bank_street" invisible="1"/>
+                    <field name="bank_city" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='currency_id']" position="after">
+                    <field name="currency_bank" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+</odoo>

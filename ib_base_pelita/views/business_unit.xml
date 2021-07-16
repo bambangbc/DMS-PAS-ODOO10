@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Unit Bisnis Pelita -->
+    <record id="view_business_unit_tree" model="ir.ui.view">
+        <field name="name">pelita.business.unit.tree</field>
+        <field name="model">pelita.business.unit</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="BOD Subordination">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="product_categ_id"/>
+                <field name="note"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_business_unit_form" model="ir.ui.view">
+        <field name="name">pelita.business.unit.form</field>
+        <field name="model">pelita.business.unit</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="BOD Subordination">
+                <sheet>
+                    <group col="4">
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="product_categ_id"/>
+                        <field name="note"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_business_unit_filter" model="ir.ui.view">
+        <field name="name">pelita.business.unit.filter</field>
+        <field name="model">pelita.business.unit</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="BOD Subordination">
+                <field name="name" string="Business Unit" filter_domain="['|','|',('name','ilike',self),('code','ilike',self),('note','ilike',self)]"/>
+                <field name="product_categ_id"/>
+            </search>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_business_unit_tree">
+        <field name="name">BOD Subordination</field>
+        <field name="res_model">pelita.business.unit</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_business_unit_tree"/>
+        <field name="context">{}</field>
+        <field name="search_view_id" ref="view_business_unit_filter"/>
+    </record>
+    <menuitem name="BOD Subordination" parent="sale.menu_sales_config"
+              id="menu_business_unit_view" action="action_business_unit_tree" sequence="20"
+              groups="sales_team.group_sale_manager,sales_team.group_sale_salesman"/>
+
+    <data noupdate="1">
+
+        <record id="sale_trx_type_reg" model="sale.trx.type">
+            <field name="name">Regular</field>
+            <field name="code">REG</field>
+            <field name="active">True</field>
+        </record>
+        <record id="sale_trx_type_longterm" model="sale.trx.type">
+            <field name="name">Longterm</field>
+            <field name="code">PLT</field>
+            <field name="active">True</field>
+        </record>
+        <record id="sale_trx_type_pst" model="sale.trx.type">
+            <field name="name">PST</field>
+            <field name="active">True</field>
+        </record>
+        <record id="sale_trx_type_onthe_spot" model="sale.trx.type">
+            <field name="name">On The Spot</field>
+            <field name="code">PSP</field>
+            <field name="active">True</field>
+        </record>
+        <record id="sale_trx_type_service" model="sale.trx.type">
+            <field name="name">Service</field>
+            <field name="code">SRV</field>
+            <field name="active">True</field>
+        </record>
+
+    </data>
+</odoo>

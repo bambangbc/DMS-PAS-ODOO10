@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<!-- ========== Spesifikasi Form Wizard ========== -->
+    	<record id="view_wizard_report_flight_time_fw_rw_form" model="ir.ui.view">
+        	<field name="name">Flying Hours Production</field>
+            <field name="model">wizard.report.flight.time.fw.rw</field>
+            <field name="arch" type="xml">
+            	<form string="Flying Hours Production">
+                    <notebook>
+						<page string="Basic">
+							<group>
+								<group>
+									<field name="type_id" required="1"/>
+									<field name="date_from" string="From Date" required="1"/>
+									<field name="date_to" string="To Date" required="1"/>
+								</group>
+								<group>
+									<field name="report_type" required="1"/>
+								</group>
+							</group>
+						</page>
+                    </notebook>
+					<footer>
+					    <button name="create_report" string="Print" type="object" class="oe_highlight"/>
+					    	or
+					    <button string="Cancel" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<!-- ========== Spesifikasi Action Wizard ========== -->
+        <record id="action_wizard_report_flight_time_fw_rw" model="ir.actions.act_window">
+            <field name="name">Flying Hours Production</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.report.flight.time.fw.rw</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_wizard_report_flight_time_fw_rw_form"/>
+            <field name="target">new</field>
+            <field name="multi">True</field>
+        </record>
+
+        <!-- ========== Spesifikasi Report ========== -->
+        <report string	= "Flying Hours Production"
+				model	= "wizard.report.flight.time.fw.rw"
+				auto	= "True"
+				name	= "report_flight_time_fw_rw"
+				rml		= "jkw_report_pelita/report/report_flight_time_fw_rw.jrxml"
+				id		= "report_flight_time_fw_rw"
+        />
+
+        <!-- ========== Spesifikasi Menu ========== -->
+		<menuitem 	name	= "Flying Hours Production"
+					action	= "action_wizard_report_flight_time_fw_rw"
+					id		= "menu_report_flight_time_fw_rw"
+					parent	= "ib_pelita_report.menu_pelita_reporting"
+					sequence= "30" />
+	</data>
+</odoo>

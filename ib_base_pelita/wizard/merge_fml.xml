@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="wzd_validate_fs_merge_fml" model="ir.ui.view">
+            <field name="name">Validate FS and Merge FML</field>
+            <field name="model">flight.schedule.make.merge.fml</field>
+            <field name="arch" type="xml">
+	        	<form string="Validate FS and Merge FML">
+                    <p style="font-weight: bold;font-size: 14px;">
+                        Click 'Validate FS and View FML' button to validate FS and show related FML document.<br/>
+	                </p>
+	                <footer>
+                        <button name="act_validate_fs" string="Validate FS and View FML" type="object"
+                            context="{'open_fml': True}" class="btn-primary"/>
+                        <button name="act_validate_fs" string="Validate FS" type="object"
+                            class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+	                </footer>
+	            </form>
+            </field>
+        </record>
+
+        <record id="action_view_validate_fs_merge_fml" model="ir.actions.act_window">
+            <field name="name">Validate FS and Merge FML</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">flight.schedule.make.merge.fml</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wzd_validate_fs_merge_fml"/>
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.values" id="flight_schedule_make_merge_fml">
+            <field name="model_id" ref="pelita_operation.model_flight_schedule"/>
+            <field name="name">Validate FS and Merge FML</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_view_validate_fs_merge_fml'))" />
+            <field name="key">action</field>
+            <field name="model">flight.schedule</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+
+        <!-- Paper Format Landscape -->
+		<record id="paperformat_A4_Surat" model="report.paperformat">
+			<field name="name">A4 Surat</field>
+			<field name="default" eval="True" />
+			<field name="format">A4</field>
+			<field name="page_height">0</field>
+			<field name="page_width">0</field>
+			<field name="orientation">Portrait</field>
+			<field name="margin_top">25</field>
+			<field name="margin_bottom">35</field>
+			<field name="margin_left">7</field>
+			<field name="margin_right">7</field>
+			<field name="header_line" eval="False" />
+			<field name="header_spacing">15</field>
+			<field name="dpi">90</field>
+		</record>
+
+		<report id="surat_keluar"
+			string="Print Surat Keluar"
+			model="surat.keluar"
+			report_type="qweb-pdf"
+			name="eofice.report_surat_keluar" paperformat="eofice.paperformat_A4_Surat"
+			/>
+
+		<report id="nota"
+			string="Print Nota"
+			model="surat.nota"
+			report_type="qweb-pdf"
+			name="eofice.report_nota"
+			paperformat="eofice.paperformat_A4_Surat"
+			/>
+
+		<report id="memorandum"
+			string="Print Memorandum"
+			model="surat.memorandum"
+			report_type="qweb-pdf"
+			name="eofice.report_memorandum"
+			paperformat="eofice.paperformat_A4_Surat"
+			/>
+
+		<report id="disposisi"
+			string="Print Disposisi"
+			model="disposisi.masuk"
+			report_type="qweb-pdf"
+			name="eofice.report_disposisi"
+			/>
+
+		<!--report id="disposisi2"
+			string="Print Disposisi Presdir"
+			model="disposisi.masuk"
+			report_type="qweb-pdf"
+			name="eofice.report_disposisi2"
+			/-->
+	</data>
+</odoo>

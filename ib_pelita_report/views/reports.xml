@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="pas_so_report_jasper" model="ir.actions.report.xml">
+		<!--<field name="string">Print SO</field>-->
+		<field name="auto">True</field>
+		<field name="model">sale.order</field>
+		<field name="jasper_model_id" ref="sale.model_sale_order"/>
+		<field name="name">Quotation / SO [PAS]</field>
+		<field name="report_name">sale.order.pas.pdf</field><!--sale_order_pas.jrxml-->
+		<!--<field name="rml">ib_pelita_report/report/sales_order.jrxml</field>-->
+		<field name="report_rml">ib_pelita_report/report/sales_order.jrxml</field>
+		<!--<field name="menu">True</field>-->
+		<field name="header">False</field>
+		<field name="report_type">pdf</field>
+		<field name="jasper_report">True</field>
+		<field name="jasper_output">pdf</field>
+		<!--<field name="groups_id" eval="[(4, ref('ib_base_pelita.group_pas_subordination'))]"/>-->
+	</record>
+	<record id="pas_so_report_jasper_values" model="ir.values">
+		<field name="name">Quotation / SO [PAS]</field>
+		<field name="model">sale.order</field>
+		<field name="key2" eval="'client_print_multi'"/>
+		<field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(pas_so_report_jasper)" />
+    </record>
+	<record id="so_report_xls_jasper" model="ir.actions.report.xml">
+		<!--<field name="string">SO Excel</field>-->
+		<field name="auto">True</field>
+		<field name="model">sale.order</field>
+		<field name="jasper_model_id" ref="sale.model_sale_order"/>
+		<field name="name">Export to Excel</field>
+		<field name="report_name">sale.order.xls</field>
+		<!--<field name="rml">ib_pelita_report/report/so_excel.jrxml</field>-->
+		<field name="report_rml">ib_pelita_report/report/so_excel.jrxml</field>
+		<!--<field name="menu">False</field>-->
+		<field name="header">False</field>
+		<field name="report_type">pdf</field>
+		<field name="jasper_report">True</field>
+		<field name="jasper_output">xls</field>
+	</record>
+	<record id="so_report_xls_jasper_values" model="ir.values">
+		<field name="name">Export to Excel</field>
+		<field name="model">sale.order</field>
+		<field name="key2" eval="'client_print_multi'"/>
+		<field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(so_report_xls_jasper)" />
+    </record>
+
+
+	<record id="pas_customer_invoice" model="ir.actions.report.xml">
+		<!--<field name="string">Print Customer Invoice</field>-->
+		<field name="auto">True</field>
+		<field name="model">account.invoice</field>
+		<field name="jasper_model_id" ref="account.model_account_invoice"/>
+		<field name="name">Invoices [PAS]</field>
+		<field name="report_name">pas.cust.invoice.pdf</field>
+		<!--<field name="rml">ib_pelita_report/report/pas_invoice.jrxml</field>-->
+		<field name="report_rml">ib_pelita_report/report/pas_invoice.jrxml</field>
+		<!--<field name="menu">True</field>-->
+		<field name="header">False</field>
+		<field name="report_type">pdf</field>
+		<field name="jasper_report">True</field>
+		<field name="jasper_output">pdf</field>
+		<field name="groups_id" eval="[(4, ref('ib_base_pelita.group_pas_subordination'))]"/>
+	</record>
+	<record id="pas_customer_invoice_values" model="ir.values">
+		<field name="name">Invoices [PAS]</field>
+		<field name="model">account.invoice</field>
+		<field name="key2" eval="'client_print_multi'"/>
+		<field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(pas_customer_invoice)" />
+    </record>
+
+	<record id="paf_so_report_jasper" model="ir.actions.report.xml">
+		<!--<field name="string">Print SO</field>-->
+		<field name="auto">True</field>
+		<field name="model">sale.order</field>
+		<field name="jasper_model_id" ref="sale.model_sale_order"/>
+		<field name="name">Quotation / Sales Order [PAF]</field>
+		<field name="report_name">sale.order.paf.pdf</field><!--sales_order.jrxml-->
+		<!--<field name="rml">ib_pelita_report/report/sale_order_paf.jrxml</field>-->
+		<field name="report_rml">ib_pelita_report/report/sale_order_paf.jrxml</field>
+		<!--<field name="menu">True</field>-->
+		<field name="header">False</field>
+		<field name="report_type">pdf</field>
+		<field name="jasper_report">True</field>
+		<field name="jasper_output">pdf</field>
+		<!--<field name="groups_id" eval="[(4, ref('ib_base_pelita.group_paf_subordination'))]"/>-->
+	</record>
+	<record id="paf_so_report_jasper_values" model="ir.values">
+		<field name="name">Quotation / Sales Order [PAF]</field>
+		<field name="model">sale.order</field>
+		<field name="key2" eval="'client_print_multi'"/>
+		<field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(paf_so_report_jasper)" />
+    </record>
+
+
+	<record id="data_jam_fl_fw_xls_jasper" model="ir.actions.report.xml">
+		<!--<field name="string">Data Jam Terbang Test Flight F/W</field>-->
+		<field name="auto">False</field>
+		<field name="model">flight.maintenance.log</field>
+		<field name="jasper_model_id" ref="pelita_operation.model_flight_maintenance_log"/>
+		<field name="name">Data Jam Terbang Test Flight F/W</field>
+		<field name="report_name">data_jam_fl_fw_xls</field>
+		<!--<field name="rml">ib_pelita_report/report/data_jam_fl_fw_xls.jrxml</field>-->
+		<field name="report_rml">ib_pelita_report/report/data_jam_fl_fw_xls.jrxml</field>
+		<!--<field name="menu">False</field>-->
+		<field name="header">False</field>
+		<field name="report_type">pdf</field>
+		<field name="jasper_report">True</field>
+		<field name="jasper_output">xls</field>
+	</record>
+	<record id="data_jam_fl_rw_xls_jasper" model="ir.actions.report.xml">
+		<!--<field name="string">Data Jam Terbang Test Flight R/W</field>-->
+		<field name="auto">False</field>
+		<field name="model">flight.maintenance.log</field>
+		<field name="jasper_model_id" ref="pelita_operation.model_flight_maintenance_log"/>
+		<field name="name">Data Jam Terbang Test Flight R/W</field>
+		<field name="report_name">data_jam_fl_rw_xls</field>
+		<!--<field name="rml">ib_pelita_report/report/data_jam_fl_rw_xls.jrxml</field>-->
+		<field name="report_rml">ib_pelita_report/report/data_jam_fl_rw_xls.jrxml</field>
+		<!--<field name="menu">False</field>-->
+		<field name="header">False</field>
+		<field name="report_type">pdf</field>
+		<field name="jasper_report">True</field>
+		<field name="jasper_output">xls</field>
+	</record>
+	<record id="data_jam_vvip_fw_xls_jasper" model="ir.actions.report.xml">
+		<!--<field name="string">Data Jam Terbang VVIP Flight F/W</field>-->
+		<field name="auto">False</field>
+		<field name="model">flight.maintenance.log</field>
+		<field name="jasper_model_id" ref="pelita_operation.model_flight_maintenance_log"/>
+		<field name="name">Data Jam Terbang VVIP Flight F/W</field>
+		<field name="report_name">data_jam_vvip_fw_xls</field>
+		<!--<field name="rml">ib_pelita_report/report/data_jam_vvip_fw_xls.jrxml</field>-->
+		<field name="report_rml">ib_pelita_report/report/data_jam_vvip_fw_xls.jrxml</field>
+		<!--<field name="menu">False</field>-->
+		<field name="header">False</field>
+		<field name="report_type">pdf</field>
+		<field name="jasper_report">True</field>
+		<field name="jasper_output">xls</field>
+	</record>
+	<record id="fl_prod_fw_aircraft_xls_jasper" model="ir.actions.report.xml">
+		<!--<field name="string">Flying Hours Production F/W Aircraft</field>-->
+		<field name="auto">False</field>
+		<field name="model">flight.maintenance.log</field>
+		<field name="jasper_model_id" ref="pelita_operation.model_flight_maintenance_log"/>
+		<field name="name">Flying Hours Production F/W Aircraft</field>
+		<field name="report_name">fl_prod_fw_aircraft_xls</field>
+		<!--<field name="rml">ib_pelita_report/report/fl_prod_fw_aircraft_xls.jrxml</field>-->
+		<field name="report_rml">ib_pelita_report/report/fl_prod_fw_aircraft_xls.jrxml</field>
+		<!--<field name="menu">False</field>-->
+		<field name="header">False</field>
+		<field name="report_type">pdf</field>
+		<field name="jasper_report">True</field>
+		<field name="jasper_output">xls</field>
+	</record>
+	<record id="fl_prod_fw_crew_xls_jasper" model="ir.actions.report.xml">
+		<!--<field name="string">Flying Hours Production F/W Crew</field>-->
+		<field name="auto">False</field>
+		<field name="model">flight.maintenance.log</field>
+		<field name="jasper_model_id" ref="pelita_operation.model_flight_maintenance_log"/>
+		<field name="name">Flying Hours Production F/W Crew</field>
+		<field name="report_name">fl_prod_fw_crew_xls</field>
+		<!--<field name="rml">ib_pelita_report/report/fl_prod_fw_crew_xls.jrxml</field>-->
+		<field name="report_rml">ib_pelita_report/report/fl_prod_fw_crew_xls.jrxml</field>
+		<!--<field name="menu">False</field>-->
+		<field name="header">False</field>
+		<field name="report_type">pdf</field>
+		<field name="jasper_report">True</field>
+		<field name="jasper_output">xls</field>
+	</record>
+	<record id="fl_prod_rw_aircraft_xls_jasper" model="ir.actions.report.xml">
+		<!--<field name="string">Flying Hours Production R/W Aircraft</field>-->
+		<field name="auto">True</field>
+		<field name="model">flight.maintenance.log</field>
+		<field name="jasper_model_id" ref="pelita_operation.model_flight_maintenance_log"/>
+		<field name="name">Flying Hours Production R/W Aircraft</field>
+		<field name="report_name">fl_prod_rw_aircraft_xls</field>
+		<!--<field name="rml">ib_pelita_report/report/fl_prod_rw_aircraft_xls.jrxml</field>-->
+		<field name="report_rml">ib_pelita_report/report/fl_prod_rw_aircraft_xls.jrxml</field>
+		<!--<field name="menu">False</field>-->
+		<field name="header">False</field>
+		<field name="report_type">pdf</field>
+		<field name="jasper_report">True</field>
+		<field name="jasper_output">pdf</field>
+	</record>
+	<record id="fl_prod_rw_crew_xls_jasper" model="ir.actions.report.xml">
+		<!--<field name="string">Flying Hours Production R/W Crew</field>-->
+		<field name="auto">False</field>
+		<field name="model">flight.maintenance.log</field>
+		<field name="jasper_model_id" ref="pelita_operation.model_flight_maintenance_log"/>
+		<field name="name">Flying Hours Production R/W Crew</field>
+		<field name="report_name">fl_prod_rw_crew_xls</field>
+		<!--<field name="rml">ib_pelita_report/report/fl_prod_rw_crew_xls.jrxml</field>-->
+		<field name="report_rml">ib_pelita_report/report/fl_prod_rw_crew_xls.jrxml</field>
+		<!--<field name="menu">False</field>-->
+		<field name="header">False</field>
+		<field name="report_type">pdf</field>
+		<field name="jasper_report">True</field>
+		<field name="jasper_output">xls</field>
+	</record>
+	<record id="record_fl_hours_fw_tipi_xls_jasper" model="ir.actions.report.xml">
+		<!--<field name="string">Records Flying Hours Crew F/W TIPI</field>-->
+		<field name="auto">False</field>
+		<field name="model">flight.maintenance.log</field>
+		<field name="jasper_model_id" ref="pelita_operation.model_flight_maintenance_log"/>
+		<field name="name">Records Flying Hours Crew F/W TIPI</field>
+		<field name="report_name">record_fl_hours_fw_tipi_xls</field>
+		<!--<field name="rml">ib_pelita_report/report/record_fl_hours_fw_tipi_xls.jrxml</field>-->
+		<field name="report_rml">ib_pelita_report/report/record_fl_hours_fw_tipi_xls.jrxml</field>
+		<!--<field name="menu">False</field>-->
+		<field name="header">False</field>
+		<field name="report_type">pdf</field>
+		<field name="jasper_report">True</field>
+		<field name="jasper_output">xls</field>
+	</record>
+	<record id="record_fl_hours_rw_tipi_xls_jasper" model="ir.actions.report.xml">
+		<!--<field name="string">Records Flying Hours Crew R/W TIPI</field>-->
+		<field name="auto">False</field>
+		<field name="model">flight.maintenance.log</field>
+		<field name="jasper_model_id" ref="pelita_operation.model_flight_maintenance_log"/>
+		<field name="name">Records Flying Hours Crew R/W TIPI</field>
+		<field name="report_name">record_fl_hours_rw_tipi_xls</field>
+		<!--<field name="rml">ib_pelita_report/report/record_fl_hours_rw_tipi_xls.jrxml</field>-->
+		<field name="report_rml">ib_pelita_report/report/record_fl_hours_rw_tipi_xls.jrxml</field>
+		<!--<field name="menu">False</field>-->
+		<field name="header">False</field>
+		<field name="report_type">pdf</field>
+		<field name="jasper_report">True</field>
+		<field name="jasper_output">xls</field>
+	</record>
+
+	<!--<record id="paf_customer_invoice" model="ir.actions.report.xml">
+		<field name="string">Print Customer Invoice</field>
+		<field name="auto">False</field>
+		<field name="model">account.invoice</field>
+		<field name="jasper_model_id" ref="account.model_account_invoice"/>
+		<field name="name">PAF Invoice</field>
+		<field name="report_name">paf.cust.invoice.pdf</field>
+		<field name="rml">ib_pelita_report/report/paf_invoice.jrxml</field>
+		<field name="report_rml">ib_pelita_report/report/paf_invoice.jrxml</field>
+		<field name="menu">False</field>
+		<field name="header">False</field>
+		<field name="report_type">pdf</field>
+		<field name="jasper_report">True</field>
+		<field name="jasper_output">pdf</field>
+		<field name="groups_id" eval="[(4, ref('ib_base_pelita.group_paf_subordination'))]"/>
+	</record>
+	<record id="paf_customer_invoice_values" model="ir.values">
+		<field name="name">PAF Invoice</field>
+		<field name="model">account.invoice</field>
+		<field name="key2" eval="'client_print_multi'"/>
+		<field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(paf_customer_invoice)" />
+    </record>
+	<record id="patc_customer_invoice" model="ir.actions.report.xml">
+		<field name="string">Print Customer Invoice</field>
+		<field name="auto">False</field>
+		<field name="model">account.invoice</field>
+		<field name="jasper_model_id" ref="account.model_account_invoice"/>
+		<field name="name">PTC Invoice</field>
+		<field name="report_name">patc.cust.invoice.pdf</field>
+		<field name="rml">ib_pelita_report/report/patc_invoice.jrxml</field>
+		<field name="report_rml">ib_pelita_report/report/patc_invoice.jrxml</field>
+		<field name="menu">False</field>
+		<field name="header">False</field>
+		<field name="report_type">pdf</field>
+		<field name="jasper_report">True</field>
+		<field name="jasper_output">pdf</field>
+		<field name="groups_id" eval="[(4, ref('ib_base_pelita.group_ptc_subordination'))]"/>
+	</record>
+	<record id="patc_customer_invoice_values" model="ir.values">
+		<field name="name">PTC Invoice</field>
+		<field name="model">account.invoice</field>
+		<field name="key2" eval="'client_print_multi'"/>
+		<field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(patc_customer_invoice)" />
+    </record>-->
+	<!--<record id="fml_rotary_report" model="ir.actions.report.xml">
+		<field name="string">Print FML</field>
+		<field name="auto">True</field>
+		<field name="model">maintenance.log.rotary</field>
+		<field name="jasper_model_id" ref="pelita_operation.model_maintenance_log_rotary"/>
+		<field name="name">FML Rotary</field>
+		<field name="report_name">fml.rotary.pdf</field>
+		<field name="rml">ib_pelita_report/report/sales_order.jrxml</field>
+		<field name="report_rml">ib_pelita_report/report/sales_order.jrxml</field>
+		<field name="menu">True</field>
+		<field name="header">False</field>
+		<field name="report_type">pdf</field>
+		<field name="jasper_report">True</field>
+		<field name="jasper_output">pdf</field>
+	</record>
+	<record id="fml_rotary_report_values" model="ir.values">
+		<field name="name">FML Rotary</field>
+		<field name="model">sale.order</field>
+		<field name="key2" eval="'client_print_multi'"/>
+		<field name="value_unpickle" eval="'ir.actions.report.xml, ' +str(fml_rotary_report)" />
+    </record>-->
+
+
+</odoo>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_flight_information_wizard" model="ir.ui.view">
+        <field name="name">Flight Information</field>
+        <field name="model">sale.flight_information</field>
+        <field name="arch" type="xml">
+            <form string="Flight Information">
+                <field name="order_line_id"  invisible="1" class="oe_inline"/>
+                <group string="Flight Requisition">
+                    <field name="flight_request_line" readonly="True" nolabel="1" options="{'no_create': True, 'no_create_edit': True, 'no_quick_create': True}">
+                        <form>
+                            <group>
+                                <group>
+                                    <field name="number"/>
+                                    <field name="state"/>
+                                </group>
+                                <group>
+                                    <field name="aircraft_id"/>
+                                    <field name="route_operation_id"/>
+                                </group>
+                            </group>
+                            <field name="route_line_ids" readonly="True" widget="one2many"/>
+                        </form>
+                        <tree>
+                            <field name="number"/>
+                            <field name="aircraft_id"/>
+                            <field name="route_operation_id"/>
+                            <field name="state"/>
+                        </tree>
+                    </field>
+                </group>
+                <group string="Flight Schedule">
+                    <field name="flight_schedule_line" readonly="True" nolabel="1" options="{'no_create': True, 'no_create_edit': True, 'no_quick_create': True}">
+                        <tree>
+                            <field name="fs_number"/>
+                            <field name="flight_order_no"/>
+                            <field name="fl_acquisition_id"/>
+                            <field name="schedule_commercial_id"/>
+                            <field name="flight_category"/>
+                            <field name="flight_type"/>
+                            <field name="internal_flight_type_id"/>
+                            <field name="status"/>
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button string="Close" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_flight_information_info" model="ir.actions.act_window">
+        <field name="name">Flight Information</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.flight_information</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

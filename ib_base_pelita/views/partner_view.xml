@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="inherit_code_view_partner_form">
+            <field name="name">view.partner.form.inherit.code</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/div[@class='oe_title']/div[@class='o_row']/field[@name='parent_id']" position="before">
+                    <field name="code" placeholder="Customer/Supplier Code" required="True"/>
+                </xpath>
+                <xpath expr="//field[@name='category_id']" position="attributes">
+                    <attribute name="string">Group [Tags]</attribute>
+                    <attribute name="placeholder">Customer/Supplier Group</attribute>
+                </xpath>
+                <xpath expr="//field[@name='state_id']" position="after">
+                    <field name="state_name" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='country_id']" position="after">
+                    <field name="country_name" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='email']" position="after">
+                    <field name="vat" string="NPWP [VAT]" placeholder="e.g. 99.999.999.9-999.999"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_partner_simple_form_inherit_partner_code">
+            <field name="name">res.partner.simplified.form.inherit.code</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_simple_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='parent_id']" position="before">
+                    <field name="code" placeholder="Customer/Supplier Code" required="True"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="inherit1_hr_eoffice_form">
+            <field name="name">Inherit Employee Form Eofice</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="eofice.hr_eoffice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='department_id']" position="attributes">
+                    <attribute name="required">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="required">True</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

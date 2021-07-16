@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<record id='rotary_wings_form' model='ir.ui.view'>
+        <field name="name">rotary.wings.form</field>
+        <field name="model">maintenance.log.rotary</field>
+        <field name="arch" type="xml">
+            <form string="Maintenance Log Rotary Wing">
+            <sheet>
+                <group>
+                <group>
+                    <field name="name"/>
+                    <field name="date_lt"/>
+                    <field name="etd"/>
+                    <field name="eta"/>
+                </group>
+                <group>
+                    <field name="flight_schedule_id"/>
+                    <field name="flight_number"/>
+                    <field name="flight_order_number"/>
+                    <field name="location_id"/>
+                </group>
+                <group>
+                    <field name="customer_id"/>
+                    <field name="schedule_commercial_id"/>
+                    <field name="flight_category"/>
+                    <field name="flight_type"/>
+                    <field name="internal_flight_type_id"/>
+                    <field name="schedule_date"/>
+                </group>
+            </group>
+            <notebook>
+             <page string='Route'>
+                    <field name='route_rotary_ids'>
+                        <tree editable='buttom'>
+                        <field name='crew_id'/>
+                        <field name='crew_type_id'/>
+                        <field name='qualification'/>
+                        <field name='fml_no'/>    
+                        <field name='from_id'/>
+                        <field name="to_id"/>
+                    	<field name="rotor_engage"/>
+                    	<field name="lift_off"/>
+                    	<field name="landing"/>
+                    <!--	<field name="flight_hours"/> 
+                    	<field name="dispatch"/> -->
+                    	<field name="rotor_stop"/>
+                    	<field name="block"/>
+                    	<field name="in_service"/>
+                    	<field name="pax_no"/>
+                    	<field name="cargo"/>
+                    	<field name="sing_hoist_no"/>
+                    	<field name="ldg"/>
+                    	<field name="cycle_start1"/>
+                    	<field name="cycle_start2"/>
+                    	<field name="cycle_gg"/>
+                    	<field name="cycle_ft"/>
+                        </tree>
+                    </field>
+             </page>
+             <!--
+             <page string='Flight Attendants'>
+                    <field name='flight_attendant_ids'>
+                        <tree editable='buttom'>
+                            <field name='crew_id'/>
+                            <field name='crew_type_id'/>
+                            <field name='qualification'/>
+                        </tree>
+                    </field>
+                </page> -->
+
+                <page string='Instructor'>
+                <group>
+                    <field name='is_instruction_flight'/>
+                    <field name='training_instructor_id'/>
+                    <field name='brief_time' widget="float_time"/>
+                </group>
+                </page>
+                <page string='Late Departure'>
+                <group>
+                    <field name='cancel_reason_id'/>
+                    <field name='late_departure_id'/>
+                    <field name='total_late' widget="float_time"/>
+                    <field name='aircraft_unserviceable_reason'/>
+                    <field name='rtb' widget="float_time"/>
+                    <field name='rtb_reason' />
+                </group>
+                </page>
+                <page string='Discrepancies'>
+                    <field name='discrepancies_ids'>
+                        <tree editable='buttom'>
+                            <field name='name'/>
+                            <field name='action'/>
+                        </tree>
+                    </field>
+                </page>
+                <page string='Maintenance Data'>
+                    <field name='maintenance_rotary_ids'>
+                        <form string='Maintenance Data'>
+                            <group string='Engine Oil'>
+                                <field name='engine_oil1'/>
+                                <field name='engine_oil2'/>
+                                <field name='fuel_added'/>
+                                <field name='fuel_total'/>
+                            </group>
+                            <group string='Performance Check'>
+                                <group string='Starting'>
+                                <field name='start_T4_engine1'/>
+                                <field name='start_T4_engine2'/>
+                                </group>
+                                <group string='Take Off'>
+                                <field name='takeoff_ng_engine1'/>
+                                <field name='takeoff_ng_engine2'/>
+                                <field name='takeoff_T4_engine1'/>
+                                <field name="takeoff_T4_engine2"/>
+                                <field name="takeoff_torque_engine1"/>
+                                <field name="takeoff_torque_engine2"/>
+                                <field name="takeoff_ntl_engine1"/>
+                                <field name="takeoff_ntl_engine2"/>
+                                <field name="takeoff_oil_press_engine1"/>
+                                <field name="takeoff_oil_press_engine2"/>
+                                <field name="takeoff_oil_temp_engine1"/>
+                                <field name="takeoff_oil_temp_engine2"/>
+                                <field name="takeoff_xmsn_torque_engine1"/>
+                                <field name="takeoff_xmsn_torque_engine2"/>
+                                <field name="takeoff_xmsn_oil_engine1"/>
+                                <field name="takeoff_xmsn_oil_engine2"/>
+                                <field name="takeoff_nr_engine"/>
+                                <field name="takeoff_pitch_engine1"/>
+                                <field name="takeoff_pitch_engine2"/>
+                                <field name="takeoff_oat_engine1"/>
+                                <field name="takeoff_oat_engine2"/>
+                                <field name="takeoff_airspeed_engine"/>
+                                <field name="takeoff_altitude_engine"/>
+                                </group>
+                            </group>
+                            <group string='Airframe'>
+                                <field name="airframe_bf_hours"/>
+                                <field name="airframe_bf_landing"/>
+                                <field name="airframe_today_hours"/>
+                                <field name="airframe_today_landing"/>
+                                <field name="airframe_total_hours"/>
+                                <field name="airframe_total_landing"/>
+                            </group>
+                            <group string='SN'>
+                                <field name="sn_bf"/>
+                                <field name="sn_today"/>
+                                <field name="sn_total"/>
+                             </group>
+                            <group string='ESN1'>
+                                <field name="esn1_bf_hours"/>
+                                <field name="esn1_bf_landing"/>
+                                <field name="esn1_today_hours"/>
+                                <field name="esn1_today_landing"/>
+                                <field name="esn1_total_hours"/>
+                                <field name="esn1_total_landing"/>
+                            </group>
+                            <group string='ESN2'>
+                                <field name="esn2_bf_hours"/>
+                                <field name="esn2_bf_landing"/>
+                                <field name="esn2_today_hours"/>
+                                <field name="esn2_today_landing"/>
+                                <field name="esn2_total_hours"/>
+                                <field name="esn2_total_landing"/>
+                            </group>
+                        </form>
+                    </field>
+                </page>
+            </notebook>
+            </sheet>
+            </form>
+</field>
+</record>
+<record id='fixed_rotary_action' model='ir.actions.act_window'>
+        <field name="name">Maintenance Log Rotary Wings</field>
+        <field name="res_model">maintenance.log.rotary</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create New Maintenance Log
+          </p>
+        </field>
+</record>
+<menuitem action="fixed_rotary_action" parent="schedule_planning_menu" id="fix_rotary_menu"/>
+
+</odoo>

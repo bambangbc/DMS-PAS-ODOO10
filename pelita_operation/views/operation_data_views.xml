@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id='base_operation_form' model='ir.ui.view'>
+            <field name="name">base.operation.form</field>
+            <field name="model">base.operation</field>
+            <field name="arch" type="xml">
+                <form string="Base Operation">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="code"/>
+                                <field name='status'/>
+                            </group>
+                            <group>
+                                <field name="latitude"/>
+                                <field name="longitude"/>
+                                <field name="coordinate"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Map" name="base_ops_geo_map">
+                                <field name="google_map_base_ops" widget="map"  nolabel="1"/>
+                            </page>
+                            <page string="Other Info" name="other_info">
+                                <field name="description"/>
+                                <field name="coordinate_map"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>  
+        <record id='base_operation_tree' model='ir.ui.view'>
+            <field name="name">base.operation.tree</field>
+            <field name="model">base.operation</field>
+            <field name="arch" type="xml">
+                <tree string="Base Operation">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="description"/>
+                    <field name='coordinate'/>
+                    <field name="latitude"/>
+                    <field name="longitude"/>
+                    <field name='status'/>
+                    <field name='active'/>
+                </tree>
+            </field>
+        </record>
+        <record id='base_operation_action' model='ir.actions.act_window'>
+            <field name="name">Base Operation</field>
+            <field name="res_model">base.operation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click for Create New Base Operation
+                </p>
+            </field>
+        </record>
+
+        <!-- Area -->
+        <record id='area_operation_form' model='ir.ui.view'>
+            <field name="name">area.operation.form</field>
+            <field name="model">area.operation</field>
+            <field name="arch" type="xml">
+                <form string="Area Operation">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="code"/>
+                                <field name='status'/>
+                            </group>
+                            <group>
+                                <field name="latitude"/>
+                                <field name="longitude"/>
+                                <field name="coordinate"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Map" name="area_ops_geo_map">
+                                <field name="google_map_area_ops" widget="map"  nolabel="1"/>
+                            </page>
+                            <page string="Other Info" name="other_info">
+                                <field name="description"/>
+                                <field name="coordinate_map"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id='area_operation_tree' model='ir.ui.view'>
+            <field name="name">area.operation.tree</field>
+            <field name="model">area.operation</field>
+            <field name="arch" type="xml">
+                <tree string="Area Operation">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="description"/>
+                    <field name="latitude"/>
+                    <field name="longitude"/>
+                    <field name='status'/>
+                </tree>
+            </field>
+        </record>
+        <record id='area_operation_action' model='ir.actions.act_window'>
+            <field name="name">Area</field>
+            <field name="res_model">area.operation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click for Create New Base Operation
+                </p>
+            </field>
+        </record>
+
+        <!-- Irregularity -->
+        <record id='irregularity_operation_form' model='ir.ui.view'>
+            <field name="name">irregularity.operation.form</field>
+            <field name="model">irregularity.operation</field>
+            <field name="arch" type="xml">
+                <form string="Irregularity">
+                <sheet>
+                    <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="late_category"/>
+                        <field name="description"/>
+                        <field name='status'/>
+                    </group>
+                </group>
+                </sheet>
+                </form>
+            </field>
+        </record>
+        <record id='irregularity_operation_tree' model='ir.ui.view'>
+            <field name="name">irregularity.operation.tree</field>
+            <field name="model">irregularity.operation</field>
+            <field name="arch" type="xml">
+                <tree string="Irregularity">
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="late_category"/>
+                        <field name="description"/>
+                        <field name='status'/>
+                </tree>
+            </field>
+        </record>  
+
+        <record id='irregularity_operation_action' model='ir.actions.act_window'>
+            <field name="name">Irregularity</field>
+            <field name="res_model">irregularity.operation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click for Create New Irregularity
+              </p>
+            </field>
+        </record>
+
+        <!-- Route -->
+        <record id='route_operation_form' model='ir.ui.view'>
+            <field name="name">route.operation.form</field>
+            <field name="model">route.operation</field>
+            <field name="arch" type="xml">
+                <form string="Route">
+                <sheet>
+                    <group>
+                    <group>
+                        <field name='name'/>
+                        <field name="from_route_id"/>
+                        <field name="to_route_id"/>
+                        <field name="distance_nm" required="True"/>
+                        <field name="distance_km"/>
+                    </group>
+                </group>
+                </sheet>
+                </form>
+            </field>
+        </record>  
+
+        <record id='route_operation_tree' model='ir.ui.view'>
+            <field name="name">route.operation.tree</field>
+            <field name="model">route.operation</field>
+            <field name="arch" type="xml">
+                <tree string="Route">
+                        <field name='name'/>
+                        <field name="from_route_id"/>
+                        <field name="to_route_id"/>
+                        <field name="distance_nm"/>
+                        <field name="distance_km"/>
+                 </tree>
+            </field>
+        </record>  
+
+        <record id='route_operation_action' model='ir.actions.act_window'>
+            <field name="name">Route</field>
+            <field name="res_model">route.operation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click for Create New Route
+                </p>
+            </field>
+        </record>
+
+
+        <!-- Flight Hours Price -->
+        <record id='flight_hours_price_form' model='ir.ui.view'>
+            <field name="name">flight.hours.price.form</field>
+            <field name="model">flight.hours.price</field>
+            <field name="arch" type="xml">
+                <form string="Flight Hours Price">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name='name' placeholder="SK Payment" style="color:#898687"/>
+                                <field name="sk_date"/>
+                                <field name="payment_type"/>
+                                <field name="aircraft_categ"/>
+                                <field name="crew_type_id"/>
+                                <field name="price"/>
+                                <field name='golongan_id'/>
+                                <field name="remark"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>  
+        <record id='flight_hours_price_tree' model='ir.ui.view'>
+            <field name="name">flight.hours.price.tree</field>
+            <field name="model">flight.hours.price</field>
+            <field name="arch" type="xml">
+                <tree string="Flight Hours Price">
+                        <field name='name'/>
+                        <field name="sk_date"/>
+                        <field name="payment_type"/>
+                        <field name="aircraft_categ"/>
+                       <!-- <field name="qualification_id"/> -->
+                        <field name="crew_type_id"/> 
+                        <field name="price"/>
+                        <field name='golongan_id'/>
+                        <field name="remark"/>
+                </tree>
+            </field>
+        </record>  
+
+        <record id='flight_hours_price_action' model='ir.actions.act_window'>
+            <field name="name">Flight Hours Price</field>
+            <field name="res_model">flight.hours.price</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click for Create New Flight Hours Price
+              </p>
+            </field>
+        </record>
+
+
+<!-- Regulation -->
+    <record id='flight_regulation_form' model='ir.ui.view'>
+        <field name="name">flight.regulation.form</field>
+        <field name="model">regulation.regulation</field>
+        <field name="arch" type="xml">
+            <form string="Regulation">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Regulation Number " class="oe_inline"/>
+                        <h1>
+                            <field name="name" class="oe_inline" nolabel="1" placeholder="e.g. 1196462"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <!--<field name='name'/>-->
+                            <field name="aircraft_categ"/>
+                            <field name="min_flight_crew"/>
+                            <field name="additional_flight_crew"/>
+                        </group>
+                        <group>
+                            <label for="duty_time"/>
+                            <div>
+                                <field name="duty_time" class="oe_inline" nolabel="True"/>
+                                <label string=" Mtx Hour" class="oe_inline"/>
+                            </div>
+                            <label for="flight_deck_duty_time"/>
+                            <div>
+                                <field name="flight_deck_duty_time" class="oe_inline" nolabel="True"/>
+                                <label string=" Mtx Hour" class="oe_inline"/>
+                            </div>
+                            <field name="qualification_id"/>
+                        </group>
+                        <group>
+                            <field name="hour_per_day" widget='float_time'/>
+                            <field name="hour_per_week" widget='float_time'/>
+                            <field name="hour_per_month" widget='float_time'/>
+                            <field name="hour_per_threemonth" widget='float_time'/>
+                            <field name="hour_per_year" widget='float_time'/>
+                        </group>
+                        <group>
+                            <label for="rest_hour"/>
+                            <div>
+                                <field name="rest_hour" class="oe_inline" nolabel="True"/>
+                                <label string=" Mtx Hour" class="oe_inline"/>
+                            </div>
+                            <label for="rest_night_duty_hour"/>
+                            <div>
+                                <field name="rest_night_duty_hour" class="oe_inline" nolabel="True"/>
+                                <label string=" Mtx Hour" class="oe_inline"/>
+                            </div>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id='flight_regulation_tree' model='ir.ui.view'>
+        <field name="name">flight.regulation.tree</field>
+        <field name="model">regulation.regulation</field>
+        <field name="arch" type="xml">
+            <tree string="Flight Hours Price">
+                    <field name='name'/>
+                    <field name="aircraft_categ"/> 
+                    <field name="min_flight_crew"/>
+                    <field name="additional_flight_crew"/>
+                    <field name="duty_time"/>
+                    <field name="flight_deck_duty_time"/>
+                    <field name="qualification_id"/>
+                    <field name="hour_per_day"/>
+                    <field name="hour_per_week"/>
+                    <field name="hour_per_month"/>
+                    <field name="hour_per_threemonth"/>
+                    <field name="hour_per_year"/>
+            </tree>
+        </field>
+</record>  
+
+<record id='flight_regulation_action' model='ir.actions.act_window'>
+        <field name="name">Regulation</field>
+        <field name="res_model">regulation.regulation</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create New Regulations
+          </p>
+        </field>
+</record>
+
+<!-- Duty Time -->
+<record id='duty_time_form' model='ir.ui.view'>
+        <field name="name">duty.time.form</field>
+        <field name="model">duty.time</field>
+        <field name="arch" type="xml">
+            <form string="Duty Time">
+            <sheet>
+                <group>
+                <group>
+                    <field name="flight_category"/>
+                    <field name="before_value"/>
+                    <field name="after_value"/>
+                </group>
+            </group>
+            </sheet>
+            </form>
+        </field>
+</record>  
+<record id='duty_time_tree' model='ir.ui.view'>
+        <field name="name">duty.time.tree</field>
+        <field name="model">duty.time</field>
+        <field name="arch" type="xml">
+            <tree string="Duty Time">
+                    <field name="flight_category"/>
+                    <field name="before_value"/>
+                    <field name="after_value"/>
+            </tree>
+        </field>
+</record>  
+        <record id='duty_time_action' model='ir.actions.act_window'>
+            <field name="name">Duty Time</field>
+            <field name="res_model">duty.time</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                Click for Create New Duty Time
+                </p>
+            </field>
+        </record>
+
+    
+        <menuitem name="Operation Management" id="operation_management" sequence="2" />
+        <menuitem name="Master Data" parent="operation_management" id="master_data_menu"/>
+        <menuitem name="Configuration" parent="operation_management" id="config_operation_menu"/>
+        
+        <menuitem action="base_operation_action" parent="master_data_menu" id="base_operation_menu"/>
+        <menuitem action="area_operation_action" parent="master_data_menu" id="area_operation_menu"/>
+        <menuitem action="irregularity_operation_action" parent="master_data_menu" id="irregularity_operation_menu"/>
+        <menuitem action="route_operation_action" parent="master_data_menu" id="route_operation_menu"/>
+        <menuitem action="flight_hours_price_action" parent="master_data_menu" id="flight_hours_menu"/>
+        <menuitem action="flight_regulation_action" parent="master_data_menu" id="flight_regulation_menu"/>
+        <menuitem action="duty_time_action" parent="master_data_menu" id="duty_time_menu"/>
+    </data>
+</odoo>

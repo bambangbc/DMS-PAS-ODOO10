@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--<record id="rotary_logs_sequence_type" model="ir.sequence.type">
+            <field name="name">Maintenance Log Rotary</field>
+            <field name="code">maintenance.rotary</field>
+        </record>-->
+        <record id="rotary_logs_sequence" model="ir.sequence">
+            <field name="name">Maintenance Log Rotary</field>
+            <field eval="5" name="padding"/>
+            <field name="prefix">R-</field>
+            <field name="implementation">no_gap</field>
+            <field name="code">maintenance.rotary</field>
+            <!--<field name="suffix">/%(year)s</field>-->
+        </record>
+        <!--<record id="fixedwing_logs_sequence_type" model="ir.sequence.type">
+            <field name="name">Maintenance Log FixedWing</field>
+            <field name="code">maintenance.fixedwing</field>
+        </record>-->
+        <record id="fixedwing_logs_sequence" model="ir.sequence">
+            <field name="name">Maintenance Log FixedWing</field>
+            <field eval="5" name="padding"/>
+            <field name="prefix">F-</field>
+            <field name="implementation">no_gap</field>
+            <field name="code">maintenance.fixedwing</field>
+            <!--<field name="suffix">/%(year)s</field>-->
+        </record>
+        <!--<record id="regulation_logs_sequence_type" model="ir.sequence.type">
+            <field name="name">Regulation</field>
+            <field name="code">regulation.regulation</field>
+        </record>-->
+        <record id="regulation_logs_sequence" model="ir.sequence">
+            <field name="name">Regulation</field>
+            <field name="code">regulation.regulation</field>
+            <field name="prefix">%(range_year)s/%(month)s/</field>
+            <field name="padding">3</field>
+            <field name="implementation">no_gap</field>
+            <!--<field name="suffix">/%(year)s</field>-->
+        </record>
+
+        <record id="flight_schedule_sequence" model="ir.sequence">
+            <field name="name">Flight Schedule</field>
+            <field eval="5" name="padding"/>
+            <field name="prefix">FS-</field>
+            <field name="implementation">no_gap</field>
+            <field name="code">flight.schedule.number</field>
+        </record>
+
+
+        <!--<record id="seq_log_fixwing" model="ir.sequence">
+            <field name="name">Maintenance Log FixedWing</field>
+            <field name="code">maintenance.fixedwing</field>
+            <field name="prefix">F-</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_log_rotary" model="ir.sequence">
+            <field name="name">Maintenance Log Rotary</field>
+            <field name="code">maintenance.rotary</field>
+            <field name="prefix">R-</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>-->
+
+    </data>
+</odoo>

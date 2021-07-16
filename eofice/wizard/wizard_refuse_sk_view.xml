@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+    <record model="ir.ui.view" id="eof_refuse_sk_form">
+            <field name="name">refuse.form</field>
+            <field name="model">refuse.sk</field>
+            <field name="arch" type="xml">
+                <form string="Reject Surat Keluar">
+                    <group>
+                        <label for="user_ids1" string="Action"/>
+                        <div>
+                            <div>
+                                <field name="note"/>
+                            </div>
+                        </div>
+                    </group>
+                    <footer>
+                        <button name="refuse" string="Refuse" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window name="Refuse Surat Keluar" id="act_refuse_sk"
+        res_model="refuse.sk"
+        view_mode="form" target="new"/>
+
+        <record model="ir.ui.view" id="eof_refuse_memo_form">
+            <field name="name">refuse.form</field>
+            <field name="model">refuse.memo</field>
+            <field name="arch" type="xml">
+                <form string="Reject Memorandum">
+                    <group>
+                        <label for="user_ids1" string="Action"/>
+                        <div>
+                            <div>
+                                <field name="note"/>
+                            </div>
+                        </div>
+                    </group>
+                    <footer>
+                        <button name="refuse" string="Refuse Memorandum" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window name="Refuse Memorandum" id="act_refuse_memo"
+        res_model="refuse.memo"
+        view_mode="form" target="new"/>
+
+    </data>
+</odoo>

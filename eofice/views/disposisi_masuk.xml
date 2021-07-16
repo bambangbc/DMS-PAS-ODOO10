@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="hr_contract_view_search" model="ir.ui.view">
+            <field name="name">disposisi.search</field>
+            <field name="model">disposisi.masuk</field>
+            <field name="arch" type="xml">
+                <search string="Search Disposisi">
+                    <field name="name" string="nomor disposisi"/>
+                    <field name="no_ref" string="Nomor Surat Masuk"/>
+                    <field name="no_nota" string="Nomor Nota"/>
+                    <field name="no_memo" string="Nomor Memorandum"/>
+                    <field name="user_ids1" string="Ditujukan Kepada"/>
+                    <field name="no_tanda_terima" string="Nomor Tanda Terima"/>
+                    <!--filter name="status" domain="[('state', '=', 'inprogres')]" string="Status"/-->
+                    <separator/>
+                    <!-- <filter name="ditujukan" domain="[('user_id2','!=',uid)]" string="Ditujukan"/> -->
+                    <separator/>
+                    <filter name="pembuat" domain="[('user_id2', '=', uid)]" string="Pembuat Dispo"/>
+                    <group expand="0" string="Group By">
+                        <filter name="jen_sur" string="Jenis Surat" domain="[]" context="{'group_by':'jenis_surat'}"/>
+                        <!-- <filter name="state" string="state" domain="[]" context="{'group_by':'state'}"/> -->
+                    </group>
+                </search>
+            </field>
+        </record>
+
+    	<record model='ir.ui.view' id='eof_disposisi_tree'>
+            <field name='name'>disposisi.masuk.tree</field>
+            <field name='model'>disposisi.masuk</field>
+            <field name='arch' type='xml'>
+                <tree string='Disposisi Surat Masuk'>
+                    <field name='name'/>
+                    <field name="user_ids1"/>
+                    <field name="user_ids2"/>
+                    <field name="user_id1"/>
+                    <field name="date"/>
+                    <field name="source"/>
+                    <field name="active_user" invisible="1"/>
+                    <field name="user_act" invisible="1"/>
+                    <field name="date_now" invisible="1"/>
+                    <field name="level_id" invisible="1"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Shortcuts -->
+        <record id="action_view_nota1_form" model="ir.actions.act_window">
+            <field name="name">Nota Dinas</field>
+            <field name="res_model">surat.nota</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="context">{'search_default_dispo_id': [active_id], 'default_dispo_id': active_id}</field>
+        </record>
+
+        <record model="ir.ui.view" id="eof_disposisi_form">
+            <field name="name">disposisi.masuk.form</field>
+            <field name="model">disposisi.masuk</field>
+            <field name="arch" type="xml">
+                <form string="Surat Masuk">
+                	<header>
+                        <button name="%(act_create_disposisi)d" string="Create Disposisi"
+                            type="action" class="btn-primary"
+                            attrs="{'invisible': ['|','|',('state','!=','inprogres'),('button_dispo','=',False),('hide_level','=','true')]}"/>
+                        <button name="%(action_view_nota1_form)d" string="Create Nota"
+                            type="action" class="btn-primary"
+                            attrs="{'invisible': ['|',('state','!=','inprogres'),('button_nota','=',False)]}"/>
+                        <button name="%(act_forward)d" string="Forward"
+                            type="action" class="oe_highlight"
+                            attrs="{'invisible': [('level_id','!=','true')]}"/>
+                        <!--button name="prints" string="Print Disposisi" type="object" class="btn-primary"/-->
+                		<button name="confirm" states="draft" string="Confirm" type="object" class="oe_highlight"/>
+                        <button name="validate" attrs="{'invisible': ['|',('state','!=','inprogres'),('active_user','!=','true')]}" string="Validate" type="object" class="oe_highlight"/>
+                        <!--button name="%(act_done_dispo)d" attrs="{'invisible': ['|',('state','!=','inprogres')]}" string="Validatess" type="action" class="oe_highlight"/-->
+                		<field name="state" widget="statusbar" nolabel="1"/>
+                	</header>
+                	<sheet>
+                        <div class="oe_title">
+                            <label string="Lembar Penerus" attrs="{'invisible': [('state','in',('draft'))]}"/>
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+	                	<group>
+                            <label for="user_ids1" string="Ditujukan Untuk"/>
+                            <div>
+                                <div>
+                                    <field name="user_ids1" widget="many2many_tags" attrs="{'readonly': [('state','!=','draft')]}" class="oe_inline"/>
+                                    <label string=" - ACTION" class="oe_inline" attrs="{'invisible': [('user_ids1','=',False)]}"/>
+                                    <!--field name="action2" attrs="{'readonly': [('state','!=','draft')],'invisible':[('user_ids1','=',False)],'required': [('user_ids1','=',True)]}" class="oe_inline"/-->
+                                </div>
+                                <div>
+                                    <field name="user_ids2" widget="many2many_tags" attrs="{'readonly': [('state','!=','draft')]}" class="oe_inline"/> - TANGGAPAN
+                                    <!--field name="action3" attrs="{'readonly': [('state','!=','draft')]}" class="oe_inline"/-->
+                                </div>
+                                <div>
+                                    <field name="user_ids4" widget="many2many_tags" attrs="{'readonly': [('state','!=','draft')]}" class="oe_inline"/> - INFO
+                                    <!--field name="action4" attrs="{'readonly': [('state','!=','draft')]}" class="oe_inline"/-->
+                                </div>
+                                <div>
+                                    <field name="user_ids5" widget="many2many_tags" attrs="{'readonly': [('state','!=','draft')]}" class="oe_inline"/> - FILE
+                                    <!--field name="action5" attrs="{'readonly': [('state','!=','draft')]}" class="oe_inline"/-->
+                                </div>
+                            </div>
+                            <field name="user_id1"/>
+                            <field name="all_dispo" inprogres="1" invisible="1"/>
+                            <field name="date" attrs="{'readonly': [('state','!=','draft')]}"/>
+                            <field name="button_dispo" invisible="1"/>
+                            <field name="button_nota" invisible="1"/>
+                            <field name="user_ids3" invisible="1"/>
+                            <field name="user_id2" invisible="1"/>
+                            <field name="pengirim" invisible="1"/>
+                            <field name="active_user" invisible="1"/>
+                            <field name="user_act" invisible="1"/>
+                            <field name="date_now" invisible="1"/>
+                            <field name="level_id" invisible="1"/>
+                            <field name="hide_level" invisible="1"/>
+                            <field name="note_forward" invisible="1"/>
+                            <field name="note" attrs="{'readonly': [('state','!=','draft')]}"/>
+	                	</group>
+	                	<notebook>
+	                		<page string="Surat Masuk" attrs="{'invisible':[('no_ref','=',False)]}">
+	                			<group>
+                					<field name="no_ref" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="name_ref" invisible="1"/>
+                					<field name="partner" attrs="{'readonly':[('state','!=','draft')]}"/>
+                					<field name="subject" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="total_set" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="date1" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="date2" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="status_surat" attrs="{'readonly': [('state','!=','draft')]}"/>
+	                			</group>
+                            </page>
+                            <page string="Nota" attrs="{'invisible':[('no_nota','=',False)]}">
+                                <group>
+                                    <field name="no_nota" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="kepada_nota" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="tembusan_nota" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="perihal_nota" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="date_nota" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                </group>
+	                		</page>
+                            <page string="Memorandum" attrs="{'invisible':[('no_memo','=',False)]}">
+                                <group>
+                                    <field name="no_memo" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <!--field name="kepada_memo"/>
+                                    <field name="tembusan_memo"/-->
+                                    <field name="perihal_memo" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="date_memo" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                </group>
+                            </page>
+                            <page string="Tanda Terima Dokumen" attrs="{'invisible':[('no_tanda_terima','=',False)]}">
+                                <group>
+                                    <field name="no_tanda_terima" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="partner_tante" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="user_tante" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="date_tante" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="konten_tante" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                </group>
+                            </page>
+                            <page string="Other Info">
+                                <group>
+                                    <field name="source" readonly="1"/>
+                                    <field name="validate_done" widget="many2many_tags" readonly="1"/>
+                                </group>
+                            </page>
+                            <page string="Forward" attrs="{'invisible':[('note_forward','=',False)]}">
+                                <group>
+                                    <field name="forward_to"/>
+                                    <field name="note_forward"/>
+                                </group>
+                            </page>
+	                	</notebook>
+	                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="open_create_disposisi" model="ir.actions.act_window">
+            <field name="name">Create a Disposisi</field>
+            <field name="res_model">disposisi.masuk</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <!--field name="view_id" ref="project_project_view_form_simplified"/-->
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.ui.view" id="view_disposisi_masuk_kanban">
+            <field name="name">disposisi.masuk.kanban</field>
+            <field name="model">disposisi.masuk</field>
+            <field name="arch" type="xml">
+                <kanban on_create="eofice.open_create_disposisi">
+                    <field name="name"/>
+                    <field name="note"/>
+                    <field name="date"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <strong><span><t t-esc="record.name.value"/></span></strong>
+                                    </div>
+                                    <div class="col-xs-6 pull-right text-right">
+                                        <strong><field name="date"/></strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6 text-muted">
+                                        <span><t t-esc="record.note.value"/></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+    	<record id="eof_dis_masuk_action" model="ir.actions.act_window">
+            <field name="name">Disposisi Masuk</field>
+            <field name="res_model">disposisi.masuk</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,graph,pivot</field>
+            <field name="domain">[('state','!=','draft')]</field>
+            <!-- <field name="context">{'search_default_state': 1,'search_default_ditujukan': 1}</field> -->
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="hr_contract_view_search"/>
+        </record>
+
+        <record id="eof_dis_keluar_action" model="ir.actions.act_window">
+            <field name="name">Disposisi Keluar</field>
+            <field name="res_model">disposisi.masuk</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,graph,pivot</field>
+            <field name="domain">[('user_id2','=',uid)]</field>
+            <!-- <field name="context">{'search_default_state': 1,'search_default_pembuat': 1}</field> -->
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="hr_contract_view_search"/>
+        </record>
+
+        <menuitem
+            action="eof_dis_masuk_action"
+            id="eof_dis_masuk_view_menu"
+            parent="eof_menu_disposisi" sequence="10"/>
+
+        <menuitem
+            action="eof_dis_keluar_action"
+            id="eof_dis_keluar_view_menu"
+            parent="eof_menu_disposisi" sequence="15"/>
+
+        <data noupdate="1">
+		  <record id="seq_disposisi_masuk" model="ir.sequence">
+		    <field name="name">Surat Masukr</field>
+		    <field name="code">disposisi.masuk</field>
+		    <field name="prefix"></field>
+		    <field name="padding">3</field>
+		  </record>
+		</data>
+
+    </data>
+</odoo>

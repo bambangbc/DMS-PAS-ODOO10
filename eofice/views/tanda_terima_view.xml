@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="hr_tanda_terima_view_search" model="ir.ui.view">
+            <field name="name">tanda.terima.search</field>
+            <field name="model">tanda.terima</field>
+            <field name="arch" type="xml">
+                <search string="Search Surat Masuk">
+                    <field name="name" string="nomor Surat"/>
+                    <field name="date" string="Tanggal"/>
+                    <field name="partner_id" string="Pengirim"/>
+                    <field name="user_id" string="Ditujukan Untuk"/>
+                    <field name="konten" string="Konten"/>
+                    <filter name="status" domain="[('state', '=', 'inprogres')]" string="Status"/>
+                    <separator/>
+                    <filter name="ditujukan" domain="['|',('user_tujuan', '=', uid),('user_delegasi','=',uid)]" string="Ditujukan"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Tanggal" domain="[]" context="{'group_by':'date'}"/>
+                        <filter string="Pengirim" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Ditujukan Untuk" domain="[]" context="{'group_by':'user_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+    	<record model='ir.ui.view' id='eof_tanda_terima_tree'>
+            <field name='name'>tanda.terima.tree</field>
+            <field name='model'>tanda.terima</field>
+            <field name='arch' type='xml'>
+                <tree string='Tanda Terima Dokumen'>
+                    <field name='name'/>
+                    <field name="partner_id"/>
+                    <field name="user_id"/>
+                    <field name="active_user" invisible="1"/>
+                    <field name="date"/>
+                    <field name="konten"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_disposisi_terima" model="ir.actions.act_window">
+            <field name="name">Disposisi</field>
+            <field name="res_model">disposisi.masuk</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="context">{'search_default_no_tanda_terima': [active_id], 'default_no_tanda_terima': active_id}</field>
+        </record>
+
+        <record id="action_view_disposisi_terima2" model="ir.actions.act_window">
+            <field name="name">Disposisi</field>
+            <field name="res_model">disposisi.masuk</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_no_tanda_terima': [active_id], 'default_no_tanda_terima': active_id}</field>
+        </record>
+
+        <record id="action_view_memo_terima" model="ir.actions.act_window">
+            <field name="name">Memorandum</field>
+            <field name="res_model">surat.memorandum</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="context">{'search_default_no_tanda_terima': [active_id], 'default_no_tanda_terima': active_id}</field>
+        </record>
+
+        <record id="action_view_memo_terima2" model="ir.actions.act_window">
+            <field name="name">Memorandum</field>
+            <field name="res_model">surat.memorandum</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_no_tanda_terima': [active_id], 'default_no_tanda_terima': active_id}</field>
+        </record>
+
+        <record id="action_view_nota_terima" model="ir.actions.act_window">
+            <field name="name">Nota</field>
+            <field name="res_model">surat.nota</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="context">{'search_default_no_tanda_terima': [active_id], 'default_no_tanda_terima': active_id}</field>
+        </record>
+
+        <record id="action_view_nota_terima2" model="ir.actions.act_window">
+            <field name="name">Nota</field>
+            <field name="res_model">surat.nota</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_no_tanda_terima': [active_id], 'default_no_tanda_terima': active_id}</field>
+        </record>
+
+        <record model="ir.ui.view" id="eof_tanda_terima_form">
+            <field name="name">tanda.terima.form</field>
+            <field name="model">tanda.terima</field>
+            <field name="arch" type="xml">
+                <form string="Tanda Terima Dokument">
+                	<header>
+                        <button name="%(action_view_disposisi_terima)d" string="Create Disposisi"
+                            type="action" class="btn-primary"
+                            attrs="{'invisible': ['|',('state','=','draft'),('button_dispo','=',False)]}"/>
+                        <button name="%(action_view_memo_terima)d" string="Create Memorandum"
+                            type="action" class="btn-primary"
+                            attrs="{'invisible': ['|',('state','=','draft'),('active_user','!=',True)]}"/>
+                        <button name="%(action_view_nota_terima)d" string="Create Nota"
+                            type="action" class="btn-primary"
+                            attrs="{'invisible': ['|',('state','=','draft'),('active_user','!=',True)]}"/>
+                        <!--button name="Save_dms" string="Save to DMS"
+                            Type="object" class="oe_highlight"
+                            attrs="{'invisible': ['|',('state','=','draft'),('active_user','!=',True)]}"/-->
+                		<button name="confirm" states="draft" string="Confirm" type="object" class="oe_highlight"/>
+                        <button name="validate" attrs="{'invisible': ['|',('state','!=','inprogres'),('active_user','!=',True)]}" string="Validate" type="object" class="oe_highlight"/>
+                		<field name="state" widget="statusbar" statusbar_visible="draft,done" nolabel="1"/>
+                	</header>
+                	<sheet>
+                        <!--div class="oe_button_box" name="button_box">
+                            <button type="action"  name="%(action_view_disposisi_terima2)d"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o"
+                                attrs="{'invisible': ['|',('state','=','draft'),('active_user','!=',True)]}">
+                                <field name="dispo_count" widget="statinfo" string="Disposisi"/>
+                            </button>
+                            <button type="action"  name="%(action_view_memo_terima2)d"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o"
+                                attrs="{'invisible': ['|',('state','=','draft'),('active_user','!=',True)]}">
+                                <field name="memo_count" widget="statinfo" string="Memorandum"/>
+                            </button>
+                            <button type="action"  name="%(action_view_nota_terima2)d"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o"
+                                attrs="{'invisible': ['|',('state','=','draft'),('active_user','!=',True)]}">
+                                <field name="nota_count" widget="statinfo" string="Nota"/>
+                            </button>
+                        </div-->
+            			<div class="oe_title">
+	                        <label string="Tanda Terima Dokumen" attrs="{'invisible': [('state','in',('draft'))]}"/>
+	                        <h1>
+	                            <field name="name" readonly="1"/>
+	                        </h1>
+	                    </div>
+            			<group>
+            				<group>
+            					<field name="partner_id" attrs="{'readonly': [('state','=','done')]}"/>
+            					<field name="user_id" attrs="{'readonly': [('state','=','done')]}"/>
+                                <field name="user_tujuan" attrs="{'readonly': [('state','=','done')]}"/>
+            				</group>
+            				<group>
+            					<field name="date" attrs="{'readonly': [('state','=','done')]}"/>
+            					<field name="konten" attrs="{'readonly': [('state','=','done')]}"/>
+                                <field name="active_user" invisible="1"/>
+                                <field name="pengirim" invisible="1"/>
+                                <field name="user_id1" invisible="1"/>
+                                <field name="button_dispo" invisible="1"/>
+                                <field name="button_memo" invisible="1"/>
+                                <field name="button_nota" invisible="1"/>
+            				</group>
+                            <field name="catatan" attrs="{'readonly': [('state','=','done')]}"/>
+            			</group>
+	                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="open_create_tanda_terima" model="ir.actions.act_window">
+            <field name="name">Create a Tanda Terima Dokumen</field>
+            <field name="res_model">tanda.terima</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <!--field name="view_id" ref="project_project_view_form_simplified"/-->
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.ui.view" id="view_tanda_terima_kanban">
+            <field name="name">tanda.terima.kanban</field>
+            <field name="model">tanda.terima</field>
+            <field name="arch" type="xml">
+                <kanban on_create="eofice.open_create_tanda_terima">
+                    <field name="name"/>
+                    <field name="konten"/>
+                    <field name="date"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <strong><span><t t-esc="record.name.value"/></span></strong>
+                                    </div>
+                                    <div class="col-xs-6 pull-right text-right">
+                                        <strong><field name="date"/></strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6 text-muted">
+                                        <span><t t-esc="record.konten.value"/></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+    	<record id="eof_tanda_terima_action" model="ir.actions.act_window">
+            <field name="name">Tanda Terima Document</field>
+            <field name="res_model">tanda.terima</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,pivot</field>
+            <field name="context">{'search_default_status': 1,'search_default_ditujukan': 1}</field>
+            <field name="search_view_id" ref="hr_tanda_terima_view_search"/>
+        </record>
+
+        <menuitem
+            action="eof_tanda_terima_action"
+            id="eof_tanda_terima_view_menu"
+            parent="eof_ttd_menu" sequence="50"/>
+
+        <data noupdate="1">
+		  <record id="seq_tanda_terima" model="ir.sequence">
+		    <field name="name">Tanda Terima</field>
+		    <field name="code">tanda.terima</field>
+		    <field name="sufix"></field>
+		    <field name="auto_reset">False</field>
+		    <field name="padding">3</field>
+		  </record>
+		</data>
+
+    </data>
+</odoo>

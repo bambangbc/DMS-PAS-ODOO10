@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Tunggakan" pageWidth="1294" pageHeight="144" columnWidth="1294" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" whenResourceMissingType="Empty" isIgnorePagination="true" uuid="b0e95a63-3a3f-47ea-8291-f0ad58d698a3">
+	<property name="ireport.zoom" value="1.4641000000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="207"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="786"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="648"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="338"/>
+	<property name="net.sf.jasperreports.export.xls.detect.cell.type" value="true"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="inch"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PAIMS"/>
+	<property name="net.sf.jasperreports.print.create.bookmarks" value="false"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="cm"/>
+	<style name="default" isDefault="true" forecolor="#000000" backcolor="#FFFFFF" hTextAlign="Left" hImageAlign="Left" vTextAlign="Top" vImageAlign="Top" isBlankWhenNull="true" fontName="SansSerif" fontSize="8">
+		<box leftPadding="2" rightPadding="2"/>
+	</style>
+	<style name="num1" style="default" hTextAlign="Right" hImageAlign="Right" pattern="#,##0.00;-#,##0.00"/>
+	<style name="num2" style="default" hTextAlign="Right" hImageAlign="Right" pattern="#,##0;-#,##0"/>
+	<style name="date1" style="default" pattern="dd-MM-yy HH:mm"/>
+	<style name="date2" style="default" pattern="dd-MMM-yy"/>
+	<style name="date3" style="default" pattern="dd/MM/yy"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Transparent" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Transparent" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Transparent" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.5"/>
+			<bottomPen lineWidth="0.5"/>
+			<rightPen lineWidth="0.5"/>
+		</box>
+	</style>
+	<style name="Crosstab Data Text" style="default" hTextAlign="Center" hImageAlign="Center">
+		<box leftPadding="0" rightPadding="0"/>
+	</style>
+	<parameter name="date_from" class="java.lang.String">
+		<parameterDescription><![CDATA[date_from]]></parameterDescription>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="date_to" class="java.lang.String">
+		<parameterDescription><![CDATA[date_to]]></parameterDescription>
+	</parameter>
+	<parameter name="date_cutoff" class="java.lang.String">
+		<parameterDescription><![CDATA[date_cutoff]]></parameterDescription>
+	</parameter>
+	<parameter name="category_id" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/baim/Documents/Python-Odoo/extra_pas/ib_pelita_report/report/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="type_ids" class="java.lang.String">
+		<parameterDescription><![CDATA[type_ids]]></parameterDescription>
+		<defaultValueExpression><![CDATA["()"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="type_id_query" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{type_ids}.replace("[","(").replace("]",")").equals("()") ||$P{type_ids}.equals("")? "TRUE" : " Type_ID in "+$P{type_ids}.replace("[","(").replace("]",")")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="crew_ids" class="java.lang.String">
+		<parameterDescription><![CDATA[crew_ids]]></parameterDescription>
+		<defaultValueExpression><![CDATA["()"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="crew_id_query" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{crew_ids}.replace("[","(").replace("]",")").equals("()") ||$P{crew_ids}.equals("")? "TRUE" : " Crew_ID in "+$P{crew_ids}.replace("[","(").replace("]",")")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fl_acquisition_ids" class="java.lang.String">
+		<parameterDescription><![CDATA[fl_acquisition_ids]]></parameterDescription>
+		<defaultValueExpression><![CDATA["()"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fl_id_query" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{fl_acquisition_ids}.replace("[","(").replace("]",")").equals("()") ||$P{fl_acquisition_ids}.equals("")? "TRUE" : " Reg_ID in "+$P{fl_acquisition_ids}.replace("[","(").replace("]",")")]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select ('Oustanding')Source,* from vfml
+where ( "Date" + interval '7 hours')::timestamp between ($P{date_from})::date  AND  ($P{date_to})::date
+AND( "Date" + interval '7 hours')::timestamp > ($P{date_cutoff})::date
+AND upper("Category ID")= upper( $P{category_id} ) 
+AND $P!{crew_id_query} 
+AND $P!{type_id_query} 
+AND $P!{fl_id_query}]]>
+	</queryString>
+	<field name="source" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="source"/>
+	</field>
+	<field name="Name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Name"/>
+	</field>
+	<field name="License Number" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="License Number"/>
+	</field>
+	<field name="Employee No" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Employee No"/>
+	</field>
+	<field name="Duty" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Duty"/>
+	</field>
+	<field name="TIPI " class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TIPI "/>
+	</field>
+	<field name="A/C" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="A/C"/>
+	</field>
+	<field name="No Maintenance Log" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="No Maintenance Log"/>
+	</field>
+	<field name="Route" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Route"/>
+	</field>
+	<field name="Date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="Date"/>
+	</field>
+	<field name="Instruction" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="Instruction"/>
+	</field>
+	<field name="Brief Time" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="Brief Time"/>
+	</field>
+	<field name="Training Flight" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="Training Flight"/>
+	</field>
+	<field name="Test Flight" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="Test Flight"/>
+	</field>
+	<field name="Flight Time" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="Flight Time"/>
+	</field>
+	<field name="Total Flifht Hours" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="Total Flifht Hours"/>
+	</field>
+	<field name="Price" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="Price"/>
+	</field>
+	<field name="Total Price" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="Total Price"/>
+	</field>
+	<field name="Create Date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="Create Date"/>
+	</field>
+	<field name="Aircraft Type" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Aircraft Type"/>
+	</field>
+	<field name="Category" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Category"/>
+	</field>
+	<field name="Flight Category" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Flight Category"/>
+	</field>
+	<field name="Flight Type" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Flight Type"/>
+	</field>
+	<field name="Internal Flight Type" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Internal Flight Type"/>
+	</field>
+	<field name="Rating Qualification" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Rating Qualification"/>
+	</field>
+	<field name="Function" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Function"/>
+	</field>
+	<field name="Type Duty" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Type Duty"/>
+	</field>
+	<field name="Category ID" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Category ID"/>
+	</field>
+	<field name="type_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="type_id"/>
+	</field>
+	<field name="crew_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="crew_id"/>
+	</field>
+	<field name="reg_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="reg_id"/>
+	</field>
+	<title>
+		<band height="87" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="num2" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="40" width="1294" height="40" uuid="81d1503e-8757-47e3-8d17-197b8080b2cb"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DATA PENERBANGAN : " + ($P{date_from}.isEmpty() ? "" : new SimpleDateFormat("dd-MM-yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse($P{date_from}))) +
+    ($P{date_to}.isEmpty() ? "" : " s/d " + new SimpleDateFormat("dd-MM-yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse($P{date_to})))]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement style="default" stretchType="ContainerBottom" x="0" y="18" width="1294" height="20" uuid="e884f857-2b3f-4d93-b4e2-e4346a74fc6d"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["FLYING HOURS PRODUCTION " +$F{Category}.toUpperCase()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement x="240" y="-3" width="83" height="30" uuid="9668e44a-7a03-47aa-aef1-ed1d25b2222e"/>
+				<box topPadding="2" leftPadding="1" bottomPadding="2" rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EMPL. NO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="-3" width="150" height="30" uuid="00bf8ad4-519f-4060-8049-fc8d0d374405"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NAMA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="534" y="-3" width="67" height="30" uuid="74adf5f9-8dcd-441f-821d-da5c1ee2bb6f"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="323" y="-3" width="91" height="30" uuid="3b19ad1d-3089-4ee0-8ad4-a2b5d1c38f90"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NO MAINT. LOG]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="601" y="-3" width="400" height="15" uuid="09c9ca84-faab-4e58-a354-ce5b4ad01927"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FLYING HOURS
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="601" y="12" width="80" height="15" uuid="d3616aee-266a-4854-b55c-4685f8d47397"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INSTRUCTION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="681" y="12" width="80" height="15" uuid="8ce6269a-d097-436c-97af-8c226f9dd7e2"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BRIEF TIME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="921" y="12" width="80" height="15" uuid="6bd5f2a3-fd26-4242-ba44-bd953a0445fd"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FLIGHT TIME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1001" y="-3" width="70" height="30" uuid="2312fcbd-656e-407c-8710-cac892cba329"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL FLIGHT HOURS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="-3" width="90" height="30" uuid="145995dc-70c3-4700-9ac9-0cfa926747f0"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LICENSE NUMBER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1235" y="-3" width="59" height="30" uuid="030004a5-0fe9-456d-a460-e49288607949"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CREATE DATE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1071" y="-3" width="69" height="30" uuid="57632878-634b-4a16-89cd-e2d4b365f133"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="414" y="-3" width="120" height="30" uuid="61339de6-8502-4d62-b834-cbfabb2aa90d"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ROUTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1140" y="-3" width="95" height="30" uuid="9dafa258-96a3-4037-ab29-34959afc97a9"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL PRICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="761" y="12" width="80" height="15" uuid="cbdfa766-1a25-4622-bda5-caaaa0481491"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TRAINING FLIGHT ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="841" y="12" width="80" height="15" uuid="f2824fc5-bcb9-4e00-9b11-64443fe534dd"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TEST FLIGHT ]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="16">
+			<textField>
+				<reportElement x="0" y="0" width="150" height="16" uuid="97ea0e7c-b7c5-4dbb-bece-9c3fc1e994aa"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$F{Name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="0" width="90" height="16" uuid="bba8aa6a-cf55-4157-8ec5-e69a1e4c9bb9"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{License Number}]]></textFieldExpression>
+			</textField>
+			<textField pattern="d/M/yy">
+				<reportElement x="534" y="0" width="67" height="16" uuid="64f2c9d0-6332-43a8-9428-601e58abf1e1"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="323" y="0" width="91" height="16" uuid="fe0d4de1-04db-4793-984f-8eaad24f08cb"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{No Maintenance Log}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="414" y="0" width="120" height="16" uuid="11cd14b0-8551-4b82-ae0b-c7de9762a962"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Route}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="601" y="0" width="80" height="16" uuid="4538458f-11a7-4a42-8f46-e4c241a81d31"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Instruction}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="681" y="0" width="80" height="16" uuid="1a6098e2-3ccf-4c08-8fa4-476b5aa79912"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Brief Time}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="921" y="0" width="80" height="16" uuid="69718324-b747-47fb-bae8-11080d165a0e"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Flight Time}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="1001" y="0" width="70" height="16" uuid="f5325fb7-7ffd-4cf6-aa64-857018a56b96"/>
+				<box topPadding="4" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{Total Flifht Hours}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="num1" x="1071" y="0" width="69" height="16" uuid="7697783c-173c-44f1-a2b6-bee8abfafb80"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{Price}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="num1" x="1140" y="0" width="95" height="16" uuid="12b9725c-5f52-4c27-a6fa-dbc467fee76d"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{Total Price}]]></textFieldExpression>
+			</textField>
+			<textField pattern="d/M/yy">
+				<reportElement style="num1" x="1235" y="0" width="59" height="16" uuid="abebacd1-4a32-4e8b-a33b-956ea9c52af4"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{Create Date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="0" width="83" height="16" uuid="6916e40b-e403-4bac-a318-05570f715c78"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Employee No}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="761" y="0" width="80" height="16" uuid="a5850d11-7c40-47cf-a1fa-92ece320d1c9"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Brief Time}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="841" y="0" width="80" height="16" uuid="f893bdfc-6b56-4eec-84ff-18674b5993b8"/>
+				<box topPadding="3" leftPadding="3" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Brief Time}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

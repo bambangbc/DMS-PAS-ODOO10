@@ -1,0 +1,52 @@
+<odoo>
+	<data>
+
+		<menuitem id="eofice_menu" name="E-Office"/>
+
+        <menuitem
+            name="Dashboard"
+            id="dashboard_eofice"
+            parent="eofice_menu" sequence="1"/>
+
+        <menuitem
+            action="board.open_board_my_dash_action"
+            id="dashboard"
+            parent="dashboard_eofice" sequence="2"/>
+
+    	<menuitem
+            name="Surat"
+            id="eof_main_menu"
+            parent="eofice_menu" sequence="10"/>
+
+        <menuitem
+        	name="Disposisi"
+        	id="eof_menu_disposisi"
+        	parent="eofice_menu" sequence="20"/>
+
+        <menuitem
+            name="Nota"
+            id="eof_nota_menu"
+            parent="eofice_menu" sequence="30"/>
+
+        <menuitem
+            name="Memorandum"
+            id="eof_memo_menu"
+            parent="eofice_menu" sequence="40"/>
+
+        <menuitem
+            name="Tanda Terima Dokumen"
+            id="eof_ttd_menu"
+            parent="eofice_menu" sequence="50"/>
+
+        <menuitem
+            name="Mail On Process"
+            id="eof_proces_menu"
+            parent="eofice_menu" sequence="20"/>
+
+        <menuitem
+        	name="Setting"
+        	id="eof_seting"
+        	parent="eofice_menu" sequence="500"/>
+
+    </data>
+</odoo>

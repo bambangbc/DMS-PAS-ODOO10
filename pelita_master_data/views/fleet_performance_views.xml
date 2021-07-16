@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<record id='aircraft_reliability_form' model='ir.ui.view'>
+        <field name="name">aircraft.reliability.form</field>
+        <field name="model">aircraft.reliability</field>
+        <field name="arch" type="xml">
+            <form string="Form Dispatch Reliability">
+            <sheet>
+            	<group>
+            	<group>
+                    <field name='name'/>
+            		<field name="aircraft_type"/>
+            		<field name="year"/>
+            		<field name="month"/>
+            		<field name="target"/>
+            		<field name='actual'/>
+                    <field name='tanggal'/>
+                    <field name='description'/>
+            	</group>
+            </group>
+            </sheet>
+            </form>
+        </field>
+	</record>  
+	<record id='aircraft_reliability_tree' model='ir.ui.view'>
+        <field name="name">aircraft.reliability.tree</field>
+        <field name="model">aircraft.reliability</field>
+        <field name="arch" type="xml">
+            <tree string="Aircraft Reliability">
+            		<field name='name'/>
+                    <field name="aircraft_type"/>
+                    <field name="month"/>
+            		<field name="target"/>
+            		<field name='actual'/>
+                    <field name='tanggal'/>
+                    <field name='description'/>
+            </tree>
+        </field>
+	</record>  
+    
+	<record id='aircraft_reliability_graph' model='ir.ui.view'>
+        <field name="name">aircraft.reliability.graph</field>
+        <field name="model">aircraft.reliability</field>
+        <field name="arch" type="xml">
+            <graph string="Aircraft Reliability" type="pivot" stacked="True">
+                   <field name='name'/>
+                    <field name="month" type='row'/> 
+                    <field name="target" type='col'/>
+                    <field name='actual' type='measure'/>
+                  <!-- <field name='tanggal' type='col' interval='month'/> -->
+                   <!-- <field name='description'/> -->
+            </graph>
+        </field>
+    </record>  
+
+    <record id='aircraft_reliability_pivot' model='ir.ui.view'>
+        <field name="name">aircraft.reliability.pivot</field>
+        <field name="model">aircraft.reliability</field>
+        <field name="arch" type="xml">
+            <pivot string="Aircraft Reliability">
+                  <!--  <field name='registration_id'/>
+                    <field name="aircraft_type"/> -->
+                    <field name="month" type='col'/>
+                <!--    <field name="target" type='row'/>
+                    <field name='actual' type='measure'/> -->
+                   <!-- <field name='tanggal'/>
+                    <field name='description'/> -->
+            </pivot>
+        </field>
+    </record>  
+    
+    <record id='aircraft_reliability_action' model='ir.actions.act_window'>
+        <field name="name">Dispatch Reliability</field>
+        <field name="res_model">aircraft.reliability</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,graph,pivot</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create New Dispatch Reliability
+          </p>
+        </field>
+	</record>
+
+    <!-- Dispatch Interruption Factor -->
+    <record id='aircraft_interruption_form' model='ir.ui.view'>
+        <field name="name">aircraft.interruption.form</field>
+        <field name="model">aircraft.interruption</field>
+        <field name="arch" type="xml">
+            <form string="Form Dispatch Interruption Factor">
+            <sheet>
+                <group>
+                <group>
+                    <field name='name'/>
+                    <field name="aircraft_type"/>
+                    <field name="year"/>
+                    <field name="month"/>
+                </group>
+                <group>
+                    <field name="ddg"/>
+                    <field name='intermitent_failure'/>
+                    <field name="reliability_issue"/>
+                    <field name='material'/>
+                    <field name="crew_decision"/>
+                    <field name='component_failure'/>
+                </group>
+            </group>
+            </sheet>
+            </form>
+        </field>
+    </record> 
+
+    <record id='aircraft_interruption_tree' model='ir.ui.view'>
+        <field name="name">aircraft.interruption.tree</field>
+        <field name="model">aircraft.interruption</field>
+        <field name="arch" type="xml">
+            <tree string="Dispatch Interruption Factor">
+                    <field name='name'/>
+                    <field name="aircraft_type"/>
+                    <field name="month"/>
+                    <field name="ddg"/>
+                    <field name='intermitent_failure'/>
+                    <field name="reliability_issue"/>
+                    <field name='material'/>
+                    <field name="crew_decision"/>
+                    <field name='component_failure'/>
+            </tree>
+        </field>
+    </record>  
+    <record id='aircraft_interruption_graph' model='ir.ui.view'>
+        <field name="name">aircraft.interruption.graph</field>
+        <field name="model">aircraft.interruption</field>
+        <field name="arch" type="xml">
+            <graph string="Dispatch Interruption Factor">
+                    <!--<field name='registration_id'/> -->
+                    <field name="month"/>
+                    <field name="ddg"/>
+                    <field name='intermitent_failure'/>
+                    <field name="reliability_issue"/>
+                    <field name='material'/>
+                    <field name="crew_decision"/>
+                    <field name='component_failure'/>
+            </graph>
+        </field>
+    </record>  
+    
+    <record id='aircraft_interruption_action' model='ir.actions.act_window'>
+        <field name="name">Dispatch Interruption Factor</field>
+        <field name="res_model">aircraft.interruption</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,graph</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create New Dispatch Interruption Factor
+          </p>
+        </field>
+    </record>
+
+    <!-- AOG -->
+    <record id='aircraft_onground_form' model='ir.ui.view'>
+        <field name="name">aircraft.onground.form</field>
+        <field name="model">aircraft.onground</field>
+        <field name="arch" type="xml">
+            <form string="Form AOG">
+            <sheet>
+                <group>
+                <group>
+                    <field name='name'/>
+                    <field name="aircraft_type"/>
+                    <field name="year"/>
+                    <field name="month"/>
+                    <field name="aog"/>
+                    <field name='tanggal'/>
+                    <field name='description'/>
+                </group>
+            </group>
+            </sheet>
+            </form>
+        </field>
+    </record>  
+    <record id='aircraft_onground_tree' model='ir.ui.view'>
+        <field name="name">aircraft.onground.tree</field>
+        <field name="model">aircraft.onground</field>
+        <field name="arch" type="xml">
+            <tree string="Aircraft On Ground">
+                    <field name='name'/>
+                    <field name="aircraft_type"/>
+                    <field name='year'/>
+                    <field name="month"/>
+                    <field name="aog"/>
+                    <field name='tanggal'/>
+                    <field name='description'/>
+            </tree>
+        </field>
+    </record>  
+    <record id='aircraft_onground_graph' model='ir.ui.view'>
+        <field name="name">aircraft.onground.graph</field>
+        <field name="model">aircraft.onground</field>
+        <field name="arch" type="xml">
+            <graph string="Aircraft On Ground">
+                    <field name="month"/>
+                    <field name="aog"/>
+             </graph>
+        </field>
+    </record>  
+    
+    <record id='aircraft_onground_action' model='ir.actions.act_window'>
+        <field name="name">Aircraft On Ground</field>
+        <field name="res_model">aircraft.onground</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,graph</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create New Aircraft On Ground
+          </p>
+        </field>
+    </record>
+
+ <!-- Aircraft Utilisation -->
+ <record id='aircraft_utilisation_form' model='ir.ui.view'>
+        <field name="name">aircraft.utilisation.form</field>
+        <field name="model">aircraft.utilisation</field>
+        <field name="arch" type="xml">
+            <form string="Form Aircraft Utilisation">
+            <sheet>
+                <group>
+                <group>
+                    <field name='name'/>
+                    <field name="aircraft_type"/>
+                    <field name="year"/>
+                    <field name="month"/>
+                    <field name="target"/>
+                    <field name='actual'/>
+                    <field name='tanggal'/>
+                    <field name='description'/>
+                </group>
+            </group>
+            </sheet>
+            </form>
+        </field>
+    </record>  
+    <record id='aircraft_utilisation_tree' model='ir.ui.view'>
+        <field name="name">aircraft.utilisation.tree</field>
+        <field name="model">aircraft.utilisation</field>
+        <field name="arch" type="xml">
+            <tree string="Aircraft Utilisation">
+                    <field name='name'/>
+                    <field name="aircraft_type"/>
+                    <field name="month"/>
+                    <field name="target"/>
+                    <field name='actual'/>
+                    <field name='tanggal'/>
+                    <field name='description'/>
+            </tree>
+        </field>
+    </record>  
+    <record id='aircraft_utilisation_graph' model='ir.ui.view'>
+        <field name="name">aircraft.utilisation.graph</field>
+        <field name="model">aircraft.utilisation</field>
+        <field name="arch" type="xml">
+            <graph string="Aircraft Utilisation">
+                    <field name="month"/>
+                    <field name="target"/>
+                    <field name='actual'/>
+            </graph>
+        </field>
+    </record>  
+    
+    <record id='aircraft_utilisation_action' model='ir.actions.act_window'>
+        <field name="name">Aircraft Utilisation</field>
+        <field name="res_model">aircraft.utilisation</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,graph</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create New Aircraft Utilisation
+          </p>
+        </field>
+    </record>
+
+
+	<menuitem name='Fleet Performance' parent='aircraft_data_menu' id="fleet_performance_menu"/>
+	<menuitem action="aircraft_reliability_action" parent="fleet_performance_menu" id="aircraft_reliability_menu"/>
+    <menuitem action="aircraft_interruption_action" parent="fleet_performance_menu" id="aircraft_interruption_menu"/>
+    <menuitem action="aircraft_onground_action" parent="fleet_performance_menu" id="aircraft_onground_menu"/>
+    <menuitem action="aircraft_utilisation_action" parent="fleet_performance_menu" id="aircraft_utilisation_menu"/>
+</odoo>

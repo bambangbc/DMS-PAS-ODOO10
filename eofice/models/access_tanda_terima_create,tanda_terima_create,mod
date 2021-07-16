@@ -1,0 +1,6 @@
+access_tanda_terima_create,tanda_terima_create,model_tanda_terima,group_eoffice_tanda_terima_create,0,0,1,0
+access_tanda_terima_edit,tanda_terima_edit,model_tanda_terima,group_eoffice_tanda_terima_edit,0,1,0,0
+access_tanda_terima_delete,tanda_terima_delete,model_tanda_terima,group_eoffice_tanda_terima_delete,0,0,0,1
+access_tanda_terima_read,tanda_terima_read,model_surat_terima,group_eoffice_tanda_terima_read,1,0,0,0
+access_hr_job_eoffice_disposisi_create,hr.job.eoffice,model_hr_job,group_eoffice_disposisi_create,1,1,1,1
+access_hr_job_eoffice_disposisi_write,hr.job.eoffice_write,model_hr_job,group_eoffice_disposisi_edit,1,1,1,1

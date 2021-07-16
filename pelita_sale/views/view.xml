@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- inherit sale order form -->
+
+  <record id="view_order_form_inherit" model="ir.ui.view">
+    <field name="name">saleorder.form.inherit</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_form"/>
+    <field name="arch" type="xml">
+
+      <!--<field name="partner_id" position="after">
+        <field name="ref_contract"/>
+      </field>-->
+      
+      <field name="validity_date" position="after">
+        <field name="business_type"/>
+      </field>
+      
+      <!--<field name="partner_shipping_id" position="after">
+        <label for="date_departure" string="Departure &amp; Arrival Date"/>
+        <div>
+          <field name="date_departure" class="oe_inline"/> -
+          <field name="date_arrival" class="oe_inline"/>
+        </div>
+      </field>-->
+
+
+      <xpath expr="//page[2]" position="after">
+        
+        <page string="Aircraft" name="aircraft_pg">
+          <group>
+            <group string="Aircraft Information" name="aircraft_info">
+              <field name="craft_name" readonly="True"/>
+              <field name="craft_type" readonly="True"/>
+              <field name="craft_reg_code" readonly="True"/>
+              <field name="craft_categ" readonly="True"/>
+            </group>
+
+            <group string="Ownership Information" name="aircraft_ownership">
+              <field name="craft_ownership" readonly="True"/>
+              <field name="craft_availseat" readonly="True"/>
+              <field name="craft_color" readonly="True"/>
+              <field name="craft_status" readonly="True"/>
+            </group>
+          </group>
+        </page>
+
+        <page string="Passenger" name="passenger_pg">
+          <group>
+            <group string="Passenger Information" name="passenger_info">
+              <field name="pass_qty"/>
+              <field name="pass_cargo"/>
+              <field name="pass_ticket"/>   
+            </group>
+            <group string="Crew Information" name="crew_info">
+              <field name="crew_set"/>
+              <field name="technician_set"/>
+              <field name="fuel_consump"/>   
+            </group>
+          </group>
+        </page>
+
+        <page string="Route" name="route_pg">
+          <group>
+            <group name="header_route">
+              <field name="route_id"/>
+            </group>
+            <group> </group>
+            <group string="Route Information" name="route_info">
+              <field name="route_from"/>
+              <field name="route_to"/>
+            </group>
+            <group string="Distance Information" name="distance_info">
+              <field name="nm_distance"/>
+              <field name="km_distance"/>
+            </group>
+          </group>
+        </page>
+
+        <page string="Base Operation" name="base_operation_pg">
+          <group>
+            <group string="Base Operation Info" name="operation_info">
+              <field name="base_name"/>
+              <field name="base_code"/>
+              <field name="base_desc"/>
+              <field name="base_coordinate"/>
+            </group>
+          </group>
+        </page>
+
+        <page string="Area" name="area_pg">
+          <group>
+            <group string="Area Information" name="area_info">
+              <field name="area_name"/>
+              <field name="area_code"/>
+              <field name="area_desc"/>
+              <field name="area_status"/>                
+            </group>
+          </group>
+        </page>
+
+      </xpath>
+    
+    </field>
+  </record>
+
+</odoo>

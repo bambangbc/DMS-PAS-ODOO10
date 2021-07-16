@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id='aircraft_view_form' model='ir.ui.view'>
+        <field name="name">aircraft.aircraft.form</field>
+        <field name="model">aircraft.aircraft</field>
+        <field name="arch" type="xml">
+            <form string="Form Aircraft">
+            <sheet>
+                <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="aircraft_type_id"/>
+                        <field name='aircraft_categ'/>
+                    </group>
+                    <group>
+                        <field name='available_seat'/>
+                        <field name='aircraft_color'/>
+                    </group>
+                    <group>
+                        <field name='aircraft_status'/>
+                    </group>
+                </group>
+            </sheet>
+            </form>
+        </field>
+    </record>
+    <record id='aircraft_view_tree' model='ir.ui.view'>
+        <field name="name">aircraft.aircraft.tree</field>
+        <field name="model">aircraft.aircraft</field>
+        <field name="arch" type="xml">
+            <tree string="Aircraft">
+                <field name="name"/>
+                <field name="aircraft_type_id"/>
+                <field name='aircraft_categ'/>
+            </tree>
+        </field>
+    </record>
+
+
+<record id='aircraft_aircraft_action' model='ir.actions.act_window'>
+        <field name="name">Aircraft</field>
+        <field name="res_model">aircraft.aircraft</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create New Aircraft
+          </p>
+        </field>
+</record>
+
+<!-- Aircraft Type -->
+
+<record id='aircraft_type_view_form' model='ir.ui.view'>
+        <field name="name">aircraft.type.form</field>
+        <field name="model">aircraft.type</field>
+        <field name="arch" type="xml">
+            <form string="Form Aircraft Type">
+            <sheet>
+           	<group>
+           		<field name='name'/>
+           		<!--<field name='description'/> -->
+           	</group>
+            <!--
+            <notebook>
+            <page string='Airframe'>
+              <group>
+              <field name='airframe'/>
+              <field name='airframe_tsn'/>
+              <field name='airframe_csn'/>
+              <field name='airframe_lastoh'/>
+              </group>
+            </page>
+            <page string='LDG'>
+              <group>
+                <group>
+                <field name='ldg'/>
+                <field name='rh_ldg'/>
+                <field name='rh_ldg_csn'/>
+                <field name='rh_ldg_lastoh'/>
+                </group>
+                <group>
+                <field name='lh_ldg'/>
+                <field name='lh_ldg_csn'/>
+                <field name='lh_ldg_lastoh'/>
+                </group>
+              </group>
+            </page>
+             <page string='Engine'>
+              <group>
+                <group>
+                <field name='engine'/>
+                <field name='engine1'/>
+                <field name='engine1_tsn'/>
+                <field name='engine1_csn'/>
+                <field name='engine1_tslsv'/>
+                <field name='engine1_cslsv'/>
+                <field name='engine1_lastoh'/>
+                </group>
+                <group>
+                <field name='engine2'/>
+                <field name='engine2_tsn'/>
+                <field name='engine2_csn'/>
+                <field name='engine2_tslsv'/>
+                <field name='engine2_cslsv'/>
+                <field name='engine2_lastoh'/>
+                </group>
+              </group>
+            </page>
+           <page string='Propeller'>
+              <group>
+                <group>
+                <field name='propeller'/>
+                <field name='propeller1'/>
+                <field name='propeller1_tsn'/>
+                <field name='propeller1_tslsv'/>
+                <field name='propeller1_lastoh'/>
+                </group>
+                <group>
+                <field name='propeller2'/>
+                <field name='propeller2_tsn'/>
+                <field name='propeller2_tslsv'/>
+                <field name='propeller2_lastoh'/>
+                </group>
+                <group>
+                <field name='propeller_sn'/>
+                <field name='propeller_tsn'/>
+                <field name='propeller_csn'/>
+                <field name='propeller_tslsv'/>
+                <field name='propeller_lastoh'/>
+                </group>
+                
+              </group>
+            </page>
+           
+           </notebook>
+         -->
+           	</sheet>
+            </form>
+        </field>
+</record>  
+<record id='aircraft_type_view_tree' model='ir.ui.view'>
+        <field name="name">aircraft.type.tree</field>
+        <field name="model">aircraft.type</field>
+        <field name="arch" type="xml">
+            <tree string="Form Aircraft Type">
+            	<field name='name'/>
+           <!--		<field name='description'/> -->
+           	</tree>
+        </field>
+</record>  
+
+<record id='aircraft_type_action' model='ir.actions.act_window'>
+        <field name="name">Aircraft Type</field>
+        <field name="res_model">aircraft.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create New Aircraft Type
+          </p>
+        </field>
+</record>
+
+<!-- Aircraft Category -->
+
+<record id='aircraft_categ_view_form' model='ir.ui.view'>
+        <field name="name">aircraft.categ.form</field>
+        <field name="model">aircraft.category</field>
+        <field name="arch" type="xml">
+            <form string="Form Aircraft Category">
+            <sheet>
+           	<group>
+           		<field name='name'/>
+           		<field name='description'/>
+           	</group>
+           	</sheet>
+            </form>
+        </field>
+</record>  
+<record id='aircraft_categ_view_tree' model='ir.ui.view'>
+        <field name="name">aircraft.categ.tree</field>
+        <field name="model">aircraft.category</field>
+        <field name="arch" type="xml">
+            <tree string="Form Aircraft Category">
+            	<field name='name'/>
+           		<field name='description'/>
+           	</tree>
+        </field>
+</record>  
+
+<record id='aircraft_categ_action' model='ir.actions.act_window'>
+        <field name="name">Aircraft Category</field>
+        <field name="res_model">aircraft.category</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create New Aircraft Category
+          </p>
+        </field>
+</record>
+
+<!-- Engine Type -->
+<record id='engine_type_view_form' model='ir.ui.view'>
+        <field name="name">engine.type.form</field>
+        <field name="model">engine.type</field>
+        <field name="arch" type="xml">
+            <form string="Form Engine Type">
+            <sheet>
+           	<group>
+              <group>
+           		   <field name='name'/>
+                 <field name='category'/>
+                 <field name='ownership'/>
+                  <field name='delivery_date' attrs="{'invisible':[('ownership', '!=', 'owner')]}"/>
+              <field name='lessor' attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+              <field name='start_lease' attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+              <field name='normal_termination' attrs="{'invisible':[('ownership', '!=', 'leasing')]}"/>
+               <field name='date_manufacture'/>
+                 <field name='propeller_type_id' attrs="{'invisible':[('category', '==', 'rotary')]}"/>      
+               </group>
+              <group>
+                <field name='esn'/>
+              <!--   <field name='rgb'/> -->
+              <!--
+                <field name='tsn'/>
+                 <field name='csn'/>
+                 <field name='tslsv'/>
+                 <field name='cslsv'/>
+                 <field name='last_oh'/>
+              -->
+              </group>
+           		</group>
+              <notebook>
+              <page string='Engine'>
+              <group>
+                <group>
+                <field name='engine_tsn' string='TSN'/>
+                <field name='engine_csn' string='CSN'/>
+                <field name='engine_tslsv' string='TSLSV OH'/>
+                <field name='engine_tslsv_hsi' string='TSLSV HSI'/>
+                <field name='engine_cslsv' string='CSLSV OH'/>
+                <field name='engine_cslsv_hsi' string='CSLSV HSI'/>
+                <field name='engine_lastoh' string='Last OH'/>
+                <field name='engine_hsi' string='Last HSI'/>
+                </group>
+              </group>
+            </page>
+            <page string='Propeller' attrs="{'invisible':[('category', '!=', 'fixedwing')]}">
+              <group>
+                <group>
+                 <field name='propeller'/>
+                <field name='propeller_tsn' string='TSN'/>
+                <field name='propeller_tslsv' string='TSLSV'/> 
+                <field name='propeller_lastoh' string='Last OH'/>
+                </group>
+               </group>
+            </page>
+           
+            </notebook>
+           	</sheet>
+            </form>
+        </field>
+</record>  
+
+<record id='engine_type_view_tree' model='ir.ui.view'>
+        <field name="name">engine.type.tree</field>
+        <field name="model">engine.type</field>
+        <field name="arch" type="xml">
+            <tree string="Engine Spare">
+            	   <field name='name'/>
+                 <field name='ownership'/>
+                 <field name='delivery_date'/>
+                 <field name='lessor'/>
+                 <field name='start_lease'/>
+                 <field name='normal_termination'/>
+                 <field name='date_manufacture'/>
+              <!--   <field name='propeller_type_id'/>  -->
+           	</tree>
+        </field>
+</record>  
+
+<record id='engine_type_action' model='ir.actions.act_window'>
+        <field name="name">Engine Type</field>
+        <field name="res_model">engine.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create New Engine Type
+          </p>
+        </field>
+</record>
+
+<!-- Propeller Type -->
+<record id='propeller_type_view_form' model='ir.ui.view'>
+        <field name="name">propeller.type.form</field>
+        <field name="model">propeller.type</field>
+        <field name="arch" type="xml">
+            <form string="Form Propeller Type">
+            <sheet>
+           	<group>
+           		<field name='name'/>
+           		<field name='description'/>
+           	</group>
+           	</sheet>
+            </form>
+        </field>
+</record>  
+<record id='propeller_type_view_tree' model='ir.ui.view'>
+        <field name="name">propeller.type.tree</field>
+        <field name="model">propeller.type</field>
+        <field name="arch" type="xml">
+            <tree string="List Propeller Type">
+            	<field name='name'/>
+           		<field name='description'/>
+           	</tree>
+        </field>
+</record>  
+
+<record id='propeller_type_action' model='ir.actions.act_window'>
+        <field name="name">Propeller Type</field>
+        <field name="res_model">propeller.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create New Propeller Type
+          </p>
+        </field>
+</record>
+
+<!-- Documents  -->
+<record id='document_view_form' model='ir.ui.view'>
+        <field name="name">document.form</field>
+        <field name="model">document.document</field>
+        <field name="arch" type="xml">
+            <form string="Documents">
+            <sheet>
+            <group>
+              <field name='name'/>
+             <!-- <field name='description'/> -->
+            </group>
+            </sheet>
+            </form>
+        </field>
+</record>  
+<record id='document_view_tree' model='ir.ui.view'>
+        <field name="name">document.tree</field>
+        <field name="model">document.document</field>
+        <field name="arch" type="xml">
+            <tree string="List Documents">
+              <field name='name'/>
+             </tree>
+        </field>
+</record>  
+
+<record id='document_action' model='ir.actions.act_window'>
+        <field name="name">Documents</field>
+        <field name="res_model">document.document</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create New Document Name
+          </p>
+        </field>
+</record>
+
+
+<menuitem name="Fleet Management" id="master_data" sequence="2" />
+<menuitem name="Fleet Management" parent="master_data" id="aircraft_data_menu"/>
+
+<menuitem name='Configuration' parent='master_data' id = 'configuration_menu'/>
+
+<menuitem action="aircraft_aircraft_action" parent="aircraft_data_menu" id="aircraft_menu"/>
+<menuitem action="engine_type_action" parent="configuration_menu" id="engine_type_menu"/>
+
+<menuitem action="aircraft_type_action" parent="configuration_menu" id="aircraft_type_menu"/>
+<menuitem action="aircraft_categ_action" parent="configuration_menu" id="aircraft_categ_menu"/>
+<menuitem action="propeller_type_action" parent="configuration_menu" id="propeller_type_menu"/>
+<menuitem action="document_action" parent="configuration_menu" id="document_menu"/>
+
+
+</odoo>

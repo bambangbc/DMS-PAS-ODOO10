@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record model="ir.ui.view" id="eof_save_dms_form">
+            <field name="name">create.file.sm.form</field>
+            <field name="model">create.file.sm</field>
+            <field name="arch" type="xml">
+                <form string="save To dms">
+                    <group>
+                        <group>
+                        <field name="directory"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="create_file" string="Save To Dms" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window name="Save To DMS" id="act_save_dms_sm"
+        res_model="create.file.sm"
+        view_mode="form" target="new"/>
+
+        <record id="button_attch_tree" model="ir.ui.view">
+            <field name="name">button attach tree</field>
+            <field name="model">ir.attachment</field>
+            <field name="inherit_id" ref="base.view_attachment_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='create_date']" position="after">
+                     <button name="%(act_save_dms_sm)d" string="Save to DMS" type="action" class="oe_highlight"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

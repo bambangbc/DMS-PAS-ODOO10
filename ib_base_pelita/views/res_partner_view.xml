@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="inherit1_view_partner_pelita_form">
+            <field name="name">inherit1.res.partner.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="partner_pelita.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='soldtp_division']" position="replace">
+                    <field name="division_id" placeholder="Division"/>
+                </xpath>
+                <xpath expr="//field[@name='soldtp_salegroup']" position="replace">
+                    <field name="team_id" placeholder="Sales Group"/>
+                </xpath>
+                <xpath expr="//field[@name='soldtp_custgroup']" position="replace">
+                    <field name="category_id" widget="many2many_tags" placeholder="Customer Group..." options="{'no_create_edit': True}"/>
+                </xpath>
+                <xpath expr="//field[@name='soldtp_distrchannel']" position="replace">
+                    <field name="dist_channel_id" placeholder="Dist.Channel"/>
+                </xpath>
+                <xpath expr="//field[@name='soldtp_saleoffice']" position="replace">
+                    <field name="sale_office_id" />
+                </xpath>
+                <xpath expr="//field[@name='soldtp_currency']" position="replace">
+                    <field name="currency_part_id" />
+                </xpath>
+                <xpath expr="//field[@name='soldtp_foreigncurrency']" position="replace">
+                    <field name="foreign_curr_id" />
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

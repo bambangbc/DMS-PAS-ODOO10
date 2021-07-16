@@ -1,0 +1,11 @@
+<odoo>
+    <data>
+        <record model="ir.ui.menu" id="maintenance.menu_equipment_form">
+            <field name="name">Aircraft</field>
+        </record>
+        <record model="ir.ui.menu" id="maintenance.menu_maintenance_cat">
+            <field name="name">Aircraft Categories</field>
+        </record>
+
+    </data>
+</odoo>

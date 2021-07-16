@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Menu Pelita Fleet Management -->
+    <record model="ir.ui.menu" id="pelita_master_data.master_data">
+        <field eval="[(6,0,[ref('ib_base_pelita.group_fleet_management_viewer'), ref('pelita_master_data.group_flt_mgnt_user'), ref('pelita_master_data.group_flt_mgnt_user_own_docs')])]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_master_data.configuration_menu">
+        <field eval="[(6,0,[ref('pelita_master_data.group_flt_mgnt_user'), ref('pelita_master_data.group_flt_mgnt_user_own_docs')])]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_master_data.aircraft_menu">
+        <field eval="[(6,0,[ref('ib_base_pelita.group_fleet_management_viewer'), ref('pelita_master_data.group_flt_mgnt_user'), 
+        ref('pelita_master_data.group_flt_mgnt_user_own_docs')])]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_master_data.aircraft_type_menu">
+        <field eval="[(6,0,[ref('pelita_master_data.group_flt_mgnt_user'), ref('pelita_master_data.group_flt_mgnt_user_own_docs')])]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_master_data.aircraft_categ_menu">
+        <field eval="[(6,0,[ref('pelita_master_data.group_flt_mgnt_user'), ref('pelita_master_data.group_flt_mgnt_user_own_docs')])]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_master_data.propeller_type_menu">
+        <field eval="[(6,0,[ref('pelita_master_data.group_flt_mgnt_user'), ref('pelita_master_data.group_flt_mgnt_user_own_docs')])]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_master_data.document_menu">
+        <field eval="[(6,0,[ref('pelita_master_data.group_flt_mgnt_user'), ref('pelita_master_data.group_flt_mgnt_user_own_docs')])]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_master_data.aircraft_data_menu">
+        <field eval="[(6,0,[ref('pelita_master_data.group_flt_mgnt_user'), ref('pelita_master_data.group_flt_mgnt_user_own_docs'), ref('ib_base_pelita.group_fleet_management_viewer')])]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_master_data.fleet_performance_menu">
+        <field eval="[(6,0,[ref('pelita_master_data.group_flt_mgnt_user'), ref('pelita_master_data.group_flt_mgnt_user_own_docs'), ref('ib_base_pelita.group_fleet_management_viewer')])]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_master_data.aircraft_reliability_menu">
+        <field eval="[(6,0,[ref('pelita_master_data.group_flt_mgnt_user'), ref('pelita_master_data.group_flt_mgnt_user_own_docs'), ref('ib_base_pelita.group_fleet_management_viewer')])]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_master_data.aircraft_interruption_menu">
+        <field eval="[(6,0,[ref('pelita_master_data.group_flt_mgnt_user'), ref('pelita_master_data.group_flt_mgnt_user_own_docs'), ref('ib_base_pelita.group_fleet_management_viewer')])]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_master_data.aircraft_onground_menu">
+        <field eval="[(6,0,[ref('pelita_master_data.group_flt_mgnt_user'), ref('pelita_master_data.group_flt_mgnt_user_own_docs'), ref('ib_base_pelita.group_fleet_management_viewer')])]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_master_data.aircraft_utilisation_menu">
+        <field eval="[(6,0,[ref('pelita_master_data.group_flt_mgnt_user'), ref('pelita_master_data.group_flt_mgnt_user_own_docs'), ref('ib_base_pelita.group_fleet_management_viewer')])]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_master_data.fleet_administration_menu">
+        <field eval="[(6,0,[ref('pelita_master_data.group_flt_mgnt_user'), ref('pelita_master_data.group_flt_mgnt_user_own_docs'), ref('ib_base_pelita.group_fleet_management_viewer')])]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_master_data.aircraft_rental_menu">
+        <field eval="[(6,0,[ref('pelita_master_data.group_flt_mgnt_user'), ref('pelita_master_data.group_flt_mgnt_user_own_docs'), ref('ib_base_pelita.group_fleet_management_viewer')])]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_master_data.maintenance_reserved_menu">
+        <field eval="[(6,0,[ref('pelita_master_data.group_flt_mgnt_user'), ref('pelita_master_data.group_flt_mgnt_user_own_docs'), ref('ib_base_pelita.group_fleet_management_viewer')])]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_master_data.reserved_claimed_menu">
+        <field eval="[(6,0,[ref('pelita_master_data.group_flt_mgnt_user'), ref('pelita_master_data.group_flt_mgnt_user_own_docs'), ref('ib_base_pelita.group_fleet_management_viewer')])]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_master_data.delivery_schedule_menu">
+        <field eval="[(6,0,[ref('pelita_master_data.group_flt_mgnt_user'), ref('pelita_master_data.group_flt_mgnt_user_own_docs'), ref('ib_base_pelita.group_fleet_management_viewer')])]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_master_data.redelivery_schedule_menu">
+        <field eval="[(6,0,[ref('pelita_master_data.group_flt_mgnt_user'), ref('pelita_master_data.group_flt_mgnt_user_own_docs'), ref('ib_base_pelita.group_fleet_management_viewer')])]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_master_data.fleet_assignment_menu">
+        <field eval="[(6,0,[ref('pelita_master_data.group_flt_mgnt_user'), ref('pelita_master_data.group_flt_mgnt_user_own_docs'), ref('ib_base_pelita.group_fleet_management_viewer')])]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_master_data.engine_spare_menu">
+        <field eval="[(6,0,[ref('pelita_master_data.group_flt_mgnt_user'), ref('pelita_master_data.group_flt_mgnt_user_own_docs'), ref('ib_base_pelita.group_fleet_management_viewer')])]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_master_data.aircraft_acquisition_menu">
+        <field eval="[(6,0,[ref('pelita_master_data.group_flt_mgnt_user'), ref('pelita_master_data.group_flt_mgnt_user_own_docs')])]" name="groups_id"/>
+    </record>
+    
+
+    <!-- Menu Pelita Operation -->
+    <record model="ir.ui.menu" id="pelita_operation.operation_management">
+        <field eval="[(4, ref('ib_base_pelita.group_operation_viewer')),(4, ref('pelita_operation.group_ops_user')),
+            (4, ref('pelita_operation.group_ops_user_own_docs'))]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_operation.master_data_menu">
+        <field eval="[(4, ref('ib_base_pelita.group_operation_viewer')),(4, ref('pelita_operation.group_ops_user')),
+            (4, ref('pelita_operation.group_ops_user_own_docs'))]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_operation.config_operation_menu">
+        <field name="groups_id" 
+               eval="[(4, ref('pelita_operation.group_ops_user')),(4, ref('pelita_operation.group_ops_user_own_docs'))]"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_operation.base_operation_menu">
+        <field eval="[(4, ref('ib_base_pelita.group_operation_viewer')),(4, ref('pelita_operation.group_ops_user')),
+            (4, ref('pelita_operation.group_ops_user_own_docs'))]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_operation.area_operation_menu">
+        <field eval="[(4, ref('ib_base_pelita.group_operation_viewer')),(4, ref('pelita_operation.group_ops_user')),
+            (4, ref('pelita_operation.group_ops_user_own_docs'))]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_operation.irregularity_operation_menu">
+        <field eval="[(4, ref('ib_base_pelita.group_operation_viewer')),(4, ref('pelita_operation.group_ops_user')),
+            (4, ref('pelita_operation.group_ops_user_own_docs'))]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_operation.route_operation_menu">
+        <field eval="[(4, ref('ib_base_pelita.group_operation_viewer')),(4, ref('pelita_operation.group_ops_user')),
+            (4, ref('pelita_operation.group_ops_user_own_docs'))]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_operation.flight_hours_menu">
+        <field eval="[(4, ref('ib_base_pelita.group_operation_viewer')),(4, ref('pelita_operation.group_ops_user')),
+            (4, ref('pelita_operation.group_ops_user_own_docs'))]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_operation.flight_regulation_menu">
+        <field eval="[(4, ref('ib_base_pelita.group_operation_viewer')),(4, ref('pelita_operation.group_ops_user')),
+            (4, ref('pelita_operation.group_ops_user_own_docs'))]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_operation.duty_time_menu">
+        <field eval="[(4, ref('ib_base_pelita.group_operation_viewer')),(4, ref('pelita_operation.group_ops_user')),
+            (4, ref('pelita_operation.group_ops_user_own_docs'))]" name="groups_id"/>
+    </record>
+    <!--[(4, ref('ib_base_pelita.group_operation_user')),(4, ref('ib_base_pelita.group_operation_viewer'))]-->
+    <record model="ir.ui.menu" id="pelita_operation.duty_time_menu">
+        <field eval="[(4, ref('ib_base_pelita.group_operation_viewer')),(4, ref('pelita_operation.group_ops_user')),
+            (4, ref('pelita_operation.group_ops_user_own_docs'))]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_operation.flight_requisition_menu">
+        <field eval="[(4, ref('pelita_operation.group_ops_user')),(4, ref('pelita_operation.group_ops_user_own_docs'))]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_operation.schedule_planning_menu">
+        <field eval="[(4, ref('ib_base_pelita.group_operation_viewer')),(4, ref('pelita_operation.group_ops_user')),
+            (4, ref('pelita_operation.group_ops_user_own_docs'))]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_operation.flight_schedule_menu">
+        <field eval="[(4, ref('pelita_operation.group_ops_user')), (4, ref('pelita_operation.group_ops_user_own_docs'))]" 
+               name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_operation.internal_flight_type_menu">
+        <field eval="[(4, ref('pelita_operation.group_ops_user')), (4, ref('pelita_operation.group_ops_user_own_docs'))]" 
+               name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_operation.crew_type_menu">
+        <field eval="[(4, ref('pelita_operation.group_ops_user')), (4, ref('pelita_operation.group_ops_user_own_docs'))]" 
+               name="groups_id"/>
+    </record>
+    
+
+    <!-- Menu Pelita Maintenance -->
+    <record model="ir.ui.menu" id="maintenance.menu_maintenance_title"> 
+        <field eval="[(4, ref('ib_base_pelita.group_maintenance_manager')),(4, ref('ib_base_pelita.group_maintenance_user')),
+        (4, ref('ib_base_pelita.group_maintenance_viewer')),(4, ref('ib_base_pelita.group_mtc_user_own_docs'))]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="maintenance.menu_m_dashboard">
+        <field eval="[(4, ref('ib_base_pelita.group_maintenance_manager')),(4, ref('ib_base_pelita.group_maintenance_user')),
+        (4, ref('ib_base_pelita.group_maintenance_viewer')),(4, ref('ib_base_pelita.group_mtc_user_own_docs'))]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="maintenance.menu_m_request">
+        <field eval="[(4, ref('ib_base_pelita.group_maintenance_manager')),(4, ref('ib_base_pelita.group_maintenance_user')),
+        (4, ref('ib_base_pelita.group_maintenance_viewer')),(4, ref('ib_base_pelita.group_mtc_user_own_docs'))]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="maintenance.menu_m_request_form">
+        <field eval="[(4, ref('ib_base_pelita.group_maintenance_manager')),(4, ref('ib_base_pelita.group_maintenance_user')),
+        (4, ref('ib_base_pelita.group_maintenance_viewer')),(4, ref('ib_base_pelita.group_mtc_user_own_docs'))]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="maintenance.menu_m_request_calendar">
+        <field eval="[(4, ref('ib_base_pelita.group_maintenance_manager')),(4, ref('ib_base_pelita.group_maintenance_user')),
+        (4, ref('ib_base_pelita.group_maintenance_viewer')),(4, ref('ib_base_pelita.group_mtc_user_own_docs'))]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="maintenance.menu_equipment_form">
+        <field eval="[(4, ref('ib_base_pelita.group_maintenance_manager')),(4, ref('ib_base_pelita.group_maintenance_user')),
+        (4, ref('ib_base_pelita.group_maintenance_viewer')),(4, ref('ib_base_pelita.group_mtc_user_own_docs'))]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="maintenance.menu_m_reports">
+        <field eval="[(4, ref('ib_base_pelita.group_maintenance_manager')),(4, ref('ib_base_pelita.group_maintenance_user')),
+        (4, ref('ib_base_pelita.group_maintenance_viewer')),(4, ref('ib_base_pelita.group_mtc_user_own_docs'))]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="maintenance.menu_m_reports_oee">
+        <field eval="[(4, ref('ib_base_pelita.group_maintenance_manager')),(4, ref('ib_base_pelita.group_maintenance_user')),
+        (4, ref('ib_base_pelita.group_maintenance_viewer')),(4, ref('ib_base_pelita.group_mtc_user_own_docs'))]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="maintenance.menu_m_reports_losses">
+        <field eval="[(4, ref('ib_base_pelita.group_maintenance_manager')),(4, ref('ib_base_pelita.group_maintenance_user')),
+        (4, ref('ib_base_pelita.group_maintenance_viewer')),(4, ref('ib_base_pelita.group_mtc_user_own_docs'))]" name="groups_id"/>
+    </record>
+    <record model="ir.ui.menu" id="maintenance.menu_maintenance_configuration">
+        <field eval="[(4, ref('ib_base_pelita.group_maintenance_manager')),(4, ref('ib_base_pelita.group_maintenance_user')),
+        (4, ref('ib_base_pelita.group_mtc_user_own_docs'))]" name="groups_id"/>
+    </record>
+    
+    <!-- Menu Pelita iCrew -->
+    <record model="ir.ui.menu" id="pelita_crew.i_crew">
+        <field name="groups_id" eval="[(4, ref('pelita_crew.group_crw_user')),(4, ref('pelita_crew.group_crw_manager')),
+            (4, ref('pelita_crew.group_crw_user_own_docs')),(4, ref('pelita_crew.group_crw_manager_own_docs')),
+            (4, ref('ib_base_pelita.group_crew_viewer'))]"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_crew.crew_menu">
+        <field name="groups_id" eval="[(4, ref('pelita_crew.group_crw_user')),(4, ref('pelita_crew.group_crw_manager')),
+            (4, ref('pelita_crew.group_crw_user_own_docs')),(4, ref('pelita_crew.group_crw_manager_own_docs')),
+            (4, ref('ib_base_pelita.group_crew_viewer'))]"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_crew.crew_schedule_menu">
+        <field name="groups_id" eval="[(4, ref('pelita_crew.group_crw_user')),(4, ref('pelita_crew.group_crw_manager')),
+            (4, ref('pelita_crew.group_crw_user_own_docs')),(4, ref('pelita_crew.group_crw_manager_own_docs')),
+            (4, ref('ib_base_pelita.group_crew_viewer'))]"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_crew.hr_crew_menu">
+        <field name="groups_id" eval="[(4, ref('pelita_crew.group_crw_user')),(4, ref('pelita_crew.group_crw_manager')),
+            (4, ref('pelita_crew.group_crw_user_own_docs')),(4, ref('pelita_crew.group_crw_manager_own_docs')),
+            (4, ref('ib_base_pelita.group_crew_viewer'))]"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_crew.hr_cv_menu">
+        <field name="groups_id" eval="[(4, ref('pelita_crew.group_crw_user')),(4, ref('pelita_crew.group_crw_manager')),
+            (4, ref('pelita_crew.group_crw_user_own_docs')),(4, ref('pelita_crew.group_crw_manager_own_docs')),
+            (4, ref('ib_base_pelita.group_crew_viewer'))]"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_crew.flying_hours_menu">
+        <field name="groups_id" eval="[(4, ref('pelita_crew.group_crw_user')),(4, ref('pelita_crew.group_crw_manager')),
+            (4, ref('pelita_crew.group_crw_user_own_docs')),(4, ref('pelita_crew.group_crw_manager_own_docs')),
+            (4, ref('ib_base_pelita.group_crew_viewer'))]"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_crew.crew_dt_menu">
+        <field name="groups_id" eval="[(4, ref('pelita_crew.group_crw_user')),(4, ref('pelita_crew.group_crw_manager')),
+            (4, ref('pelita_crew.group_crw_user_own_docs')),(4, ref('pelita_crew.group_crw_manager_own_docs')),
+            (4, ref('ib_base_pelita.group_crew_viewer'))]"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_crew.crew_schedule_plan_menu">
+        <field name="groups_id" eval="[(4, ref('pelita_crew.group_crw_user')),(4, ref('pelita_crew.group_crw_manager')),
+            (4, ref('pelita_crew.group_crw_user_own_docs')),(4, ref('pelita_crew.group_crw_manager_own_docs')),
+            (4, ref('ib_base_pelita.group_crew_viewer'))]"/>
+    </record>
+    <record model="ir.ui.menu" id="pelita_crew.crew_schedule_actual_menu">
+        <field name="groups_id" eval="[(4, ref('pelita_crew.group_crw_user')),(4, ref('pelita_crew.group_crw_manager')),
+            (4, ref('pelita_crew.group_crw_user_own_docs')),(4, ref('pelita_crew.group_crw_manager_own_docs')),
+            (4, ref('ib_base_pelita.group_crew_viewer'))]"/>
+    </record>
+    
+
+</odoo>

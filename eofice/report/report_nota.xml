@@ -1,0 +1,79 @@
+<odoo>
+    <data>
+        <template id="report_nota">
+            <t t-name="eofice.report_nota">
+			    <t t-name="eofice.report_nota">
+			        <t t-call="report.html_container">
+			            <t t-foreach="docs" t-as="o">
+							<div class="header">
+								<p style="float: left; display: inline-block; font-weight: bold;">NOTA
+								</p>
+								<img style="float: right;" src="/eofice/static/src/img/logo-pelita.jpeg" width="150" />
+							</div>
+			                <div class="page">
+			                    <div class="row">
+									<p>Jakarta, <span t-field="o.date" t-field-options="{&quot;format&quot;: &quot;dd MMMM y&quot;}"/></p>
+									<table>
+										<tr>
+											<td width="100px">Kepada</td>
+											<td width="10px">:</td>
+											<td><span t-field="o.kepada.name"/></td>
+										</tr>
+										<tr>
+											<td>Dari</td>
+											<td>:</td>
+											<td><span t-field="o.user_id.name"/></td>
+										</tr>
+										<!-- <tr>
+											<td>Lampiran</td>
+											<td>:</td>
+											<td><span t-field="o.lampiran"/></td>
+										</tr> -->
+										<tr>
+											<td>Perihal</td>
+											<td>:</td>
+											<td><span t-field="o.perihal"/></td>
+										</tr>
+									</table>
+
+			                        <p><span t-field="o.content"/></p>
+									<p style="margin-bottom: 50px;">Demikian disampaikan, terima kasih atas perhatian dan kerjasama yang diberikan.</p>
+			                        <table width="100%">
+			                            <tr>
+			                                <td width="30%"/>
+			                                <td width="30%"/>
+			                                <td width="40%"><span t-field="o.user_id.partner_id.job_id.name"/></td>
+			                            </tr>
+			                        </table>
+			                        <p><span style="color: #ffffff;">a</span></p>
+			                        <p><span style="color: #ffffff;">a</span></p>
+			                        <p><span style="color: #ffffff;">a</span></p>
+			                        <p><span style="color: #ffffff;">a</span></p>
+			                        <table width="100%">
+			                            <tr>
+			                                <td width="30%"/>
+			                                <td width="30%"/>
+			                                <td width="40%"><span t-field="o.user_id.partner_id.name"/></td>
+			                            </tr>
+			                            <tr>
+		                                    <td width="30%">Tembusan :</td>
+		                                    <td width="30%"/>
+		                                    <td width="40%"/>
+		                                </tr>
+		                                <t t-foreach="o.tembusan" t-as="i">
+		                                    <tr>
+		                                        <td width="30%"><li><t t-esc="i.name"/></li></td>
+		                                        <td width="30%"/>
+		                                        <td width="40%"/>
+		                                    </tr>
+		                                </t>
+			                        </table>
+			                    </div>
+			                </div>
+			            </t>
+			        </t>
+			    </t>
+			</t>
+	    </template>
+	</data>
+</odoo>

@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0"> <!--default: noupdate="1"-->
+        
+        <record id="tax_pbbkb_0" model="account.tax">
+            <field name="name">PBBKB 0%</field>
+            <field name="type_tax_use">sale</field>
+            <field name="amount_type">percent</field>
+            <field name="amount">0</field>
+        </record>
+        <record id="tax_pbbkb_4_5" model="account.tax">
+            <field name="name">PBBKB 4.5%</field>
+            <field name="type_tax_use">sale</field>
+            <field name="amount_type">percent</field>
+            <field name="amount">4.5</field>
+        </record>
+        <record id="tax_pbbkb_5" model="account.tax">
+            <field name="name">PBBKB 5%</field>
+            <field name="type_tax_use">sale</field>
+            <field name="amount_type">percent</field>
+            <field name="amount">5</field>
+        </record>
+        <record id="tax_pbbkb_0_859" model="account.tax">
+            <field name="name">PBBKB 0.859%</field>
+            <field name="type_tax_use">sale</field>
+            <field name="amount_type">percent</field>
+            <field name="amount">0.859</field>
+        </record>
+        <record id="tax_vat_10" model="account.tax">
+            <field name="name">10% VAT</field>
+            <field name="type_tax_use">sale</field>
+            <field name="amount_type">percent</field>
+            <field name="amount">10</field>
+        </record>
+        <record id="tax_pph_22" model="account.tax">
+            <field name="name">PPH 22</field>
+            <field name="type_tax_use">sale</field>
+            <field name="amount_type">percent</field>
+            <field name="amount">1.5</field>
+        </record>
+        
+        <record id="product_categ_karosene" model="product.category">
+            <field name="name">Karosene</field>
+            <field name="type">normal</field>
+            <field name="parent_id">1</field>
+        </record>
+        <record id="product_categ_premium" model="product.category">
+            <field name="name">Premium</field>
+            <field name="type">normal</field>
+            <field name="parent_id">1</field>
+        </record>
+        <record id="product_categ_pertamax" model="product.category">
+            <field name="name">Pertamax</field>
+            <field name="type">normal</field>
+            <field name="parent_id">1</field>
+        </record>
+        <record id="product_categ_pertamax_plus" model="product.category">
+            <field name="name">Pertamax Plus</field>
+            <field name="type">normal</field>
+            <field name="parent_id">1</field>
+        </record>
+        <record id="product_categ_pertamina_dex" model="product.category">
+            <field name="name">Pertamina Dex</field>
+            <field name="type">normal</field>
+            <field name="parent_id">1</field>
+        </record>
+        <record id="product_categ_diesel_oil" model="product.category">
+            <field name="name">Diesel Oil</field>
+            <field name="type">normal</field>
+            <field name="parent_id">1</field>
+        </record>
+        <record id="product_categ_fuel_oil" model="product.category">
+            <field name="name">Fuel Oil</field>
+            <field name="type">normal</field>
+            <field name="parent_id">1</field>
+        </record>
+        <record id="product_categ_lubricants" model="product.category">
+            <field name="name">Lubricants</field>
+            <field name="type">normal</field>
+            <field name="parent_id">1</field>
+        </record>
+        <record id="product_categ_lpg" model="product.category">
+            <field name="name">LPG [3KG/12KG]</field>
+            <field name="type">normal</field>
+            <field name="parent_id">1</field>
+        </record>
+        <record id="product_categ_avtur" model="product.category">
+            <field name="name">Avtur / Avgas</field>
+            <field name="type">normal</field>
+            <field name="parent_id">1</field>
+        </record>
+        <record id="product_categ_aspal" model="product.category">
+            <field name="name">Petkim / Asphalt</field>
+            <field name="type">normal</field>
+            <field name="parent_id">1</field>
+        </record>
+        
+        <record id="sale_sales_off_3410" model="sale.sales.office">
+            <field name="name">3410</field>
+            <field name="active">True</field>
+        </record>
+        <record id="sale_sales_off_3440" model="sale.sales.office">
+            <field name="name">3440</field>
+            <field name="active">True</field>
+        </record>
+        <record id="sale_sales_off_3450" model="sale.sales.office">
+            <field name="name">3450</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="industry_perkebunan" model="res.partner.industries">
+            <field name="name">Perkebunan</field>
+            <field name="code">0102</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_kehutanan" model="res.partner.industries">
+            <field name="name">Kehutanan</field>
+            <field name="code">0105</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_tangkar_satwa_liar" model="res.partner.industries">
+            <field name="name">Tangkar Satwa Liar</field>
+            <field name="code">010602</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_tambang_galian" model="res.partner.industries">
+            <field name="name">Tambang &amp; Galian</field>
+            <field name="code">0201</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_tambang_batubara" model="res.partner.industries">
+            <field name="name">Tambang Batu Bara</field>
+            <field name="code">020101</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_tambang_migas" model="res.partner.industries">
+            <field name="name">Tambang Migas</field>
+            <field name="code">0202</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_tambang_migas_bumi" model="res.partner.industries">
+            <field name="name">Tambang Migas Bumi</field>
+            <field name="code">020201</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_usaha_tenaga_pabum" model="res.partner.industries">
+            <field name="name">Usaha Tenaga Pabum</field>
+            <field name="code">020202</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_tambang_logam" model="res.partner.industries">
+            <field name="name">Tambang Logam</field>
+            <field name="code">0203</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_tambang_batu_tanah" model="res.partner.industries">
+            <field name="name">Tambang Batu, Tanah</field>
+            <field name="code">0204</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_industri_kimia_plastik" model="res.partner.industries">
+            <field name="name">Industri Kimia &amp; Plastik</field>
+            <field name="code">0305</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_pengolahan_lain" model="res.partner.industries">
+            <field name="name">Industri Pengolahan Lain</field>
+            <field name="code">0309</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_listrik" model="res.partner.industries">
+            <field name="name">Listrik</field>
+            <field name="code">0401</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_konstruksi_bangunan" model="res.partner.industries">
+            <field name="name">Konstruksi Bangunan</field>
+            <field name="code">0502</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_konstruksi_umum" model="res.partner.industries">
+            <field name="name">Konstruksi Umum</field>
+            <field name="code">050201</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_perdagangan_besar" model="res.partner.industries">
+            <field name="name">Perdagangan Besar</field>
+            <field name="code">0601</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_perdagangan_eceran" model="res.partner.industries">
+            <field name="name">Perdagangan Eceran</field>
+            <field name="code">0602</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_angkutan_kereta_api" model="res.partner.industries">
+            <field name="name">Angkutan Kereta Api</field>
+            <field name="code">070101</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_angkutan_laut" model="res.partner.industries">
+            <field name="name">Angkutan Laut</field>
+            <field name="code">070201</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_angkutan_udara" model="res.partner.industries">
+            <field name="name">Angkutan Udara</field>
+            <field name="code">0703</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_angkutan_udara_penumpang" model="res.partner.industries">
+            <field name="name">Angkutan Udara Penumpang</field>
+            <field name="code">070301</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_jasa_penunjang_angkutan_udara" model="res.partner.industries">
+            <field name="name">Jasa Penunjang Angkutan Udara</field>
+            <field name="code">070302</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_jasa_penunjang_angkutan" model="res.partner.industries">
+            <field name="name">Jasa Penunjang Angkutan</field>
+            <field name="code">0704</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_lembaga_keuangan" model="res.partner.industries">
+            <field name="name">Lembaga Keuangan</field>
+            <field name="code">0801</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_bank_lembaga_nonbank" model="res.partner.industries">
+            <field name="name">Bank, Lembaga Non Bank</field>
+            <field name="code">080101</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_jasa_litbang" model="res.partner.industries">
+            <field name="name">Jasa Litbang</field>
+            <field name="code">080204</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_pemerintah_hankam" model="res.partner.industries">
+            <field name="name">Pemerintah &amp; Hankam</field>
+            <field name="code">0901</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_admin_pemerintahan" model="res.partner.industries">
+            <field name="name">Admin Pemerintahan</field>
+            <field name="code">090101</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_administrasi_lain" model="res.partner.industries">
+            <field name="name">Administrasi Lainnya</field>
+            <field name="code">090109</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_jasa_pend_pemerintah" model="res.partner.industries">
+            <field name="name">Jasa Pend.Pemerintah</field>
+            <field name="code">090201</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_jasa_kesehatan_swasta" model="res.partner.industries">
+            <field name="name">Jasa Kesehatan Swasta</field>
+            <field name="code">090302</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_kegiatan_sosial_pemerintah" model="res.partner.industries">
+            <field name="name">Kegiatan Sosial Pemerintah</field>
+            <field name="code">090401</field>
+            <field name="active">True</field>
+        </record>
+        <record id="industry_jasa_perorangan" model="res.partner.industries">
+            <field name="name">Jasa Perorangan</field>
+            <field name="code">0907</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record model="crm.team" id="sales_team_reg">
+            <field name="name">REG</field>
+            <field name="member_ids" eval="[(4, ref('base.user_root'))]"/>
+            <field name="company_id" eval="False"/>
+        </record>
+        
+        <record id="partner_categ_industri" model="res.partner.category">
+            <field name="name">[30] Industri</field>
+            <field name="color" eval="1"/>
+            <field name="active">True</field>
+        </record>
+        <record id="partner_categ_pln" model="res.partner.category">
+            <field name="name">[31] PLN</field>
+            <field name="color" eval="2"/>
+            <field name="active">True</field>
+        </record>
+        <record id="partner_categ_instansi_pemerintah" model="res.partner.category">
+            <field name="name">[34] Instansi Pemerintah</field>
+            <field name="color" eval="3"/>
+            <field name="active">True</field>
+        </record>
+        <record id="partner_categ_domestic_route" model="res.partner.category">
+            <field name="name">[39] Domestic Route</field>
+            <field name="color" eval="4"/>
+            <field name="active">True</field>
+        </record>
+        <record id="partner_categ_oil_gas_producer" model="res.partner.category">
+            <field name="name">[55] Oil &amp; Gas Producer</field>
+            <field name="color" eval="5"/>
+            <field name="active">True</field>
+        </record>
+        <record id="partner_categ_mining_mineral_pro" model="res.partner.category">
+            <field name="name">[56] Mining &amp; Mineral Pro</field>
+            <field name="color" eval="6"/>
+            <field name="active">True</field>
+        </record>
+        <record id="partner_categ_swasta" model="res.partner.category">
+            <field name="name">[59] Swasta</field>
+            <field name="color" eval="7"/>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="dist_channel_0000" model="sale.distribution.channel">
+            <field name="name">Other Indonesia City</field>
+            <field name="code">0000</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_0101" model="sale.distribution.channel">
+            <field name="name">Kodya Jakarta Pusat</field>
+            <field name="code">0101</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_0102" model="sale.distribution.channel">
+            <field name="name">Kodya Jakarta Barat</field>
+            <field name="code">0102</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_0103" model="sale.distribution.channel">
+            <field name="name">Kodya Jakarta Selatan</field>
+            <field name="code">0103</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_0104" model="sale.distribution.channel">
+            <field name="name">Kodya Jakarta Timur</field>
+            <field name="code">0104</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_0105" model="sale.distribution.channel">
+            <field name="name">Kodya Jakarta Utara</field>
+            <field name="code">0105</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_0214" model="sale.distribution.channel">
+            <field name="name">Kodya Bogor</field>
+            <field name="code">0214</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_0219" model="sale.distribution.channel">
+            <field name="name">Kodya Bekasi</field>
+            <field name="code">0219</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_0223" model="sale.distribution.channel">
+            <field name="name">Kodya Bandung</field>
+            <field name="code">0223</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_0410" model="sale.distribution.channel">
+            <field name="name">Kodya Surabaya</field>
+            <field name="code">0410</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_0412" model="sale.distribution.channel">
+            <field name="name">Kab. Sidoarjo</field>
+            <field name="code">0412</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_0450" model="sale.distribution.channel">
+            <field name="name">Kodya Malang</field>
+            <field name="code">0450</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_0901" model="sale.distribution.channel">
+            <field name="name">Kodya Pekan Baru</field>
+            <field name="code">0901</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_0902" model="sale.distribution.channel">
+            <field name="name">Kodya Dumai</field>
+            <field name="code">0902</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_1101" model="sale.distribution.channel">
+            <field name="name">Kodya Palembang</field>
+            <field name="code">1101</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_1301" model="sale.distribution.channel">
+            <field name="name">Kota Bandar Lampung</field>
+            <field name="code">1301</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_1406" model="sale.distribution.channel">
+            <field name="name">Kab. Tanah Bumbu</field>
+            <field name="code">1406</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_1613" model="sale.distribution.channel">
+            <field name="name">Kab. Barito Utara</field>
+            <field name="code">1613</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_1701" model="sale.distribution.channel">
+            <field name="name">Kota Balikpapan</field>
+            <field name="code">1701</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_1704" model="sale.distribution.channel">
+            <field name="name">Kota Tarakan</field>
+            <field name="code">1704</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_1709" model="sale.distribution.channel">
+            <field name="name">Kota Samarinda</field>
+            <field name="code">1709</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_1710" model="sale.distribution.channel">
+            <field name="name">Kota Bontang</field>
+            <field name="code">1710</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_1711" model="sale.distribution.channel">
+            <field name="name">Kab. Kutai Kertanega</field>
+            <field name="code">1711</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_2210" model="sale.distribution.channel">
+            <field name="name">Kodya Denpasar</field>
+            <field name="code">2210</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_2211" model="sale.distribution.channel">
+            <field name="name">Kab. Badung</field>
+            <field name="code">2211</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_2601" model="sale.distribution.channel">
+            <field name="name">Kota Jayapura</field>
+            <field name="code">2601</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_2612" model="sale.distribution.channel">
+            <field name="name">Kab.Peg. Bintang</field>
+            <field name="code">2612</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_2619" model="sale.distribution.channel">
+            <field name="name">Kab. Nabire</field>
+            <field name="code">2619</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_2807" model="sale.distribution.channel">
+            <field name="name">Kodya Tangerang</field>
+            <field name="code">2807</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_2808" model="sale.distribution.channel">
+            <field name="name">Kabupaten Tangerang</field>
+            <field name="code">2808</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_2814" model="sale.distribution.channel">
+            <field name="name">Kota Tangerang Selatan</field>
+            <field name="code">2814</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_3001" model="sale.distribution.channel">
+            <field name="name">Kota Ternate</field>
+            <field name="code">3001</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_3301" model="sale.distribution.channel">
+            <field name="name">Kota Sorong</field>
+            <field name="code">3301</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_3302" model="sale.distribution.channel">
+            <field name="name">Kab. Sorong</field>
+            <field name="code">3302</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_3306" model="sale.distribution.channel">
+            <field name="name">Kab. Sorong Selatan</field>
+            <field name="code">3306</field>
+            <field name="active">True</field>
+        </record>
+        <record id="dist_channel_9999" model="sale.distribution.channel">
+            <field name="name">Overseas</field>
+            <field name="code">9999</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="company_type_child_pertamina" model="res.company.type">
+            <field name="name">Anak Perusahaan PTMN</field>
+            <field name="active">True</field>
+        </record>
+        <record id="company_type_bumn" model="res.company.type">
+            <field name="name">BUMN</field>
+            <field name="active">True</field>
+        </record>
+        <record id="company_type_instansi_pemerintah_tni_polri" model="res.company.type">
+            <field name="name">Instansi Pemerintah / TNI / Polri</field>
+            <field name="active">True</field>
+        </record>
+        <record id="company_type_swasta" model="res.company.type">
+            <field name="name">Swasta</field>
+            <field name="active">True</field>
+        </record>
+        
+    </data>
+</odoo>

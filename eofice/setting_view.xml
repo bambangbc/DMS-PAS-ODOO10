@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="eof_action_form">
+            <field name="name">action.action.form</field>
+            <field name="model">action.action</field>
+            <field name="arch" type="xml">
+                <form string="action">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="active"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    	<record id="eof_setingacc_action" model="ir.actions.act_window">
+            <field name="name">Master Action</field>
+            <field name="res_model">action.action</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--record model="ir.ui.view" id="department_code_view">
+            <field name="model">hr.department</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_department_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='parent_id']" position="after">
+                    <field name="code" invisible="1"/>
+                    <field name="code_sk" invisible="1"/>
+                    <field name="code_memo" invisible="1"/>
+                    <field name="code_nota" invisible="1"/>
+                </xpath>
+            </field>
+        </record-->
+
+        <record id="eof_setingacc_departments" model="ir.actions.act_window">
+            <field name="name">Master Department</field>
+            <field name="res_model">hr.department</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- JOB POSITION-->
+        <record model="ir.ui.view" id="jobs_code_view">
+            <field name="model">hr.job</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_hr_job_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='department_id']" position="after">
+                    <field name="manager_id"/>
+                    <field name="level_id"/>
+                    <field name="code_dispo"/>
+                    <field name="code_sm"/>
+                    <field name="code_sk"/>
+                    <field name="code_memo"/>
+                    <field name="code_nota"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="eof_settingacc_jobs" model="ir.actions.act_window">
+            <field name="name">Master Job Position</field>
+            <field name="res_model">hr.job</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.ui.view" id="eof_seting_dispo_form">
+            <field name="name">master.dispo.form</field>
+            <field name="model">master.dispo</field>
+            <field name="arch" type="xml">
+                <form string="Setting User Disposisi">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="child_ids" widget="many2many_tags"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="eof_setingacc_jobdispos" model="ir.actions.act_window">
+            <field name="name">Setting User</field>
+            <field name="res_model">master.dispo</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Stage Tree View -->
+    <record model="ir.ui.view" id="hr_sk_stage_tree">
+        <field name="name">sk.stage.tree</field>
+        <field name="model">sk.stage</field>
+        <field name="arch" type="xml">
+            <tree string="Stages">
+                <field name="name"/>
+                <field name="department_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Stage Form View -->
+    <record model="ir.ui.view" id="sk_stage_form">
+        <field name="name">sk.stage.form</field>
+        <field name="model">sk.stage</field>
+        <field name="arch" type="xml">
+            <form string="Stage">
+                <group string="Stage Definition">
+                    <field name="name"/>
+                    <field name="department_id"/>
+                </group>
+                <notebook>
+                    <page string="Stage">
+                        <group string="Stage">
+                            <group>
+                                <div>
+                                    <field name="checker1" nolabel="1"/>
+                                    <label for="checker1" class="oe_inline"/>
+                                </div>
+                                <field name="user_id1" class="oe_inline" nolabel="1"/>
+                                <div>
+                                    <field name="checker2" nolabel="1" attrs="{'invisible':[('checker1','=',False)]}"/>
+                                    <label for="checker2" class="oe_inline" attrs="{'invisible':[('checker1','=',False)]}"/>
+                                </div>
+                                <field name="user_id2" class="oe_inline" nolabel="1" attrs="{'invisible':[('checker1','=',False)]}"/>
+                                <div>
+                                    <field name="checker3" nolabel="1" attrs="{'invisible':[('checker2','=',False)]}"/>
+                                    <label for="checker3" class="oe_inline" attrs="{'invisible':[('checker2','=',False)]}"/>
+                                </div>
+                                <field name="user_id3" class="oe_inline" nolabel="1" attrs="{'invisible':[('checker2','=',False)]}"/>
+                            </group>
+                            <group>
+                                <div>
+                                    <field name="checker4" nolabel="1" attrs="{'invisible':[('checker3','=',False)]}"/>
+                                    <label for="checker4" class="oe_inline" attrs="{'invisible':[('checker3','=',False)]}"/>
+                                </div>
+                                <field name="user_id4" class="oe_inline" nolabel="1" attrs="{'invisible':[('checker3','=',False)]}"/>
+                                <div>
+                                    <field name="checker5" nolabel="1" attrs="{'invisible':[('checker4','=',False)]}"/>
+                                    <label for="checker5" class="oe_inline" attrs="{'invisible':[('checker4','=',False)]}"/>
+                                </div>
+                                <field name="user_id5" class="oe_inline" nolabel="1" attrs="{'invisible':[('checker4','=',False)]}"/>
+                                <div>
+                                    <field name="signer6" nolabel="1"/>
+                                    <label for="signer6" class="oe_inline"/>
+                                </div>
+                                <field name="user_id6" class="oe_inline" nolabel="1"/>
+                            </group>
+                        </group>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record id="eof_sk_stage" model="ir.actions.act_window">
+        <field name="name">Surat Keluar Stage</field>
+        <field name="res_model">sk.stage</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.ui.view" id="view_partner_eoffice_form">
+        <field name="name">res.partner</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account.view_partner_property_form"/>
+        <field name="arch" type="xml">
+            <field name="function" position="replace"/>
+            <page name="sales_purchases" position="after">
+                <page string="HR Setting" name="hrsetting">
+                    <group name="HR Setting">
+                        <field name="job_id"/>
+                        <field name="department_id"/>
+                    </group>
+                </page>
+            </page>
+        </field>
+    </record>
+
+    <record id="eof_employee" model="ir.actions.act_window">
+        <field name="name">E-office Employee</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.ui.view" id="hr_eoffice_form">
+        <field name="name">hr.employee.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="pelita_crew.hr_crew_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[6]" position="after">
+                <page string="HR Setting">
+                    <group name="HR Setting">
+                        <field name="job_id"/>
+                        <field name="department_id"/>
+                        <field name="user_id"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="eof_leveling" model="ir.actions.act_window">
+        <field name="name">E-office Level</field>
+        <field name="res_model">eof.level</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.ui.view" id="eof_level_form">
+        <field name="name">eof.level</field>
+        <field name="model">eof.level</field>
+        <field name="arch" type="xml">
+            <form string="Level">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+            <!-- Stage memo Tree View -->
+    <record model="ir.ui.view" id="hr_memo_stage_tree">
+        <field name="name">memo.stage.tree</field>
+        <field name="model">memo.stage</field>
+        <field name="arch" type="xml">
+            <tree string="Stages">
+                <field name="name"/>
+                <field name="department_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Stage Form View -->
+    <record model="ir.ui.view" id="memo_stage_form">
+        <field name="name">memo.stage.form</field>
+        <field name="model">memo.stage</field>
+        <field name="arch" type="xml">
+            <form string="Stage">
+                <group string="Stage Definition">
+                    <field name="name"/>
+                    <field name="department_id"/>
+                </group>
+                <notebook>
+                    <page string="Stage">
+                        <group string="Stage">
+                            <group>
+                                <div>
+                                    <field name="checker1" nolabel="1"/>
+                                    <label for="checker1" class="oe_inline"/>
+                                </div>
+                                <field name="user_id1" class="oe_inline" nolabel="1"/>
+                                <div>
+                                    <field name="checker2" nolabel="1" attrs="{'invisible':[('checker1','=',False)]}"/>
+                                    <label for="checker2" class="oe_inline" attrs="{'invisible':[('checker1','=',False)]}"/>
+                                </div>
+                                <field name="user_id2" class="oe_inline" nolabel="1" attrs="{'invisible':[('checker1','=',False)]}"/>
+                                <div>
+                                    <field name="checker3" nolabel="1" attrs="{'invisible':[('checker2','=',False)]}"/>
+                                    <label for="checker3" class="oe_inline" attrs="{'invisible':[('checker2','=',False)]}"/>
+                                </div>
+                                <field name="user_id3" class="oe_inline" nolabel="1" attrs="{'invisible':[('checker2','=',False)]}"/>
+                            </group>
+                            <group>
+                                <div>
+                                    <field name="checker4" nolabel="1" attrs="{'invisible':[('checker3','=',False)]}"/>
+                                    <label for="checker4" class="oe_inline" attrs="{'invisible':[('checker3','=',False)]}"/>
+                                </div>
+                                <field name="user_id4" class="oe_inline" nolabel="1" attrs="{'invisible':[('checker3','=',False)]}"/>
+                                <div>
+                                    <field name="checker5" nolabel="1" attrs="{'invisible':[('checker4','=',False)]}"/>
+                                    <label for="checker5" class="oe_inline" attrs="{'invisible':[('checker4','=',False)]}"/>
+                                </div>
+                                <field name="user_id5" class="oe_inline" nolabel="1" attrs="{'invisible':[('checker4','=',False)]}"/>
+                                <div>
+                                    <field name="signer6" nolabel="1"/>
+                                    <label for="signer6" class="oe_inline"/>
+                                </div>
+                                <field name="user_id6" class="oe_inline" nolabel="1"/>
+                            </group>
+                        </group>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record id="eof_memo_stage" model="ir.actions.act_window">
+        <field name="name">Memorandum Stage</field>
+        <field name="res_model">memo.stage</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+        <!--menuitem
+            action="eof_setingacc_action"
+            id="eof_setingacc_menu"
+            parent="eof_seting" sequence="10"/-->
+
+        <menuitem
+            action="eof_setingacc_departments"
+            id="eof_setingacc_department"
+            parent="eof_seting" sequence="20"/> 
+
+        <menuitem
+            action="eof_settingacc_jobs"
+            id="eof_setingacc_job"
+            parent="eof_seting" sequence="30"/>
+
+        <menuitem
+            action="eof_setingacc_jobdispos"
+            id="eof_setingacc_jobdispo"
+            parent="eof_seting" sequence="40"/>
+
+        <menuitem
+            action="eof_sk_stage"
+            id="eof_setinga_sk_stage"
+            parent="eof_seting" sequence="50"/>  
+
+        <menuitem
+            action="eof_memo_stage"
+            id="eof_setinga_memo_stage"
+            parent="eof_seting" sequence="55"/>
+
+        <menuitem
+            action="eof_employee"
+            id="eof_employees"
+            parent="eof_seting" sequence="60"/>
+
+         <menuitem
+            action="eof_leveling"
+            id="eof_levels"
+            parent="eof_seting" sequence="70"/>
+
+    </data>
+</odoo>

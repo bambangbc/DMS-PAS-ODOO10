@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record model="ir.ui.view" id="eof_create_dispo_form">
+            <field name="name">create.dispo.form</field>
+            <field name="model">create.dispo</field>
+            <field name="arch" type="xml">
+                <form string="Surat Masuk">
+                    <group>
+                        <group>
+                            <label for="user_ids1" string="Ditujukan Untuk"/>
+                            <div>
+                                <div>
+                                    <field name="user_ids1" widget="many2many_tags" class="oe_inline"/> - ACTION
+                                </div>
+                                <div>
+                                    <field name="user_ids2" widget="many2many_tags" class="oe_inline"/> - TANGGAPAN
+                                </div>
+                                <div>
+                                    <field name="user_ids3" widget="many2many_tags" class="oe_inline"/> - INFO
+                                </div>
+                                <div>
+                                    <field name="user_ids4" widget="many2many_tags" class="oe_inline"/> - FILE
+                                </div>
+                            </div>
+                        </group>
+                        <field name="date" invisible="1"/>
+                        <field name="user_id1" invisible="1"/>
+                        <field name="note"/>
+                    </group>
+                    <footer>
+                        <button name="create_dispo" string="Create Disposisi" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window name="Create Disposisi" id="act_create_disposisi"
+        res_model="create.dispo"
+        view_mode="form" target="new"/>
+
+
+    </data>
+</odoo>

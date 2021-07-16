@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="view_wizard_dash_dispo">
+            <field name="name">Dashboard Disposisi</field>
+            <field name="model">report.dispo</field>
+            <field name="arch" type="xml">
+                <form string="Report" >
+                    <group>
+                        <field name="dispo"/>
+                    </group>
+                    <footer>
+                        <button string='Proces' type='object' name='genertae'/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window name="Report Disposisi"
+            res_model="report.dispo"
+            view_mode="form"
+            target="new"
+            context="{}"
+            id="action_wizard_dispo_view"/>
+
+        <menuitem
+            action="action_wizard_dispo_view"
+            id="dashboard_disposisi"
+            parent="dashboard_eofice"
+            name = "Report Disposisi"
+            sequence="10"/>
+
+
+    </data>
+</odoo>

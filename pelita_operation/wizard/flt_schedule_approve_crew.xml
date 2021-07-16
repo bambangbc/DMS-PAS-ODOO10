@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="view_flt_schedule_approve_crew_wzd" model="ir.ui.view">
+            <field name="name">Approve Crew Unregulated</field>
+            <field name="model">flight.schedule.approve.crew</field>
+            <field name="arch" type="xml">
+                <form string="Approve Crew Unregulated">
+                    <label string="Flight hours over Limit!" />
+                    <separator/>
+                    <field name="information" readonly="True" nolabel="True"/>
+                    <field name="employee_ids" widget="many2many_tags" nolabel="True"/>
+                    <separator/>
+                    <label string="Reason" for="reason" />
+                    <field name="reason" required="True" nolabel="True"
+                               placeholder="To approve unregulated crews (above), please enter the reason and click Yes..."/>
+                    <footer>
+                        <button name="action_approve" string="Yes" type="object" class="oe_highlight"/>
+                         or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_flt_schedule_approve_crew" model="ir.actions.act_window">
+            <field name="name">Approve Crew Unregulated</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">flight.schedule.approve.crew</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_flt_schedule_approve_crew_wzd"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

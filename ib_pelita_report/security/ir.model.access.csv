@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_opt_report_user1,opt.reports.user1,ib_pelita_report.model_operational_reports,pelita_operation.group_ops_user,1,1,1,0
+access_opt_report_user2,opt.reports.user2,ib_pelita_report.model_operational_reports,pelita_master_data.group_flt_mgnt_user,1,1,1,0
+access_opt_report_sales,opt.reports.sales,ib_pelita_report.model_operational_reports,sales_team.group_sale_salesman,1,1,1,0
+access_sale_export_user1,sale_export.user1,ib_pelita_report.model_sale_export_csv,pelita_operation.group_ops_user,1,1,1,0
+access_sale_export_user2,sale_export.user2,ib_pelita_report.model_sale_export_csv,pelita_master_data.group_flt_mgnt_user,1,1,1,0
+access_sale_export_sales,sale_export.sales,ib_pelita_report.model_sale_export_csv,sales_team.group_sale_salesman,1,1,1,0
+

@@ -1,0 +1,35 @@
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="laporan_disposisi_tree">
+            <field name="name">hasil_laporan.disposisi</field>
+            <field name="model">hasil_laporan.disposisi</field>
+            <field name="type">tree</field>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <tree string="Laporan Disposisi" create="false">
+                    <field name="name"/>
+                    <field name="jenis"/>
+                    <field name="ditujukan"/>
+                    <field name="ditujukan_tanggapan"/>
+                    <field name="ditujukan_info"/>
+                    <field name="ditujukan_file"/>
+                    <field name="pembuat"/>
+                    <field name="date"/>
+                    <field name="note"/>
+                    <field name="source_document"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="dashboard1_disposisi" model="ir.actions.act_window">
+            <field name="name">Report Disposisi</field>
+            <field name="res_model">hasil_laporan.disposisi</field>
+            <field name="view_type">form</field>
+            <field name="domain"></field>
+            <field name="view_mode">tree</field>
+        </record>
+
+    </data>
+</openerp>

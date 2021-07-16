@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="data_jam_fl_fw_xls" pageWidth="595" pageHeight="842" columnWidth="589" leftMargin="3" rightMargin="3" topMargin="20" bottomMargin="20" uuid="b0e95a63-3a3f-47ea-8291-f0ad58d698a3">
+	<property name="ireport.zoom" value="1.4641000000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="start_date" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="end_date" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/baim/Documents/Python-Odoo/extra_pas/ib_pelita_report/report/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+    e.id as emp_id, e.employee_no, e.name_related as nama_karyawan,
+    (SELECT name FROM pilot_category WHERE id=e.pilot_categ_id) AS pilot_categ,
+    (SELECT SUM(frc.flt) FROM maintenance_fixedwing AS mf
+     	    JOIN flight_maintenance_log as fl ON mf.fixedwing_id=fl.id
+     	    LEFT JOIN internal_flight_type AS t ON fl.internal_flight_type_id=t.id
+	    LEFT JOIN flight_fixed_crew as frc ON mf.id=frc.fixed_id
+     	WHERE t.name='Instruction Flight' AND fl.id=fml.id AND frc.crew_id=e.id) AS inst_fl_time,
+    (SELECT SUM(frc.flt) FROM maintenance_fixedwing AS mf
+     	    JOIN flight_maintenance_log as fl ON mf.fixedwing_id=fl.id
+     	    LEFT JOIN internal_flight_type AS t ON fl.internal_flight_type_id=t.id
+	    LEFT JOIN flight_fixed_crew as frc ON mf.id=frc.fixed_id
+     	WHERE t.name='Test Flight' AND fl.id=fml.id AND frc.crew_id=e.id) AS test_fl_time,
+  ((SELECT SUM(frc.flt) FROM maintenance_fixedwing AS mf
+     	    JOIN flight_maintenance_log as fl ON mf.fixedwing_id=fl.id
+     	    LEFT JOIN internal_flight_type AS t ON fl.internal_flight_type_id=t.id
+	    LEFT JOIN flight_fixed_crew as frc ON mf.id=frc.fixed_id
+     	WHERE t.name in ('Instruction Flight','Test Flight') AND fl.id=fml.id AND frc.crew_id=e.id) *
+   (SELECT price FROM flight_hours_price
+      	WHERE qualification_id=e.qualification_id AND payment_type=c.payment_type
+      	AND aircraft_categ=fml.aircraft_type
+     	ORDER BY sk_date DESC LIMIT 1)) AS total_tarif
+FROM
+    flight_maintenance_log as fml LEFT JOIN maintenance_fixedwing AS l ON fml.id=l.fixedwing_id
+    LEFT JOIN internal_flight_type AS flt ON fml.internal_flight_type_id=flt.id
+    LEFT JOIN flight_fixed_crew AS c ON l.id=c.fixed_id LEFT JOIN hr_employee as e ON c.crew_id=e.id
+WHERE
+    fml.create_date >= to_date($P{start_date}, 'YYYY-MM-DD')
+    AND fml.create_date <= to_date($P{end_date}, 'YYYY-MM-DD')
+    AND fml.state!='cancel' AND fml.aircraft_type='fixedwing' AND c.crew_id IS NOT NULL
+GROUP BY e.id, fml.id, c.id]]>
+	</queryString>
+	<field name="emp_id" class="java.lang.Integer"/>
+	<field name="employee_no" class="java.lang.String">
+		<fieldDescription><![CDATA[Employee Number]]></fieldDescription>
+	</field>
+	<field name="nama_karyawan" class="java.lang.String"/>
+	<field name="pilot_categ" class="java.lang.String"/>
+	<field name="inst_fl_time" class="java.lang.Double"/>
+	<field name="test_fl_time" class="java.lang.Double"/>
+	<field name="total_tarif" class="java.lang.Double"/>
+	<variable name="inst_fl_time_1" class="java.lang.Double" resetType="Group" resetGroup="Employee" calculation="Sum">
+		<variableExpression><![CDATA[$F{inst_fl_time}]]></variableExpression>
+	</variable>
+	<variable name="test_fl_time_1" class="java.lang.Double" resetType="Group" resetGroup="Employee" calculation="Sum">
+		<variableExpression><![CDATA[$F{test_fl_time}]]></variableExpression>
+	</variable>
+	<variable name="total_tarif_1" class="java.lang.Double" resetType="Group" resetGroup="Employee" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_tarif}]]></variableExpression>
+	</variable>
+	<group name="Employee">
+		<groupExpression><![CDATA[$F{emp_id}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<frame>
+					<reportElement uuid="9bc4f571-be5c-4a1d-9582-02cbc96c004c" positionType="Float" stretchType="RelativeToTallestObject" x="247" y="0" width="83" height="20" isPrintWhenDetailOverflows="true"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+				</frame>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement uuid="3a73fdf2-0f0b-4bcc-be4c-48d1eb972bc4" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="70" height="20"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{employee_no}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement uuid="17fd653b-082e-4a0a-8996-278a9465821c" positionType="Float" stretchType="RelativeToTallestObject" x="70" y="0" width="120" height="20"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<paragraph leftIndent="2" rightIndent="1"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nama_karyawan}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement uuid="6375a156-9ee2-416f-8fa9-0db7a78cb025" positionType="Float" stretchType="RelativeToTallestObject" x="190" y="0" width="57" height="20"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{pilot_categ}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="Employee" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+					<reportElement uuid="46331a3d-1b75-4e2f-82f0-71633fac7f0c" positionType="Float" stretchType="RelativeToTallestObject" x="330" y="0" width="40" height="20"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{inst_fl_time_1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="Employee" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+					<reportElement uuid="6e30d6a1-3c6f-4692-8440-30865023dda3" positionType="Float" stretchType="RelativeToTallestObject" x="415" y="0" width="48" height="20"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{test_fl_time_1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+					<reportElement uuid="bd5e85db-6f85-488e-a69a-96a30b19bc15" positionType="Float" stretchType="RelativeToTallestObject" x="370" y="0" width="45" height="20"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement/>
+					<textFieldExpression><![CDATA[]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+					<reportElement uuid="5ac60d6c-5808-4820-8d63-8ea51254fe5e" positionType="Float" stretchType="RelativeToTallestObject" x="463" y="0" width="40" height="20"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement/>
+					<textFieldExpression><![CDATA[]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="Employee" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+					<reportElement uuid="0ce1a6af-cbfd-4721-86d5-ff356618b7dd" positionType="Float" stretchType="RelativeToTallestObject" x="519" y="0" width="70" height="20"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<paragraph rightIndent="2"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{total_tarif_1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="f5ceccc6-52de-44ec-b651-c2694eb207ed" positionType="Float" stretchType="RelativeToTallestObject" x="503" y="0" width="16" height="20"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+						<paragraph leftIndent="1"/>
+					</textElement>
+					<text><![CDATA[Rp]]></text>
+				</staticText>
+				<subreport>
+					<reportElement uuid="5a0454ca-16b4-471e-a1ad-9ce207a93ab9" positionType="Float" stretchType="RelativeToTallestObject" x="247" y="0" width="83" height="20"/>
+					<subreportParameter name="employee_id">
+						<subreportParameterExpression><![CDATA[$F{emp_id}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "data_jam_fl_rw_xls_subreport1.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="7c0f8522-8f52-4099-893b-94c7deffdc21" x="0" y="0" width="589" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATA JAM TERBANG INSTRUKSI / TEST FLIGHT / BDB AWAK PESAWAT
+FIXED WING]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="81d1503e-8757-47e3-8d17-197b8080b2cb" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="589" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PERIODE : " + ($P{start_date}.isEmpty() ? "" : new SimpleDateFormat("dd-MM-yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse($P{start_date}))) +
+    ($P{end_date}.isEmpty() ? "" : " s/d " + new SimpleDateFormat("dd-MM-yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse($P{end_date})))]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="38" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="09c9ca84-faab-4e58-a354-ce5b4ad01927" x="330" y="0" width="173" height="21"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[JAM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9668e44a-7a03-47aa-aef1-ed1d25b2222e" x="0" y="0" width="70" height="38"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NO.
+PEGAWAI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d3616aee-266a-4854-b55c-4685f8d47397" x="330" y="21" width="40" height="17"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INST.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2312fcbd-656e-407c-8710-cac892cba329" x="503" y="0" width="86" height="38"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TARIF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8ce6269a-d097-436c-97af-8c226f9dd7e2" x="370" y="21" width="45" height="17"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TRN FLT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2bb94b1b-b9c2-40f9-b737-306287e2521f" x="463" y="21" width="40" height="17"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BDB]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3b19ad1d-3089-4ee0-8ad4-a2b5d1c38f90" x="247" y="0" width="83" height="38"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RATING INSTRUKTUR /
+TYPE PESAWAT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6bd5f2a3-fd26-4242-ba44-bd953a0445fd" x="415" y="21" width="48" height="17"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TEST FLT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="74adf5f9-8dcd-441f-821d-da5c1ee2bb6f" x="190" y="0" width="57" height="38"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[KATEGORI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="00bf8ad4-519f-4060-8049-fc8d0d374405" x="70" y="0" width="120" height="38"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NAMA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<summary>
+		<band height="90" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="dd MMMMM yyyy" isBlankWhenNull="true">
+				<reportElement uuid="4d3f7a0d-d790-4d01-86ca-7fac3e4ab84d" x="330" y="0" width="259" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pondok Cabe,  " + new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c9037d40-6d15-44ac-ba7e-8dbc063b321d" x="330" y="16" width="259" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Ops. Support & Adm.Specialist]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a1ab60d5-b268-4e77-91e3-101bf84e6612" x="330" y="73" width="259" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Fuad Yahya, SE.]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

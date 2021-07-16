@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="hr_surat_memorandum_view_search" model="ir.ui.view">
+            <field name="name">surat.memorandum.search</field>
+            <field name="model">surat.memorandum</field>
+            <field name="arch" type="xml">
+                <search string="Search Surat Nota">
+                    <field name="name" string="nomor Memorandum"/>
+                    <field name="kepada" string="Ditujukan Untuk"/>
+                    <field name="tembusan" string="Tembusan"/>
+                    <field name="perihal" string="Perihal"/>
+                    <field name="no_tanda_terima" string="No Tanda Terima"/>
+                    <filter name="status" domain="[('state', '=', 'inprogres')]" string="Status"/>
+                    <separator/>
+                    <filter name="ditujukan" domain="['|',('kepada_usr', 'in', uid),('tembusan_usr', 'in', uid)]" string="Ditujukan"/>
+                    <separator/>
+                    <filter name="pembuat" domain="['|','|','|','|','|','|',('uid_u1', '=', uid),('uid_u2', '=', uid),('uid_u3', '=', uid),('uid_u4', '=', uid),('uid_u5', '=', uid),('uid_u6', '=', uid),('user_id','=',uid)]" string="Pembuat Memo"/>
+                    <group expand="0" string="Group By">
+                        <filter name="state" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Status Surat" domain="[]" context="{'group_by':'status_surat'}"/>
+                        <filter string="Tembusan" domain="[]" context="{'group_by':'tembusan'}"/>
+                        <filter string="Ditujukan Untuk" domain="[]" context="{'group_by':'kepada'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+    	<record model='ir.ui.view' id='eof_memorandum_tree'>
+            <field name='name'>surat.memorandum.tree</field>
+            <field name='model'>surat.memorandum</field>
+            <field name='arch' type='xml'>
+                <tree string='Surat Masuk'>
+                    <field name='name'/>
+                    <field name="uid1" invisible="1"/>
+                    <field name="uid2" invisible="1"/>
+                    <field name="uid3" invisible="1"/>
+                    <field name="uid4" invisible="1"/>
+                    <field name="uid5" invisible="1"/>
+                    <field name="uid6" invisible="1"/>
+                    <field name="mixin" invisible="1"/>
+                    <field name="mixin2" invisible="1"/>
+                    <field name="kepada"/>
+                    <field name="tembusan"/>
+                    <field name="user_id"/>
+                    <field name="source"/>
+                    <field name="perihal"/>
+                    <field name="date"/>
+                    <field name="report_true" invisible="1"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_disposisi_memo" model="ir.actions.act_window">
+            <field name="name">Disposisi</field>
+            <field name="res_model">disposisi.masuk</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_no_memo': [active_id], 'default_no_memo': active_id}</field>
+        </record>
+
+        <record id="action_view_disposisi_memo_form" model="ir.actions.act_window">
+            <field name="name">Disposisi</field>
+            <field name="res_model">disposisi.masuk</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="context">{'search_default_no_memo': [active_id], 'default_no_memo': active_id}</field>
+        </record>
+
+        <record model="ir.ui.view" id="eof_memorandum_form">
+            <field name="name">surat.memorandum.form</field>
+            <field name="model">surat.memorandum</field>
+            <field name="arch" type="xml">
+                <form string="Surat Memorandum">
+                	<header>
+                        <button name="%(action_view_disposisi_memo_form)d" string="Create Disposisi"
+                            type="action" class="btn-primary"
+                            attrs="{'invisible': [('button_dispo','=',False)]}"/>
+                        <button name="%(act_reply_memo)d" string="Reply Memorandum"
+                            type="action" class="btn-primary"
+                            attrs="{'invisible': [('button_memo','=',False)]}"/>
+                        <button name="%(act_create_memo)d" string="Create Memorandum"
+                            type="action" class="btn-primary"
+                            attrs="{'invisible': [('button_memo','=',False)]}"/>
+                        <!--button name="Save_dms" string="Save to DMS"
+                            Type="object" class="oe_highlight"
+                            attrs="{'invisible': ['|',('state','=','draft'),('active_user','!=','true')]}"/-->
+                		<button name="confirm" states="draft" string="Confirm" type="object" class="oe_highlight"/>
+                        <button name="checker1" attrs="{'invisible': ['|',('state','!=','checker1'),('uid1','!=',True)]}" string="Confirm" type="object" class="oe_highlight"/>
+                        <button name="checker2" attrs="{'invisible': ['|',('state','!=','checker2'),('uid2','!=',True)]}" string="Confirm" type="object" class="oe_highlight"/>
+                        <button name="checker3" attrs="{'invisible': ['|',('state','!=','checker3'),('uid3','!=',True)]}" string="Confirm" type="object" class="oe_highlight"/>
+                        <button name="checker4" attrs="{'invisible': ['|',('state','!=','checker4'),('uid4','!=',True)]}" string="Confirm" type="object" class="oe_highlight"/>
+                        <button name="checker5" attrs="{'invisible': ['|',('state','!=','checker5'),('uid5','!=',True)]}" string="Confirm" type="object" class="oe_highlight"/>
+                        <button name="signer" attrs="{'invisible': ['|',('state','!=','signer'),('uid6','!=',True)]}" string="Confirm" type="object" class="oe_highlight"/>
+                        <button name="%(act_refuse_memo)d" string="Refuse" attrs="{'invisible': ['|',('state','!=','checker1'),('uid1','!=',True)]}" type="action" class="btn_primary"/>
+                        <button name="%(act_refuse_memo)d" string="Refuse" attrs="{'invisible': ['|',('state','!=','checker2'),('uid2','!=',True)]}" type="action" class="btn_primary"/>
+                        <button name="%(act_refuse_memo)d" string="Refuse" attrs="{'invisible': ['|',('state','!=','checker3'),('uid3','!=',True)]}" type="action" class="btn_primary"/>
+                        <button name="%(act_refuse_memo)d" string="Refuse" attrs="{'invisible': ['|',('state','!=','checker4'),('uid4','!=',True)]}" type="action" class="btn_primary"/>
+                        <button name="%(act_refuse_memo)d" string="Refuse" attrs="{'invisible': ['|',('state','!=','checker5'),('uid5','!=',True)]}" type="action" class="btn_primary"/>
+                        <button name="%(act_refuse_memo)d" string="Refuse" attrs="{'invisible': ['|',('state','!=','signer'),('uid6','!=',True)]}" type="action" class="btn_primary"/>
+                        <button name="validate" attrs="{'invisible': ['|',('state','!=','inprogres'),('active_validate','!=','true')]}" string="Validate" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar"  statusbar_visible="draft,checker1,signer,done"  nolabel="1"/>
+                	</header>
+                	<sheet>
+                        <!--div class="oe_button_box" name="button_box">
+                            <button type="action"  name="%(action_view_disposisi_memo)d"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o"
+                                attrs="{'invisible': ['|',('state','=','draft'),('active_user','!=','true')]}">
+                                <field name="memo_count" widget="statinfo" string="Disposisi"/>
+                            </button>
+                        </div-->
+                		<div class="oe_title">
+	                        <label string="Memorandum" attrs="{'invisible': [('state','in',('draft'))]}"/>
+	                        <h1>
+	                            <field name="name" readonly="1"/>
+	                        </h1>
+	                    </div>
+	                	<group>
+	                		<group>
+			           			<field name="kepada" widget="many2many_tags" attrs="{'readonly': [('state','!=','draft')]}"/>
+		    					<field name="tembusan" widget="many2many_tags" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                <field name="kepada_dep" widget="many2many_tags" invisible="1"/>
+                                <field name="tembusan_dep" widget="many2many_tags" invisible="1"/>
+                                <field name="kepada_usr" widget="many2many_tags" invisible="1"/>
+                                <field name="tembusan_usr" widget="many2many_tags" invisible="1"/>
+		    				</group>
+		    				<group>
+		    					<field name="perihal" attrs="{'readonly': [('state','!=','draft')]}"/>
+		    					<field name="date" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                <field name="folowup" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                <field name="rahsia" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                <field name="lampiran" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                <field name="active_validate" invisible="1"/>
+                                <field name="auto_done" invisible="1"/>
+                                <field name="report_true" invisible="1"/>
+                                <field name="jenis_surat" invisible="1"/>
+                                <field name="active_user" invisible='1'/>
+                                <field name="user_id" invisible="1"/>
+                                <field name="user_id1" invisible="1"/>
+                                <field name="button_dispo" invisible="1"/>
+                                <field name="button_memo" invisible="1"/>
+                                <field name="mixin" invisible="1"/>
+                                <field name="uid_u1" invisible="1"/>
+                                <field name="uid_u2" invisible="1"/>
+                                <field name="uid_u3" invisible="1"/>
+                                <field name="uid_u4" invisible="1"/>
+                                <field name="uid_u5" invisible="1"/>
+                                <field name="uid_u6" invisible="1"/>
+		    				</group>
+		    			</group>
+	                	<notebook>
+                            <page string="Contents">
+                                <group>
+                                    <field name="content" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                </group>
+                            </page>
+                            <page string="Other Info">
+                                <group>
+                                    <field name="id" invisible="1"/>
+                                    <field name="template" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                    <field name="pengirim" invisible="1"/>
+                                    <field name="user_id" attrs="{'readonly': [('id','!=',False)]}"/>
+                                    <field name="validate_done" widget="many2many_tags" invisible="1"/>
+                                    <field name="validate_show" widget="many2many_tags" invisible="1"/>
+                                    <!--field name="signer"/-->
+                                    <field name="no_tanda_terima" attrs="{'readonly': [('state','!=','draft')],'invisible':[('no_tanda_terima','=',False)]}"/>
+                                    <field name="source" attrs="{'readonly': [('id','!=',False)]}"/> <!--attrs="{'readonly': [('state','!=','draft')],'invisible':[('source','=',False)]}"/-->
+                                    <field name="uid1" invisible="1"/>
+                                    <field name="uid2" invisible="1"/>
+                                    <field name="uid3" invisible="1"/>
+                                    <field name="uid4" invisible="1"/>
+                                    <field name="uid5" invisible="1"/>
+                                    <field name="uid6" invisible="1"/>
+                                    <field name="mixin" invisible="1"/>
+                                    <field name="mixin2" invisible="1"/>
+                                    <field name="user_id1" invisible="1"/>
+                                    <field name="note" readonly="1"/><!--attrs="{'readonly': [('state','!=','draft')]}"/-->
+                                </group>
+                            </page>
+                        </notebook>
+	                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="open_create_surat_memorandum" model="ir.actions.act_window">
+            <field name="name">Create a Surat Memorandum</field>
+            <field name="res_model">surat.memorandum</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <!--field name="view_id" ref="project_project_view_form_simplified"/-->
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.ui.view" id="view_surat_memorandum_kanban">
+            <field name="name">surat.memorandum.kanban</field>
+            <field name="model">surat.memorandum</field>
+            <field name="arch" type="xml">
+                <kanban on_create="eofice.open_create_surat_memorandum">
+                    <field name="name"/>
+                    <field name="perihal"/>
+                    <field name="date"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <strong><span><t t-esc="record.name.value"/></span></strong>
+                                    </div>
+                                    <div class="col-xs-6 pull-right text-right">
+                                        <strong><field name="date"/></strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6 text-muted">
+                                        <span><t t-esc="record.perihal.value"/></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+    	<record id="eof_memorandum_action" model="ir.actions.act_window">
+            <field name="name">Memorandum Masuk</field>
+            <field name="res_model">surat.memorandum</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,graph,pivot</field>
+            <field name="domain">['&amp;','&amp;','&amp;','&amp;','&amp;','&amp;',('state','!=','checker1'),('state','!=','checker2'),('state','!=','checker3'),('state','!=','checker4'),('state','!=','checker5'),('state','!=','draft'),('state','!=','signer'),'|',('kepada_usr', 'in', uid),('tembusan_usr', 'in', uid)]</field>
+            <!-- <field name="context">{'search_default_ditujukan': 1,'search_default_state': 1}</field> -->
+            <!-- <field name="context">{}</field> -->
+            <!-- <field name="search_view_id" ref="hr_surat_memorandum_view_search"/> -->
+        </record>
+
+        <record id="eof_memorandum_keluar_action" model="ir.actions.act_window">
+            <field name="name">Memorandum Keluar</field>
+            <field name="res_model">surat.memorandum</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,graph,pivot</field>
+            <field name="domain">['|','|','|','|','|','|','|',(1,'=',1),('uid_u1', '=', uid),('uid_u2', '=', uid),('uid_u3', '=', uid),('uid_u4', '=', uid),('uid_u5', '=', uid),('uid_u6', '=', uid),('user_id','=',uid)]</field>
+            <!-- <field name="context">{}</field> -->
+            <!-- <field name="search_view_id" ref="hr_surat_memorandum_view_search"/> -->
+        </record>
+
+        <menuitem
+            action="eof_memorandum_action"
+            id="eof_memorandum_view_menu"
+            parent="eof_memo_menu" sequence="40"/>
+
+        <menuitem
+            action="eof_memorandum_keluar_action"
+            id="eof_memorandum_keluar_view_menu"
+            parent="eof_memo_menu" sequence="50"/>
+
+        <data noupdate="1">
+		  <record id="seq_surat_memorandum" model="ir.sequence">
+		    <field name="name">Memorandul</field>
+		    <field name="code">surat.memorandum</field>
+		    <field name="prefix"></field>
+		    <field name="padding">5</field>
+		  </record>
+		</data>
+
+    </data>
+</odoo>

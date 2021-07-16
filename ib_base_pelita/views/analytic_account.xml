@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="relayout1_view_account_analytic_account_form" model="ir.ui.view">
+        <field name="name">relayout1.analytic.analytic.account.form</field>
+        <field name="model">account.analytic.account</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="/form/sheet" position="before">
+                <header>
+                    <!--<button string="Validate" name="action_validate"  type="object" groups="analytic.group_analytic_accounting"/>
+                    <button string="Set to Draft" name="action_set_to_draft"  type="object" groups="analytic.group_analytic_accounting"/>
+                    <button string="Cancel" name="action_cancel" type="object"
+                            groups="analytic.group_analytic_accounting"/>-->
+                    <!--states="validated" states="cancel"  states="draft"-->
+                    <!--<field name="state" widget="statusbar" statusbar_visible="draft,validated,cancel"/>-->
+                </header>
+            </xpath>
+            <xpath expr="//field[@name='currency_id']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="/form/sheet/div[@class='oe_title']" position="replace">
+                <div class="oe_title">
+                    <label for="name" class="oe_edit_only" string="Contract"/>
+                    <h1>
+                        <field name="priority" widget="priority"/>
+                        <field name="name" class="oe_inline" placeholder="Title Contract"/>
+                    </h1>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='code']" position="attributes">
+                <attribute name="string">Contract Number / Ref.</attribute>
+                <attribute name="placeholder">Contract Number / Reference</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="required">True</attribute>
+            </xpath>
+            <!--<xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="npwp" />
+            </xpath>-->
+            <xpath expr="//group[@name='main']" position="after">
+                <notebook>
+                    <page string="Information" name="more_info">
+                        <group name="contract_period" string="Contract Period">
+                            <group><field name="date_start" /></group>
+                            <group><field name="date_end"/></group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="order_id" options="{'no_quick_create': True,'no_create_edit': True,'no_create': True, 'no_open': True}"/>
+                                <label for="amount_total" string="Contract Value"/>
+                                <div>
+                                    <field name="currency_id" class="oe_inline" options="{'no_create': True}" groups="base.group_multi_currency"/>
+                                    <field name="amount_total" class="oe_inline" />
+                                </div>
+                            </group>
+                            <group><field name="order_ref"/></group>
+                        </group>
+                        <field name="order_line_ids" readonly="True" nolabel="1" colspan="2" mode="tree">
+                            <tree>
+                                <field name="name"/>
+                                <field name="route_opt_id"/>
+                                <field name="departure"/>
+                                <field name="arrival"/>
+                                <field name="base_ops_id"/>
+                                <field name="area_ops_id"/>
+                                <field name="fleet_acquisition_id"/>
+                            </tree>
+                        </field>
+                        <field name="description" colspan="2" class="oe_inline" nolabel="True" placeholder="Additional Info"/>
+                        <div class="oe_clear"/>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_sale_contract_search" model="ir.ui.view">
+        <field name="name">inherit.contract.analytic.account.search</field>
+        <field name="model">account.analytic.account</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_account_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="replace">
+                <search string="Contracts">
+                    <field name="name" filter_domain="['|','|',('name','ilike',self), ('code','ilike',self), ('description','ilike',self)]" string="Contract"/>
+                    <field name="tag_ids"/>
+                    <field name="partner_id" string="Customer"/>
+                    <field name="order_id"/>
+                    <filter string="Archived" domain="[('active', '=', False)]" name="inactive"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Customer" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Order" domain="[]" context="{'group_by':'order_id'}"/>
+                    </group>
+                </search>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_sale_contract_list" model="ir.ui.view">
+        <field name="name">sale.analytic.account.contract.list</field>
+        <field name="model">account.analytic.account</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_account_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="replace">
+                <tree decoration-bf="message_needaction==True" decoration-danger="date_end and (date_end&lt;current_date)" string="Contacts">
+                    <field name="message_needaction" invisible="1"/>
+                    <field name="name" string="Title Contract"/>
+                    <field name="code" string="Contract Number"/>
+                    <field name="partner_id" string="Customer"/>
+                    <!--<field name="npwp" />-->
+                    <field name="active" invisible="1"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="order_id"/>
+                    <field name="amount_total"/>
+                    <!--<field name="state"/>-->
+                </tree>
+            </xpath>
+        </field>
+    </record>
+    <!-- Sale Contract View -->
+    <record model="ir.ui.view" id="view_sale_contract_kanban">
+        <field name="name">account.analytic.account.kanban</field>
+        <field name="model">account.analytic.account</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_small_column o_kanban_sale_contracts" on_create="quick_create">
+                <field name="color"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="partner_id"/>
+                <!--<field name="npwp"/>-->
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="tag_ids"/>
+                <field name="message_needaction_counter"/>
+                <field name="amount_total"/>
+                <field name="description"/>
+                <field name="line_ids"/>
+                <field name="order_id"/>
+                <field name="order_ref"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_global_click">
+
+                            <div class="o_dropdown_kanban dropdown" groups="base.group_user">
+                                <a class="dropdown-toggle btn" data-toggle="dropdown" href="#" >
+                                    <span class="fa fa-bars fa-lg"/>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <!--<t t-if="widget.editable"><li><a type="set_cover">Set Cover Image</a></li></t>-->
+                                    <t t-if="widget.editable"><li><a type="edit">Edit Task</a></li></t>
+                                    <t t-if="widget.deletable"><li><a type="delete">Delete</a></li></t>
+                                    <li><ul class="oe_kanban_colorpicker" data-field="color"/></li>
+                                </ul>
+                            </div>
+                            <div class="oe_kanban_content">
+                                <div>
+                                    <field name="tag_ids"/>
+                                </div>
+                                <div>
+                                    <strong><field name="name"/></strong>
+                                </div>
+                                <div class="text-muted">
+                                    <field name="partner_id" invisible="context.get('default_partner_id', False)"/>
+                                    <t t-if="record.date_end.raw_value and record.date_end.raw_value lt (new Date())" t-set="red">oe_kanban_text_red</t>
+                                    <span t-attf-class="#{red || ''}"><i><field name="date_end"/></i></span>
+                                </div>
+                                <div class="text-muted">
+                                    <field name="order_id" invisible="context.get('default_order_id', False)"/>
+                                    <!--<t t-if="record.amount_total.raw_value">
+                                        <span><i><field name="amount_total"/></i></span>
+                                    </t>-->
+                                    <field name="order_ref" invisible="context.get('default_order_ref', False)"/>
+                                </div>
+                                <div class="oe_kanban_bottom_left">
+                                    <field name="priority" widget="priority"/>
+                                    <t t-if="record.message_needaction_counter.raw_value">
+                                        <span class='oe_kanban_mail_new' title='Unread Messages'><i class='fa fa-comments'/><t t-raw="record.message_needaction_counter.raw_value"/></span>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="oe_clear"></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_view_sale_contract" model="ir.actions.act_window">
+        <field name="name">Contracts</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.analytic.account</field>
+        <field name="search_view_id" ref="view_sale_contract_search"/>
+        <field name="context">{'search_default_active':1}</field> <!--'default_use_tasks': 1-->
+        <field name="domain">[('active', '=', True)]</field> <!--,('use_tasks','=',True)-->
+        <!--<field name="view_id" ref="view_sale_contract_list"/>-->
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create a Contract...
+            </p>
+        </field>
+    </record>
+    <record id="open_view_sale_contract_list_kanban" model="ir.actions.act_window.view">
+        <field name="sequence" eval="0"/>
+        <field name="view_mode">kanban</field>
+        <field name="act_window_id" ref="action_view_sale_contract"/>
+    </record>
+    <record id="open_view_sale_contract_list_tree" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="act_window_id" ref="action_view_sale_contract"/>
+    </record>
+    <menuitem action="action_view_sale_contract"
+            id="menu_view_sale_contracts" parent="sales_team.menu_sales"
+            sequence="80" groups="base.group_user" />
+    <!--groups="sales_team.group_sale_salesman,sales_team.group_sale_manager"-->
+
+
+
+</odoo>

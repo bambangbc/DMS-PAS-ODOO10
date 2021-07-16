@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="inherit1_project_view_form_simplified" model="ir.ui.view">
+        <field name="name">inherit1.project.view.form.simplified</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.project_project_view_form_simplified"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <label for="date_start" string="Period" />
+                <div name="period_date">
+                    <field name="date_start" placeholder="Start Date" class="oe_inline" nolabel="1"/>
+                    <field name="date" placeholder="Expiration Date" class="oe_inline" nolabel="1"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

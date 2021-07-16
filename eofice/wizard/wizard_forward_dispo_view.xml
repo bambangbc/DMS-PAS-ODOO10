@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record model="ir.ui.view" id="eof_forward_dispo_form">
+            <field name="name">forward.dispo.form</field>
+            <field name="model">forward.dispo</field>
+            <field name="arch" type="xml">
+                <form string="Forward">
+                    <group>
+                        <group>
+                            <field name="user_id1" invisible="1"/>
+                            <field name="forward_to"/>
+                            <field name="note"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="create_forward" string="Save" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window name="Forward" id="act_forward"
+        res_model="forward.dispo"
+        view_mode="form" target="new"/>
+
+    </data>
+</odoo>

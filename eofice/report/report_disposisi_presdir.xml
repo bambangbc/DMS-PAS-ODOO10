@@ -1,0 +1,205 @@
+<odoo>
+    <data>
+        <template id="report_disposisi2">
+            <t t-name="eofice.report_disposisi2">
+			    <t t-name="eofice.report_disposisi2">
+			        <t t-call="report.html_container">
+			            <t t-foreach="docs" t-as="o">
+			                <div class="page">
+			                    <div class="row">
+			                        <table style="width: 100%;">
+			                            <tr>
+			                                <td width="30%"><img src="/eofice/static/src/img/logo.png" width="150" height="56"/></td>
+			                                <td width="40%" style="text-align: center;">
+			                                    <br/><span style="text-decoration: underline;">LEMBAR PENERUS</span>
+			                                    <br/><span t-field="o.job_delegasi"/>
+			                                </td>
+			                                <td width="30%"/>
+			                            </tr>
+			                        </table>
+			                        <p><span style="color: #ffffff;">a</span></p>
+			                        <table style="width:100%">
+			                        	<tr>
+			                        		<td width="25%"></td>
+			                        		<td width="10%">Segera [ ]</td>
+			                        		<td width="10%">Penting [ ]</td>
+			                        		<td width="10%">Rahasia [ ]</td>
+			                        		<td width="10%">Terbatas [ ]</td>
+			                        		<td width="10%">Biasa [ ]</td>
+			                        		<td width="25%"></td>
+			                        	</tr>
+			                        </table>
+			                        <p><span style="color: #ffffff;">a</span></p>
+			                        <table style="border:1px solid black;border-collapse:collapse;" width="100%">
+			                            <tr style="border:1px solid black;">
+			                                <td width="10%">Nomor  </td>
+			                                <td width="1%">:</td>
+			                                <td width="39%"></td>
+			                                <td width="9%">No Set</td>
+			                                <td width="1%">:</td>
+			                                <td width="15%"></td>
+			                                <td width="9%">Agenda</td>
+			                                <td width="1%">:</td>
+			                                <td width="15%"></td>
+			                            </tr>
+			                            <tr style="border:1px solid black;">
+			                                <td width="10%">Asal Dok  </td>
+			                                <td width="1%">:</td>
+			                                <td width="39%"></td>
+			                                <td width="9%">Tanggal</td>
+			                                <td width="1%">:</td>
+			                                <td width="15%"></td>
+			                                <td width="9%">Tanggal</td>
+			                                <td width="1%">:</td>
+			                                <td width="15%"></td>
+			                            </tr>
+			                            <tr style="border:1px solid black;">
+			                                <td width="10">Perihal</td>
+			                                <td width="1%">:</td>
+			                                <td width="89%" colspan="7"></td>
+			                            </tr>
+			                            <tr style="border:1px solid black;">
+			                                <td width="100" style="text-align: center;" colspan="9">Diteruskan Kepada</td>
+			                            </tr>
+			                        </table>
+			                        <table style="border:1px solid black;border-collapse:collapse;" width="100%">
+			                        	<tr style="border:1px solid black;">
+			                                <td width="10%" style="border:1px solid black;text-align: center;"></td>
+			                                <td width="10%" style="border:1px solid black;text-align: center;"></td>
+			                                <td width="10%" style="border:1px solid black;text-align: center;">CL</td>
+			                                <td width="10%" style="border:1px solid black;text-align: center;">CC</td>
+			                                <td width="10%" style="border:1px solid black;text-align: center;">SICT</td>
+			                                <td width="15%" style="border:1px solid black;text-align: center;">BOD Supp.</td>
+			                                <td width="10%" style="border:1px solid black;text-align: center;">ADM</td>
+			                                <td width="10%" style="border:1px solid black;text-align: center;"></td>
+			                                <td width="15%" style="border:1px solid black;text-align: center;"></td>
+			                            </tr>
+			                        </table>
+			                        <table style="border:1px solid black;border-collapse:collapse;" width="100%">
+			                        	<tr style="border:1px solid black;">
+			                        		<td width="10%" style="border:1px solid black;">
+			                        			<table width="100%">
+						                        	<tr>
+						                        		<td width="20%">
+						                        			
+						                        		</td>
+			                                            <td width="70%">
+			                                            Action
+			                                            </td>
+			                                            <td width="10%">
+			                                            </td>
+						                        	</tr>
+						                        	<tr>
+						                        		<td width="15%">
+						                        			
+						                        		</td>
+			                                            <td width="70%">
+			                                            <table style="border:1px solid black;border-collapse:collapse;" width="100%">
+			                                            	<tr>
+			                                            		<td width="7%" style="border:1px solid black;">
+			                                            		
+			                                            		</td>
+			                                            		<td width="26%" style="border:1px solid black;">
+			                                            		Untuk Diketahui
+			                                            		</td>
+			                                            		<td width="7%" style="border:1px solid black;">
+			                                            			
+			                                            		</td>
+			                                            		<td width="30%" style="border:1px solid black;">
+			                                            			Untuk Dilaporan
+			                                            		</td>
+			                                            	</tr>
+			                                            	<tr>
+			                                            		<td width="7%" style="border:1px solid black;">
+			                                            		
+			                                            		</td>
+			                                            		<td width="26%" style="border:1px solid black;">
+			                                            		Untuk Didiskusikan
+			                                            		</td>
+			                                            		<td width="7%" style="border:1px solid black;">
+			                                            			
+			                                            		</td>
+			                                            		<td width="30%" style="border:1px solid black;">
+			                                            			Untuk Menghadap
+			                                            		</td>
+			                                            	</tr>
+			                                            	<tr>
+			                                            		<td width="7%" style="border:1px solid black;">
+			                                            		
+			                                            		</td>
+			                                            		<td width="26%" style="border:1px solid black;">
+			                                            		Untuk Dipelajari
+			                                            		</td>
+			                                            		<td width="7%" style="border:1px solid black;">
+			                                            			
+			                                            		</td>
+			                                            		<td width="30%" style="border:1px solid black;">
+			                                            			Untuk Dilengkapi Data-data
+			                                            		</td>
+			                                            	</tr>
+			                                            	<tr>
+			                                            		<td width="7%" style="border:1px solid black;">
+			                                            		
+			                                            		</td>
+			                                            		<td width="26%" style="border:1px solid black;">
+			                                            		Untuk Dijawab
+			                                            		</td>
+			                                            		<td width="7%" style="border:1px solid black;">
+			                                            			
+			                                            		</td>
+			                                            		<td width="30%" style="border:1px solid black;">
+			                                            			Untuk Dibiacarakan Dalam Rapat
+			                                            		</td>
+			                                            	</tr>
+			                                            	<tr>
+			                                            		<td width="7%" style="border:1px solid black;">
+			                                            		
+			                                            		</td>
+			                                            		<td width="26%" style="border:1px solid black;">
+			                                            		Untuk Ditidak lanjuti
+			                                            		</td>
+			                                            		<td width="7%" style="border:1px solid black;">
+			                                            			
+			                                            		</td>
+			                                            		<td width="30%" style="border:1px solid black;">
+			                                            			Untuk Dikoreksi
+			                                            		</td>
+			                                            	</tr>
+			                                            	<tr>
+			                                            		<td width="7%" style="border:1px solid black;">
+			                                            		
+			                                            		</td>
+			                                            		<td width="26%" style="border:1px solid black;">
+			                                            		Untuk Mewakilkan
+			                                            		</td>
+			                                            		<td width="7%" style="border:1px solid black;">
+			                                            			
+			                                            		</td>
+			                                            		<td width="30%" style="border:1px solid black;">
+			                                            			Untuk Difile
+			                                            		</td>
+			                                            	</tr>
+			                                            </table>
+			                                            </td>
+			                                            <td width="10%">
+			                                            </td>
+						                        	</tr>
+						                        </table>
+						                    Catatan :
+						                    <p><span style="color: #ffffff;">a</span></p>
+						                    <p><span style="color: #ffffff;">a</span></p>
+						                    <p><span style="color: #ffffff;">a</span></p>
+						                    <p><span style="color: #ffffff;">a</span></p>
+						                    <p><span style="color: #ffffff;">a</span></p>
+			                        		</td>
+			                        	</tr>
+			                        </table>
+			                    </div>
+			                </div>
+			            </t>
+			        </t>
+			    </t>
+			</t>
+		</template>
+	</data>
+</odoo>

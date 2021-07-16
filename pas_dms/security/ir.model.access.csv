@@ -1,0 +1,9 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+
+access_dms_access_groups_user_ews,dms_access_groups_user_ews,model_ews_dms,muk_dms.group_dms_user,1,0,0,0
+
+access_dms_access_groups_manager_ews,dms_access_groups_manager_ews,model_ews_dms,muk_dms.group_dms_manager,1,1,1,0
+
+access_dms_access_groups_admin_ews,dms_access_groups_admin_ews,model_ews_dms,muk_dms.group_dms_admin,1,1,1,1
+
+access_dms_access_groups_admin_audit,dms_access_groups_admin_audit,model_audit_log,muk_dms.group_dms_admin,1,1,1,1

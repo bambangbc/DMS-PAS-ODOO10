@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="1">
+
+        <record forcecreate="True" id="ir_cron_product_log_scheduler_act" model="ir.cron">
+            <field name="name">Run product log scheduler</field>
+            <field eval="True" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">5</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field eval="'product.log.availability'" name="model"/>
+            <field eval="'run_log_scheduler'" name="function"/>
+            <field eval="'(True,)'" name="args"/>
+        </record>
+
+    </data>
+
+    <data noupdate="1">
+        <!--Create Partner for Subordination-->
+        <record id="res_partner_paf" model="res.partner">
+            <field name="code">PAF</field>
+            <field name="name">Pelita Avionic Facility SBU</field>
+            <field name="active">True</field>
+            <!--<field name="npwp">PAF-1234567890</field>-->
+            <field name="street">Office &amp; Workshop</field>
+            <field name="street2">Avionic Building, Pondok Cabe Airfield</field>
+            <field name="city">Tangerang Selatan</field>
+            <field name="zip">1548</field>
+            <field name="country_id">101</field>
+            <field name="phone">+62 21 - 740 1509</field>
+            <field name="fax">+62 21 - 740 1523</field>
+            <field name="email">pelita-avionic@pelita-air.com</field>
+        </record>
+        <record id="res_partner_ptc" model="res.partner">
+            <field name="code">PTC</field>
+            <field name="name">Pelita Air Training Center SBU</field>
+            <field name="active">True</field>
+            <!--<field name="npwp">PTC-1234567890</field>-->
+            <field name="street">Office &amp; Workshop</field>
+            <field name="street2">Training Center Building, Pondok Cabe Airfield</field>
+            <field name="city">Tangerang Selatan</field>
+            <field name="zip">1548</field>
+            <field name="country_id">101</field>
+            <field name="phone">+62 21 - 740 1509</field>
+            <field name="fax">+62 21 - 740 1523</field>
+        </record>
+        <record id="res_partner_pca" model="res.partner">
+            <field name="code">PCA</field>
+            <field name="name">Pondok Cabe Airport SBU</field>
+            <field name="active">True</field>
+            <!--<field name="npwp">PCA-1234567890</field>-->
+            <field name="street">Pondok Cabe Airport</field>
+            <field name="city">Tangerang Selatan</field>
+            <field name="zip">1548</field>
+            <field name="country_id">101</field>
+            <field name="phone">+62 21 - 740 1509</field>
+            <field name="fax">+62 21 - 740 1523</field>
+        </record>
+
+        <record id="product_category_pas" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">PAS</field>
+        </record>
+        <record id="product_category_paf" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">PAF</field>
+        </record>
+        <record id="product_category_patc" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">PTC</field>
+        </record>
+        <record id="product_category_pca" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">PCA</field>
+        </record>
+
+        <record id="unit_bisnis_pas" model="pelita.business.unit">
+            <field name="code">PAS</field>
+            <field name="name">Pelita Air Service</field>
+            <field name="product_categ_id" ref="product_category_pas"/>
+            <field name="note">Pelita Business Unit for Air Services</field>
+        </record>
+        <record id="unit_bisnis_paf" model="pelita.business.unit">
+            <field name="code">PAF</field>
+            <field name="name">Pelita Avionic Facility SBU</field>
+            <field name="product_categ_id" ref="product_category_paf"/>
+            <field name="note">Pelita Business Unit for Avionics Facilities</field>
+            <field name="partner_id" ref="res_partner_paf"/>
+        </record>
+        <record id="unit_bisnis_patc" model="pelita.business.unit">
+            <field name="code">PTC</field>
+            <field name="name">Pelita Air Training Center SBU</field>
+            <field name="product_categ_id" ref="product_category_patc"/>
+            <field name="note">Pelita Business Unit for Air Training Services</field>
+            <field name="partner_id" ref="res_partner_ptc"/>
+        </record>
+        <record id="unit_bisnis_pca" model="pelita.business.unit">
+            <field name="code">PCA</field>
+            <field name="name">Pondok Cabe Airport SBU</field>
+            <field name="product_categ_id" ref="product_category_pca"/>
+            <field name="partner_id" ref="res_partner_pca"/>
+        </record>
+
+        <record id="partner_category_sales_channel" model="res.partner.category">
+            <field name="name">Sales Channel</field>
+            <field name="parent_left">0</field>
+        </record>
+
+        <record model="crm.team" id="sales_team_ogm">
+            <field name="name">OGM</field>
+            <field name="member_ids" eval="[(4, ref('base.user_root'))]"/>
+            <field name="company_id" eval="False"/>
+            <!--<field name="member_ids" eval="[(4, ref('base.user_root')),(4, ref('sales_team.group_sale_manager')),(4, ref('sales_team.group_sale_salesman')),(4, ref('sales_team.group_sale_salesman_all_leads'))]"/>-->
+            <!--<field name="use_quotations">True</field>-->
+            <!--<field name="use_leads">True</field>-->
+            <!--<field name="use_opportunities">True</field>-->
+        </record>
+        <record model="crm.team" id="sales_team_gop">
+            <field name="name">GOP</field>
+            <field name="member_ids" eval="[(4, ref('base.user_root'))]"/>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+        <record id="sale_division_hrd" model="sale.division">
+            <field name="name">HR</field>
+            <field name="code">60</field>
+            <field name="active">True</field>
+        </record>
+        <record id="sale_division_akunting" model="sale.division">
+            <field name="name">Accounting &amp; Finance</field>
+            <field name="code">70</field>
+            <field name="active">True</field>
+        </record>
+        <record id="sale_division_marketing" model="sale.division">
+            <field name="name">Sales &amp; Marketing</field>
+            <field name="code">80</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="sale_disc_channel_20" model="sale.distribution.channel">
+            <field name="name">20</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="sale_sales_area_3410" model="sale.sales.area">
+            <field name="name">Jakarta</field>
+            <field name="code">3410</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="sale_sales_off_3460" model="sale.sales.office">
+            <field name="name">3460</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="needs_helipad" model="additional.flight.needs">
+            <field name="name">Helipad</field>
+            <field name="active">True</field>
+        </record>
+        <record id="needs_fuel_refill" model="additional.flight.needs">
+            <field name="name">Fuel Refill</field>
+            <field name="active">True</field>
+        </record>
+        <record id="needs_fuelman" model="additional.flight.needs">
+            <field name="name">Fuelman</field>
+            <field name="active">True</field>
+        </record>
+
+    </data>
+
+</odoo>

@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="0">
+        <record id="sequence_craft_charter" model="ir.sequence">
+            <field name="name">Aircraft Charter Sequence</field>
+            <field name="code">craft.charter.sequence</field>
+            <field name="prefix">PELITA/%(range_year)s/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field name="padding">4</field>
+        </record>
+    </data>
+
+    <data>
+        <record id="cron_scheduler_for_fleet" model="ir.cron">
+            <field name="name">Aircraft scheduler</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field eval="'craft.charter.contract'" name="model"/>
+            <field eval="'fleet_scheduler'" name="function"/>
+        </record>
+
+        <record model="ir.ui.view" id="charter_fleet_vehicle_inherit_form_view">
+            <field name="name">fleet.vehicle.form.inherit.view</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+            <field name="arch" type="xml">
+                <field name="car_value" position="after">
+                    <field name="charter_check_availability" invisible="1"/>
+                    <field name="charter_reserved_time" invisible="1"/>
+                </field>
+                <field name="color" position="replace">
+                    <field name="color"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="craft_charter_contract_form_view" model="ir.ui.view">
+            <field name="name">craft.contract.result.form</field>
+            <field name="model">craft.charter.contract</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="craft_result">
+                    <header>
+                        <button name="action_confirm" string="Confirm" type="object"
+                                attrs="{'invisible': [('state', '!=', 'draft')]}" class="oe_highlight"/>
+                        <button name="action_run" string="Run" type="object"
+                                attrs="{'invisible': [('state', '!=', 'reserved')]}" class="oe_highlight"/>
+                        <button name="action_cancel" string="Cancel" type="object"
+                                attrs="{'invisible': [('state', 'not in', ('draft', 'reserved'))]}" class="oe_highlight"/>
+                        <button name="action_invoice_create" string="Create Invoice"
+                                attrs="{'invisible': ['|',('state', '!=', 'running'),
+                                ('first_invoice_created','=',True)]}" type="object" class="oe_highlight"/>
+                        <button name="force_checking" string="Force Checking"
+                                attrs="{'invisible': ['|',('state','!=','running'),
+                                ('first_invoice_created','=',False)]}" type="object" class="oe_highlight"/>
+                        <button name="set_to_done" string="Set to Done"
+                                states="invoice" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,running,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_right oe_button_box" style="width: 300px;" name="buttons">
+                            <button name='action_view_invoice' class="oe_stat_button" type="object" icon="fa-money">
+                                <field string="Invoice" name="invoice_count" widget="statinfo" />
+                            </button>
+                        </div>
+                        <field name="image_medium" widget='image' class="oe_avatar"/>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <separator string="Contract Details " colspan="4" />
+                            <group>
+                                <field name="customer_id"  string="Customer" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                <field name="rent_start_date" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                <field name="rent_end_date" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                <field name="vehicle_id" domain="[('charter_check_availability','=',True),
+                                ('state_id.name','!=','Inactive')]"
+                                   options="{'no_create': True}"/>
+                                <field name="journal_type" invisible="1" />
+                                <field name="check_verify" invisible="1" />
+                                <field name="sales_person" attrs="{'readonly': [('state','!=','draft')]}"/>
+                            </group>
+                            <group>
+                                <field name="craft_brand"/>
+                                <field name="craft_color"/>
+                                <field name="first_invoice_created" invisible="1"/>
+                                <label for="first_payment"/>
+                                <div>
+                                    <field name="first_payment" class="oe_inline"
+                                         attrs="{'readonly': ['|', ('state','not in',('draft', 'running')),
+                                                ('first_invoice_created','=',True)]}"/>
+                                    <field name="first_payment_inv" style="width:142px;" readonly="1"/>
+                                </div>
+                                <field name="account_type" invisible="1"/>
+                                <field name="cost" invisible="1"/>
+                                <label for="cost_generated"/>
+                                    <div>
+                                        <field name="cost_frequency" class="oe_inline"
+                                               attrs="{'readonly': [('state','!=','draft')]}"/>
+                                        <field name="cost_generated" style="width:142px;"
+                                               attrs="{'invisible': [('cost_frequency','=','no')],
+                                                       'readonly': [('state','!=','draft')],
+                                                       'required': [('cost_frequency','not in',[None,False,'no'])]}"/>
+                                    </div>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Recurring Invoices" attrs="{'invisible': [('cost_frequency','in',[None,False,'no'])]}">
+                                <field name="recurring_line" mode="tree">
+                                    <tree string="Fleet Reccurring Lines"
+                                          colors="#0b7a35:payment_info=='paid';#f20b07:payment_info!='paid'">
+                                        <field name="date_today"/>
+                                        <field name="date_due"/>
+                                        <field name="name"/>
+                                        <field name="account_info"/>
+                                        <field name="recurring_amount"/>
+                                        <field name="payment_info"/>
+                                        <field name="invoice_ref"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Checklist">
+                                <group>
+                                    <group>
+                                        <field name="attachment_ids" widget="many2many_binary" class="oe_inline"/>
+                                    </group>
+                                    <group>
+                                        <field name="damage_cost" attrs="{'invisible': [('state','!=','checking')]}"/>
+                                    </group>
+                                </group>
+                                <field name="checklist_line">
+                                    <tree string="Fleet Checklist Lines" editable="bottom">
+                                        <field name="name"/>
+                                        <field name="checklist_active"/>
+                                        <field name="checklist_number" invisible="True"/>
+                                        <field name="price"/>
+                                    </tree>
+                                    <form>
+                                        <sheet>
+                                            <group>
+                                                <field name="name"/>
+                                                <field name="checklist_active" invisible="1"/>
+                                                <field name="checklist_number" invisible="1"/>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                                <div>
+                                    <group class="oe_subtotal_footer oe_right">
+                                        <field name="total"/>
+                                        <field name="tools_missing_cost"/>
+                                        <field name="damage_cost_sub"/>
+                                        <field name="total_cost" class="oe_subtotal_footer_separator"/>
+                                    </group>
+                                </div>
+                                <div style="float: right;margin-left: 78%;margin-bottom: 36px;">
+                                    <button name="action_verify" string="Verify" type="object"
+                                            style="width: 100px !important;height: 40px;"
+                                            attrs="{'invisible': [('state', '!=', 'checking')]}"
+                                            class="oe_subtotal_footer oe_right oe_highlight"/>
+                                </div>
+                            </page>
+
+<!--                            <page string="Aircraft">
+                                <group>
+                                    <group string="Aircraft Information" name="aircraft_info">
+                                        <field name="craft_name"/>
+                                        <field name="craft_type"/>
+                                        <field name="craft_reg_code"/>  
+                                        <field name="craft_categ"/>        
+                                    </group>
+
+                                    <group string="Ownership Information" name="aircraft_ownership">
+                                        <field name="craft_ownership"/>
+                                        <field name="craft_availseat"/>
+                                        <field name="craft_color"/>
+                                        <field name="craft_status"/>             
+                                    </group>
+                                </group>
+                            </page>
+-->
+                            <page string="Route">
+                                <group>
+                                    <group string="Route Information" name="route_info">
+                                        <field name="route_from" placeholder="e.g PONDOK CABE"/>
+                                        <field name="route_to"/>
+                                    </group>
+                                    <group string="Distance Information" name="distance_info">
+                                        <field name="nm_distance"/>
+                                        <field name="km_distance"/>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <page string="Passenger">
+                                <group>
+                                    <group string="Passenger Information" name="passenger_info">
+                                        <field name="pass_qty"/>
+                                        <field name="pass_cargo"/>
+                                        <field name="pass_ticket"/>   
+                                    </group>
+                                    <group string="Crew Information" name="crew_info">
+                                        <field name="crew_set"/>
+                                        <field name="technician_set"/>
+                                        <field name="fuel_consump"/>   
+                                    </group>
+                                </group>
+                            </page>
+
+                            <page string="Base Operation">
+                                <group>
+                                    <group string="Base Operation Info" name="operation_info">
+                                        <field name="base_name"/>
+                                        <field name="base_code"/>
+                                        <field name="base_desc"/>
+                                        <field name="base_coordinate"/>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <page string="Area">
+                                <group>
+                                    <group string="Area Information" name="area_info">
+                                        <field name="area_name"/>
+                                        <field name="area_code"/>
+                                        <field name="area_desc"/>
+                                        <field name="area_status"/>                
+                                    </group>
+                                </group>
+                            </page>
+
+                        </notebook>
+                        <group>
+                          <field name="notes"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="craft_contract_tree_view">
+            <field name="name">craft_contract_tree_view.tree</field>
+            <field name="model">craft.charter.contract</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="craft_contract_result" decoration-info="state == 'draft'" colors="grey:state == 'done';
+                              green:state == 'running';red:state == 'checking';black:state == 'invoice';">
+                    <field name="name"/>
+                    <field name="customer_id" string="Customer"/>
+			        <field name="vehicle_id"/>
+                    <field name="cost"/>
+                    <field name="craft_brand" />
+					<field name="craft_color" />
+                    <field name="rent_start_date"/>
+                    <field name="rent_end_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_craft_charter_contract" model="ir.actions.act_window">
+            <field name="name">Charter Contract</field>
+            <field name="res_model">craft.charter.contract</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.ui.menu" id="fleet.fleet_vehicles">
+            <field name="name">Aircraft</field>
+        </record>
+        <record model="ir.ui.menu" id="fleet.fleet_vehicle_menu">
+            <field name="name">Aircraft</field>
+        </record>
+
+<!--        <record id="view_order_search_inherit" model="ir.ui.view">
+            <field name="name">fleet.search.inherit</field>
+            <field name="model">fleet.vehicle.log.contract.search</field>
+            <field name="inherit_id" ref="fleet.vehicle.log.contract.fleet_vehicle_log_contract_view_search"/>
+            <field name="arch" type="xml">
+                <string string="Vehicles Contracts" position="attributes">
+                    <attribute name = "string">Aircraft Contracts</attribute>
+                </string>>
+            </field>
+        </record>
+-->
+        <menuitem name="Aircraft Service" id="fleet.menu_root" sequence="115" groups="fleet.fleet_group_user"
+                  web_icon="fleet,static/description/icon.png"/>
+        <menuitem id="menu_craft_parent" sequence="1" name="Aircraft Management" parent="fleet.menu_root"/>
+        <menuitem id="menu_craft_charter_contract" parent="menu_craft_parent" name="Aircraft Contract"
+                  action="action_craft_charter_contract" sequence="1"/>
+    </data>
+</odoo>

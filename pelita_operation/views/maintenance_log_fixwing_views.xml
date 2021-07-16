@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<!-- MaintenanceLogFixedWings -->
+<record id='fix_wings_form' model='ir.ui.view'>
+        <field name="name">fix.wings.form</field>
+        <field name="model">maintenance.log.fixwing</field>
+        <field name="arch" type="xml">
+            <form string="Maintenance Log Fix Wing">
+            <sheet>
+                <group>
+                <group>
+                    <field name="name"/>
+                    <field name="date_lt"/>
+                    <field name="etd"/>
+                    <field name="eta"/>
+                </group>
+                <group>
+                    <field name="flight_schedule_id"/>
+                    <field name="flight_number"/>
+                    <field name="flight_order_number"/>
+                    <field name="location_id"/>
+                </group>
+                <group>
+                    <field name="customer_id"/>
+                    <field name="schedule_commercial_id"/>
+                    <field name="flight_category"/>
+                    <field name="flight_type"/>
+                    <field name="internal_flight_type_id"/>
+                    <field name="schedule_date"/>
+                </group>
+            </group>
+            <notebook>
+                <page string='Route'>
+                    <field name='route_ids'>
+                        <tree editable='buttom'>
+                            <field name='crew_id'/>
+                            <field name='crew_type_id'/>
+                            <field name='qualification'/>
+                            <field name='fml_no'/>
+                            <field name='from_id'/>
+                            <field name='to_id'/>
+                            <field name='take_off' widget="float_time"/>
+                            <field name='landing' widget="float_time"/>
+                            <field name='flight_hours' widget="float_time"/>
+                            <field name='block_off' widget="float_time"/>
+                            <field name='block_on' widget="float_time"/>
+                            <field name='flight_time' widget="float_time"/>
+                            <field name='flight_time_matrix'/>
+                            <field name='no_pax' widget="float_time"/>
+                            <field name='pax' widget="float_time"/>
+                            <field name='lugg' widget="float_time"/>
+                            <field name='freight' widget="float_time"/>
+                            <field name='total' widget="float_time"/>
+                            <field name='fuel_payload_available'/>
+                            <field name='fuel_uplift'/>
+                            <field name='fuel_total'/>
+                            <field name='fuel_const'/>
+                            <field name='fuel_rem'/>
+                            <field name='oil_added1'/>
+                            <field name='oil_added2'/>
+                            <field name='oil_added3'/>
+                            <field name='oil_added4'/>
+                        </tree>
+                    </field>
+                </page>
+                <!--
+                <page string='Flight Attendants'>
+                    <field name='flight_attendant_ids'>
+                        <tree editable='buttom'>
+                            <field name='crew_id'/>
+                            <field name='crew_type_id'/>
+                            <field name='qualification'/>
+                        </tree>
+                    </field>
+                </page>
+            -->
+                <page string='Instructor'>
+                <group>
+                    <field name='is_instruction_flight'/>
+                    <field name='training_instructor_id'/>
+                    <field name='brief_time' widget="float_time"/>
+                </group>
+                </page>
+                <page string='Late Departure/Cancel flight'>
+                <group>
+                    <field name='cancel_reason_id'/>
+                    <field name='late_departure_id'/>
+                    <field name='total_late' widget="float_time"/>
+                    <field name='aircraft_unserviceable_reason'/>
+                    <field name='rtb' widget="float_time"/>
+                    <field name='rtb_reason' />
+                </group>
+                </page>
+                <page string='Corrective Actions'>
+                    <field name='corective_action_ids'>
+                        <tree editable='buttom'>
+                            <field name='name'/>
+                            <field name='action'/>
+                        </tree>
+                    </field>
+                </page>
+            <page string='Maintenance Data'>
+                    <field name='maintenance_ids'>
+                        <form>
+                        <group>
+                            <group string='Engine Monitoring'>
+                            <field name='engine_torque1'/>
+                            <field name='engine_torque2'/>
+                            <field name='engine_rpm_nl'/>
+                            <field name='engine_rpm_nl2'/>
+                            <field name='engine_rpm_nh'/>
+                            <field name='engine_np1'/>
+                            <field name='engine_np2'/>
+                            <field name='engine_itt1'/>
+                            <field name='engine_itt2'/>
+                            <field name='fuel_flow1'/>
+                            <field name='fuel_flow2'/>
+                            <field name='fuel_temp1'/>
+                            <field name='fuel_temp2'/>
+                            <field name='oil_temp1'/>
+                            <field name='oil_temp2'/>
+                            <field name='oil_preasure1'/>
+                            <field name='oil_preasure2'/>
+                            <field name='oil_level1'/>
+                            <field name='oil_level2'/>
+                            <field name='vibration1'/>
+                            <field name='vibration2'/>
+                            <field name='c1_gw'/>
+                            <field name='c2_gw'/>
+                            <field name='c1_gw'/>
+                            </group>
+                            <group string='Airframe'>
+                            <field name='airframe_brt_fwd_hours'/>
+                            <field name='airframe_brt_fwd_cycles'/>
+                            <field name='airframe_brt_today_hours'/>
+                            <field name='airframe_brt_today_cycles'/>
+                            <field name='airframe_brt_total_hours'/>
+                        </group>
+                            <group string='Engine1'>
+                            <field name='engine1_brt_fwd_hours'/>
+                            <field name='engine1_brt_fwd_cycles'/>
+                            <field name='engine1_brt_today_hours'/>
+                            <field name='engine1_brt_today_cycles'/>
+                            <field name='engine1_brt_total_hours'/>
+                            <field name='engine1_brt_total_cycles'/>
+                            </group>
+                            <group string='Engine2'>
+                            <field name='engine2_brt_fwd_hours'/>
+                            <field name='engine2_brt_fwd_cycles'/>
+                            <field name='engine2_brt_today_hours'/>
+                            <field name='engine2_brt_today_cycles'/>
+                            <field name='engine2_brt_total_hours'/>
+                            <field name='engine2_brt_total_cycles'/>
+                            </group>
+                            <group string='APU'>
+                            <field name='apu_brt_fwd_hours'/>
+                            <field name='apu_brt_fwd_cycles'/>
+                            <field name='apu_brt_today_hours'/>
+                            <field name='apu_brt_today_cycles'/>
+                            <field name='apu_brt_total_hours'/>
+                            <field name='apu_brt_total_cycles'/>
+                            </group>
+                            <group string='Propeller'>
+                            <field name='propeller_brt_fwd_hours'/>
+                            <field name='propeller_brt_fwd_cycles'/>
+                            <field name='propeller_brt_today_hours'/>
+                            <field name='propeller_brt_today_cycles'/>
+                            <field name='propeller_brt_total_hours'/>
+                            <field name='propeller_brt_total_cycles'/>
+                            </group>
+                        </group>
+                        </form>
+                    </field>
+                </page>
+            </notebook>
+            </sheet>
+            </form>
+        </field>
+    </record>  
+
+<record id='fixed_wing_action' model='ir.actions.act_window'>
+        <field name="name">Maintenance Log Fixed Wings</field>
+        <field name="res_model">maintenance.log.fixwing</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create New Maintenance Log
+          </p>
+        </field>
+</record>
+<menuitem action="fixed_wing_action" parent="schedule_planning_menu" id="fix_wing_menu"/>
+
+</odoo>

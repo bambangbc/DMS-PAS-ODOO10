@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id='hr_crew_view_form' model='ir.ui.view'>
+        <field name="name">hr.crew.form</field>
+        <field name="model">hr.employee</field>
+        <field name="arch" type="xml">
+            <form string="My Curriculum Vitae">
+            <sheet>
+                <field name="image" widget='image' class="oe_avatar" options='{"preview_image":"image_medium"}'/>
+                <div class="oe_title">
+                    <label for="name" class="oe_edit_only"/>
+                    <h1>
+                        <field name="name" placeholder="Crew's Name"/>
+                    </h1>
+                </div>
+                <field name="is_crew" invisible="True"/>
+                <group>
+                    <group>
+                        <field name="employee_no"/>
+                        <field name="qualification_id" attrs="{'required': [('is_crew', '=', True)]}"/>
+                        <field name="religion"/>
+                        <field name="date_employee"/>
+                    </group>
+                    <group>
+                        <field name="pilot_categ_id" attrs="{'required': [('is_crew', '=', True)]}"/>
+                        <field name="crew_categ" attrs="{'required': [('is_crew', '=', True)]}"/>
+                        <field name="license_no"/>
+                        <field name="instructor_id"/>
+                        <field name="otr_no"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page name="public" string="Public Info">
+                        <group>
+                            <group string="Contact Information">
+                                <field name='work_address'/>
+                                <field name="mobile_phone"/>
+                                <field name="work_location"/>
+                                <field name="work_email" widget="email"/>
+                                <field name="work_phone"/>
+                            </group>
+                        </group>
+                        <field name="notes" placeholder="Other Information ..." colspan="4"/>
+                    </page>
+                    <page name="personal_information" string="Personal Info" groups="hr.group_hr_user">
+                        <group>
+                            <group string="Citizenship &amp; Other Information">
+                                <field name="country_id" options='{"no_open": True, "no_create": True}'/>
+                                <field name="identification_id" groups="hr.group_hr_user"/>
+                                <field name="passport_id" groups="hr.group_hr_user"/>
+                                <field name="bank_account_id" context="{'default_partner_id': address_home_id}"/>
+                            </group>
+                            <group string="Contact Information">
+                                <field name='address'/>
+                            </group>
+                            <group string="Status">
+                                <field name="gender"/>
+                                <field name="marital"/>
+                            </group>
+                            <group string="Birth">
+                                <field name="birthday"/>
+                                <field name='place_of_birth'/>
+                            </group>
+                        </group>
+                    </page>
+                    <page string="Instructor">
+                        <group>
+                            <field name='ground_instructor'/>
+                            <field name='flight_instructor'/>
+                            <field name='simulator_instructor'/>
+                            <field name='company_check_pilot'/>
+                        </group>
+                    </page>
+                    <page string='Current Rating'>
+                        <field name='rating_ids'>
+                            <tree editable='buttom'>
+                                <field name="aircraft_id" required="1"/>
+                                <field name="rating_qualification" required="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='CV'>
+                        <field name='cv_ids' string='CV'>
+                            <form string='CV' >
+                                <group string='Education'>
+                                    <field name='education_ids' string='Education'>
+                                           <tree editable='buttom'>
+                                            <field name='name'/>
+                                            <field name='year'/>
+                                            <field name='location'/>
+                                           </tree>
+                                    </field>
+                                </group>
+                                <group>
+                                    <field name='carrier_ids' string='Carrier History'>
+                                            <tree editable='buttom'>
+                                            <field name='name'/>
+                                            <field name='company_name'/>
+                                            <field name='year_from'/>
+                                            <field name='year_until'/>
+                                           </tree>
+                                    </field>
+                                </group>
+                                <group>
+                                    <field name='train_ids' string='Training'>
+                                            <tree editable='buttom'>
+                                            <field name='training_id'/>
+                                            <field name='date_training'/>
+                                            <field name='training_type'/>
+                                            <field name='valid_from'/>
+                                            <field name='valid_to'/>
+                                            <field name='upload_certificate'/>
+                                           </tree>
+                                    </field>
+                                </group>
+                                <group>
+                                    <field name='document_ids' string='Document'>
+                                            <tree editable='buttom'>
+                                            <field name='name'/>
+                                            <field name='date_doc'/>
+                                            <field name='next_due'/>
+                                            <field name='upload_doc'/>
+                                           </tree>
+                                    </field>
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                    <page string='Flying Hours'>
+                        <field name="flying_hours_ids">
+                            <tree editable='buttom'>
+                                <field name="fl_acquisition_id"/>
+                                <field name="fml_id"/>
+                                <field name="date_flight"/>
+                                <field name="qualification_id"/>
+                                <field name="eta" invisible="True"/>
+                                <field name="flying_hours" sum='flying_hours'/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='Duty Time'>
+                        <field name='duty_time_ids'>
+                            <tree editable='buttom'>
+                                <field name="fl_acquisition_id"/>
+                                <field name='fml_id'/>
+                                <field name='date_flight'/>
+                                <field name='time_in' widget='float_time'/>
+                                <field name='login' widget='float_time'/>
+                                <field name='time_out' widget='float_time'/>
+                                <field name='logout' widget='float_time'/>
+                                <field name='duty_time' sum='duty_time'/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id='hr_crew_view_tree' model='ir.ui.view'>
+        <field name="name">hr.crew.tree</field>
+        <field name="model">hr.employee</field>
+        <field name="arch" type="xml">
+            <tree string="Crew List">
+              <field name='name'/>
+              <field name="employee_no"/>
+              <field name="date_employee"/>
+              <field name='work_email'/>
+              <field name='place_of_birth'/>
+              <field name='birthday'/>
+              <field name="gender"/>
+              <field name="religion"/>
+             </tree>
+        </field>
+    </record>
+    <record id="view_hr_crew_filter" model="ir.ui.view">
+        <field name="name">hr.crew.filter</field>
+        <field name="model">hr.employee</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="Crew">
+                <field name="name" string="Crew-Tech.Name/Emp.No/Email" filter_domain="['|','|',('name','ilike',self),('employee_no','ilike',self),('work_email','ilike',self)]"/>
+                <field name="qualification_id"/>
+                <field name="pilot_categ_id"/>
+                <field name="crew_categ_id"/>
+                <field name="otr_no"/>
+                <field name="instructor_id"/>
+                <field name="category_ids" string="Employee Categ"/>
+                <group expand="1" string="Group By">
+                    <filter string="Religion" domain="[]" context="{'group_by':'religion'}"/>
+                    <filter name="qualification" string="Qualification" domain="[]" context="{'group_by':'qualification_id'}"/>
+                    <filter string="Pilot Category" domain="[]" context="{'group_by':'pilot_categ_id'}"/>
+                    <filter string="Crew Category" domain="[]" context="{'group_by':'crew_categ_id'}"/>
+                    <filter string="Instructor" domain="[]" context="{'group_by':'instructor_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+        <record id='hr_crew_action' model='ir.actions.act_window'>
+            <field name="name">List Crew</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_hr_crew_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click for Create New Crew
+              </p>
+            </field>
+        </record>
+        <record id="act_hr_crew_tree_view" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="hr_crew_view_tree"/>
+            <field name="act_window_id" ref="hr_crew_action"/>
+        </record>
+        <record id="act_hr_crew_form_view" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="hr_crew_view_form"/>
+            <field name="act_window_id" ref="hr_crew_action"/>
+        </record>
+
+    <!-- My CV -->
+    <record id='hr_cv_view_form' model='ir.ui.view'>
+        <field name="name">hr.cv.form</field>
+        <field name="model">hr.cv</field>
+        <field name="arch" type="xml">
+            <form string="My Curriculum Vitae">
+            <sheet>
+                
+                 <field name="image" widget='image' class="oe_avatar" options='{"preview_image":"image_medium"}' readonly='True'/> 
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="employee_id" readonly='True'/>
+                            </h1>
+                        </div>
+                <group>
+                <group>
+                    <field name="employee_no" readonly='True'/>
+                    <field name="qualification" readonly='True'/>
+                    <field name="religion" readonly='True'/>
+                    <field name="date_employee" readonly='True'/>
+                </group>
+                <group>
+                    <field name="marital" readonly='True'/>
+                    <field name="place_of_birth" readonly='True'/>
+                    <field name="birthday" readonly='True'/>
+                    <field name="gender" readonly='True'/>
+                </group>
+                <group>
+                    <field name="pilot_categ" readonly='True'/>
+                    <field name='crew_categ' readonly='True'/>
+                    <field name='license_no' readonly='True'/>
+                    <field name='instructor' readonly='True'/>
+                    <field name='otr_no' readonly='True'/>
+                </group>
+                 </group>
+                <notebook>
+                            <page string='Education'>
+                                 <field name='education_ids' string='Education'>
+                                           <tree>
+                                            <field name='name' readonly='True'/>
+                                            <field name='year' readonly='True'/>
+                                            <field name='location' readonly='True'/>
+                                           </tree>
+                                    </field>
+                            </page>
+                             <page string='Carrier'> 
+                              <field name='carrier_ids' string='Carrier History'>
+                                            <tree >
+                                            <field name='name' readonly='True' />
+                                            <field name='company_name' readonly='True'/>
+                                            <field name='year_from' readonly='True'/>
+                                            <field name='year_until' readonly='True'/>
+                                           </tree>
+                                        </field>
+                                    </page>
+                                    <page string='Training'>
+                                        <field name='train_ids' string='Training'>
+                                            <tree >
+                                            <field name='training_id' readonly='True'/>
+                                            <field name='date_training' readonly='True'/>
+                                            <field name='training_type' readonly='True'/>
+                                            <field name='valid_from' readonly='True'/>
+                                            <field name='valid_to' readonly='True'/>
+                                            <field name='upload_certificate' readonly='True'/>
+                                           </tree>
+                                        </field>
+                                    </page>
+                                    <page string='Document'>
+                                        <field name='document_ids' string='Document'>
+                                            <tree >
+                                            <field name='name' readonly='True'/>
+                                            <field name='date_doc' readonly='True'/>
+                                            <field name='next_due' readonly='True'/>
+                                            <field name='upload_doc' readonly='True'/>
+                                           </tree>
+                                        </field>
+                                    </page>
+                    </notebook>
+            </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id='hr_cv_view_tree' model='ir.ui.view'>
+        <field name="name">hr.cv.tree</field>
+        <field name="model">hr.cv</field>
+        <field name="arch" type="xml">
+            <tree string="My CV">
+              <field name='employee_id' string='Name'/>
+              <field name="employee_no"/>
+              <field name="date_employee"/>
+              <field name='work_email'/>
+              <field name='place_of_birth'/>
+              <field name='birthday'/>
+              <field name="gender"/>
+              <field name="religion"/>
+             </tree>
+        </field>
+    </record>  
+
+    <record id='hr_cv_action' model='ir.actions.act_window'>
+        <field name="name">My CV</field>
+        <field name="res_model">hr.cv</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create New Crew
+          </p>
+        </field>
+    </record>
+    
+    <!-- Crew Scheule -->
+    <record id="crew_schedule_gantt" model="ir.ui.view">
+        <field name="model">crew.schedule</field> 
+        <field name='type'>gantt</field>
+        <field name="arch" type="xml">
+            <gantt date_start="date_from"
+              date_stop="date_to" 
+              progress="progress"
+              string="Employee" color="name" default_group_by="employee_id">
+                <field name='etd'/>
+                <field name='eta'/>
+                <field name='aircraft_id'/>
+            </gantt>
+        </field> 
+    </record> 
+
+<record id="crew_schedule_calendar" model="ir.ui.view"> 
+  <field name="model">crew.schedule</field> 
+  <field name='type'>calendar</field>
+  <field name="arch" type="xml"> 
+    <calendar date_start="date_from"  date_stop="date_to" color="aircraft_id" mode="month"
+                          quick_add="False" avatar_model="hr.employee"
+                     > 
+        <field name='name'/>
+        <field name='employee_id'/>
+      <field name="date_from"/>
+      <field name='date_to'/>
+      <field name='schedule_type_id'/> 
+    </calendar> 
+  </field> 
+</record> 
+
+
+    <record id='crew_schedule_form' model='ir.ui.view'>
+        <field name="name">crew.schedule.form</field>
+        <field name="model">crew.schedule</field>
+        <field name="arch" type="xml">
+            <form string="Crew Schedule Planning"> <!--create="false" edit="false" delete="false"-->
+            <sheet>
+                <group>
+                <group>
+                    <field name='name'/>
+                    <field name="employee_id"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                </group>
+                <group>
+                    <field name="aircraft_id"/>
+                    <field name="etd"/>
+                    <field name="eta"/>
+                </group>
+                <group>
+                    <field name="flight_type"/>
+                    <field name="customer_id"/>
+                    <field name="remark"/>
+                </group>
+            </group>
+            </sheet>
+            </form>
+        </field>
+    </record>  
+
+    <record id='crew_schedule_tree' model='ir.ui.view'>
+        <field name="name">crew.schedule.tree</field>
+        <field name="model">crew.schedule</field>
+        <field name="arch" type="xml">
+            <tree string="Crew Schedule Planning"> <!--create="false" edit="false" delete="false"-->
+                    <field name='name'/>
+                    <field name="employee_id"/>
+                    <field name="schedule_type_id"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="aircraft_id"/>
+                    <!--<field name="aircraft_type"/>-->
+                    <field name="etd"/>
+                    <field name="eta"/>
+            </tree>
+        </field>
+    </record>  
+    
+    <record id='crew_schedule_action' model='ir.actions.act_window'>
+        <field name="name">Crew Schedule Planning</field>
+        <field name="res_model">crew.schedule</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">gantt,tree,form,calendar</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create New Crew Schedule
+          </p>
+        </field>
+</record>
+
+<!-- crew schedule actual -->
+
+<record id="crew_schedule_actual_gantt" model="ir.ui.view"> 
+  <field name="model">crew.schedule.actual</field> 
+  <field name='type'>gantt</field>
+  <field name="arch" type="xml"> 
+    <!--
+    <calendar date_start="date_from"  date_stop="date_to" color="aircraft_id" mode="month"
+                          quick_add="False" avatar_model="hr.employee"
+                     > 
+        <field name='name'/>
+        <field name='employee_id'/>
+      <field name="date_from"/>
+      <field name='date_to'/>
+      <field name='schedule_type_id'/> 
+
+    </calendar> -->
+    <gantt date_start="date_from"
+          date_stop="date_to"
+          progress="progress"
+          string="Employee" color='name'
+    default_group_by="employee_id">
+    <field name='etd'/>
+    <field name='eta'/>
+    <field name='aircraft_id'/>
+</gantt>
+
+  </field> 
+</record> 
+
+<record id="crew_schedule_actual_calendar" model="ir.ui.view"> 
+  <field name="model">crew.schedule.actual</field> 
+  <field name='type'>calendar</field>
+  <field name="arch" type="xml"> 
+    <calendar date_start="date_from"  date_stop="date_to" color="aircraft_id" mode="month" quick_add="False" avatar_model="hr.employee"> 
+        <field name='name'/>
+        <field name='employee_id'/>
+      <field name="date_from"/>
+      <field name='date_to'/>
+      <field name='schedule_type_id'/> 
+    </calendar> 
+  </field> 
+</record> 
+
+<record id='crew_schedule_actual_form' model='ir.ui.view'>
+        <field name="name">crew.schedule.actual.form</field>
+        <field name="model">crew.schedule.actual</field>
+        <field name="arch" type="xml">
+            <form string="Crew Schedule Actual"> <!--create="false" edit="false" delete="false"-->
+            <sheet>
+                <group>
+                <group>
+                    <field name='name'/>
+                    <field name="employee_id"/>
+                    <field name='fml_id'/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                </group>
+                <group>
+                    <field name="aircraft_id"/>
+                    <!--<field name="aircraft_type"/>-->
+                    <field name="etd"/>
+                    <field name="eta"/>
+                </group>
+                <group>
+                    <field name="flight_type"/>
+                    <field name="customer_id"/>
+                    <field name="remark"/>
+                </group>
+             </group>
+            </sheet>
+            </form>
+        </field>
+    </record>  
+
+    <record id='crew_schedule_actual_tree' model='ir.ui.view'>
+        <field name="name">crew.schedule.actual.tree</field>
+        <field name="model">crew.schedule.actual</field>
+        <field name="arch" type="xml">
+            <tree string="Crew Schedule Actual"> <!--create="false" edit="false" delete="false"-->
+                    <field name='name'/>
+                    <field name="employee_id"/>
+                    <field name='fml_id'/>
+                   <field name="schedule_type_id"/> 
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="aircraft_id"/>
+                    <!--<field name="aircraft_type"/>-->
+                    <field name="etd"/>
+                    <field name="eta"/>
+            </tree>
+        </field>
+    </record>  
+    
+    <record id='crew_schedule_actual_action' model='ir.actions.act_window'>
+        <field name="name">Crew Schedule Actual</field>
+        <field name="res_model">crew.schedule.actual</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">gantt,tree,form,calendar</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click for Create New Crew Schedule
+            </p>
+        </field>
+    </record>
+
+    <!-- Flight Hours -->
+    <record id='flying_hours_tree' model='ir.ui.view'>
+        <field name="name">flying.hours.tree</field>
+        <field name="model">flying.hours</field>
+        <field name="arch" type="xml">
+            <tree string="Flight Hours">
+                <field name='crew_id'/>
+                <field name="fl_acquisition_id"/>
+                <field name="fml_id"/>
+                <field name="date_flight"/>
+                <field name="eta" invisible="True"/>
+                <field name="qualification_id"/>
+                <field name="flying_hours" sum='flying_hours'/>
+            </tree>
+        </field>
+    </record>
+    <record id='flying_hours_form' model='ir.ui.view'>
+        <field name="name">flying.hours.form</field>
+        <field name="model">flying.hours</field>
+        <field name="arch" type="xml">
+            <form string="Flight Hours">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="crew_id" required="True"/>
+                            <field name="fml_id" readonly="True"/>
+                            <field name="qualification_id" readonly="True"/>
+                            <field name="flying_hours" readonly="True"/>
+                        </group>
+                        <group>
+                            <field name="date_flight"/>
+                            <field name="eta"/>
+                            <field name="fl_acquisition_id" readonly="True"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record> 
+    <record id='flying_hours_action' model='ir.actions.act_window'>
+        <field name="name">Crew Flight Hours</field>
+        <field name="res_model">flying.hours</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    
+    </record>
+
+    <!-- Crew Duty Time -->
+    <record id='crew_dt_tree' model='ir.ui.view'>
+        <field name="name">crew.dt.tree</field>
+        <field name="model">crew.duty.time</field>
+        <field name="arch" type="xml">
+            <tree string="Crew Duty Time">
+                <field name='crew_id'/>
+                <field name="fl_acquisition_id"/>
+                <field name='fml_id'/>
+                <field name='date_flight'/>
+                <field name='time_in' widget='float_time'/>
+                <field name='login' widget='float_time'/>
+                <field name='time_out' widget='float_time'/>
+                <field name='logout' widget='float_time'/>
+                <field name='duty_time' sum='duty_time'/>
+            </tree>
+        </field>
+    </record>  
+    <record id='crew_dt_action' model='ir.actions.act_window'>
+        <field name="name">Crew Duty Time</field>
+        <field name="res_model">crew.duty.time</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Schedule Type -->
+    <record id='schedule_type_form' model='ir.ui.view'>
+        <field name="name">schedule.type.form</field>
+        <field name="model">crew.schedule.type</field>
+        <field name="arch" type="xml">
+            <form string="Schedule Type">
+            <sheet>
+            <group>
+              <field name='name'/> 
+              <field name='color_name'/>
+            </group>
+            </sheet>
+            </form>
+        </field>
+    </record>  
+    <record id='schedule_type_action' model='ir.actions.act_window'>
+        <field name="name">Schedule Type</field>
+        <field name="res_model">crew.schedule.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create New Schedule Type
+          </p>
+        </field>
+    </record>
+    
+    <!-- Qualification -->
+    <record id='hr_qualification_form' model='ir.ui.view'>
+        <field name="name">hr.qualification.form</field>
+        <field name="model">hr.qualification</field>
+        <field name="arch" type="xml">
+            <form string="Qualification">
+            <sheet>
+            <group>
+              <field name='name'/>
+             <!-- <field name='description'/> -->
+            </group>
+            </sheet>
+            </form>
+        </field>
+    </record>  
+    <record id='hr_qualification_action' model='ir.actions.act_window'>
+        <field name="name">Qualification</field>
+        <field name="res_model">hr.qualification</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create New Qualification
+          </p>
+        </field>
+    </record>
+
+    <!-- Pilot Category -->
+    <record id='pilot_categ_form' model='ir.ui.view'>
+        <field name="name">pilot.categ.form</field>
+        <field name="model">pilot.category</field>
+        <field name="arch" type="xml">
+            <form string="Pilot Category">
+            <sheet>
+            <group>
+              <field name='name'/>
+             <!-- <field name='description'/> -->
+            </group>
+            </sheet>
+            </form>
+        </field>
+    </record>  
+    <record id='pilot_categ_action' model='ir.actions.act_window'>
+        <field name="name">Pilot Category</field>
+        <field name="res_model">pilot.category</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create New Crew
+          </p>
+        </field>
+</record>
+
+<!-- Crew Category -->
+<record id='crew_categ_form' model='ir.ui.view'>
+        <field name="name">crew.categ.form</field>
+        <field name="model">crew.category</field>
+        <field name="arch" type="xml">
+            <form string="Crew Category">
+            <sheet>
+            <group>
+              <field name='name'/>
+             <!-- <field name='description'/> -->
+            </group>
+            </sheet>
+            </form>
+        </field>
+</record>  
+<record id='crew_categ_action' model='ir.actions.act_window'>
+        <field name="name">Crew Category</field>
+        <field name="res_model">crew.category</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click for Create New Crew
+          </p>
+        </field>
+</record>
+
+<!-- Training -->
+<record id='training_operation_form' model='ir.ui.view'>
+        <field name="name">training.operation.form</field>
+        <field name="model">training.operation</field>
+        <field name="arch" type="xml">
+            <form string="Route">
+            <sheet>
+                <group>
+                <group>
+                    <field name='name'/>
+                    <field name="code"/>
+                    <field name="description"/>
+                    <field name="training_categ"/>
+                    <field name="qualification"/>
+                    
+                 </group>
+            </group>
+            <field name='training_line_ids' string='Training Lines'>
+                <tree editable='buttom'>
+                    <field name="dgca_categ"/>
+                    <field name="aircraft_categ_id"/>
+                    <field name="frequency"/>
+                </tree>
+            </field>
+            </sheet>
+            </form>
+        </field>
+</record>  
+
+        <record id='training_operation_tree' model='ir.ui.view'>
+            <field name="name">training.operation.tree</field>
+            <field name="model">training.operation</field>
+            <field name="arch" type="xml">
+                <tree string="Tree">
+                        <field name='name'/>
+                        <field name="code"/>
+                        <field name="description"/>
+                        <field name="training_categ"/>
+                        <field name="qualification"/>
+                        <!--
+                        <field name="dgca_categ"/>
+                        <field name="aircraft_categ_id"/>
+                        <field name="frequency"/> -->
+                </tree>
+            </field>
+        </record>
+        <record id='training_operation_action' model='ir.actions.act_window'>
+            <field name="name">Training</field>
+            <field name="res_model">training.operation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click for Create New Training
+              </p>
+            </field>
+        </record>
+
+        <menuitem name="ICrew" id="i_crew" sequence="2" 
+                  groups="group_crw_user,group_crw_manager,group_crw_user_own_docs,group_crw_manager_own_docs" />
+        <menuitem name="Crew Information" sequence='1' parent="i_crew" id="crew_menu"
+                  groups="group_crw_user,group_crw_manager,group_crw_user_own_docs,group_crw_manager_own_docs"/>
+        <menuitem name="Crew Schedule" sequence='2' parent="i_crew" id="crew_schedule_menu"
+                  groups="group_crw_user,group_crw_manager,group_crw_user_own_docs,group_crw_manager_own_docs"/>
+        
+        <menuitem name="Configuration" parent="i_crew" id="crew_config_menu" 
+                  groups="group_crw_user,group_crw_manager,group_crw_user_own_docs,group_crw_manager_own_docs"/>
+        
+        <menuitem action="hr_crew_action" parent="crew_menu" id="hr_crew_menu" 
+                  groups="group_crw_user,group_crw_manager"/> <!--,group_crw_user_own_docs,group_crw_manager_own_docs-->
+        <menuitem action="hr_cv_action" parent="crew_menu" id="hr_cv_menu" 
+                  groups="group_crw_user,group_crw_manager,group_crw_user_own_docs,group_crw_manager_own_docs"/>
+        <menuitem action="flying_hours_action" parent="crew_menu" id="flying_hours_menu"
+                  groups="group_crw_user,group_crw_manager,group_crw_user_own_docs,group_crw_manager_own_docs"/>
+        <menuitem action="crew_dt_action" parent="crew_menu" id="crew_dt_menu" 
+                  groups="group_crw_user,group_crw_manager,group_crw_user_own_docs,group_crw_manager_own_docs"/>
+        
+        <menuitem action="crew_schedule_action" parent="crew_schedule_menu" id="crew_schedule_plan_menu"
+                  groups="group_crw_user,group_crw_manager,group_crw_user_own_docs,group_crw_manager_own_docs"/>
+        
+        <menuitem action="crew_schedule_actual_action" parent="crew_schedule_menu" id="crew_schedule_actual_menu"
+                  groups="group_crw_user,group_crw_manager,group_crw_user_own_docs,group_crw_manager_own_docs"/>
+        
+        <menuitem action="hr_qualification_action" parent="crew_config_menu" id="hr_qualification_menu"
+                  groups="group_crw_user,group_crw_manager,group_crw_user_own_docs,group_crw_manager_own_docs"/>
+        <menuitem action="schedule_type_action" parent="crew_config_menu" id="schedule_crew_type_menu"
+                  groups="group_crw_user,group_crw_manager,group_crw_user_own_docs,group_crw_manager_own_docs"/>
+        
+        <menuitem action="pilot_categ_action" parent="crew_config_menu" id="pilot_categ_menu"
+                  groups="group_crw_user,group_crw_manager,group_crw_user_own_docs,group_crw_manager_own_docs"/>
+        <menuitem action="crew_categ_action" parent="crew_config_menu" id="crew_categ_menu"
+                  groups="group_crw_user,group_crw_manager,group_crw_user_own_docs,group_crw_manager_own_docs"/>
+        <menuitem action="training_operation_action" parent="crew_config_menu" id="training_operation_menu"
+                  groups="group_crw_user,group_crw_manager,group_crw_user_own_docs,group_crw_manager_own_docs"/>
+
+
+</odoo>

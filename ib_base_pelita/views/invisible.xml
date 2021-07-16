@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--Sales Order Form-->
+    <record id="invisible_fields_view_order_form" model="ir.ui.view">
+        <field name="name">invisible.fields.sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='sales_person']" position="replace">
+                <group string="Sales Information" name="sales_person">
+                    <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                    <field name="business_unit_id"/>
+                    <field name="approved_by"/>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="user_id"/>
+            </xpath>
+        </field>
+    </record>
+    <!--<record id="invisible1_view_order_form_inherit_sale_stock" model="ir.ui.view">
+        <field name="name">sale.order.form.sale.stock</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/form/group/group/field[@name='route_id']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree/field[@name='route_id']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="invisible_view_oline_tree_inherit_sale_stock" model="ir.ui.view">
+        <field name="name">invisible.sol.tree.sale.stock.location</field>
+        <field name="inherit_id" ref="sale_stock.view_order_line_tree_inherit_sale_stock"/>
+        <field name="model">sale.order.line</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='route_id']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+        </field>
+    </record>-->
+
+</odoo>
